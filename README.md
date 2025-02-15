@@ -22,21 +22,9 @@
 2. Ekstrak file zip.
 3. Jalankan `game.exe`.
 
-### Linux
-1. Download file `game.AppImage` dari [release](link-release).
-2. Berikan izin eksekusi: `chmod +x game.AppImage`.
-3. Jalankan dengan `./game.AppImage`.
-
-### MacOS
-1. Download file `game.dmg` dari [release](link-release).
-2. Mount file DMG.
-3. Seret game ke Applications.
-4. Jalankan game dari Launchpad.
-
 ## 🛠️ Teknologi yang Digunakan
-- Engine: [Game Engine yang digunakan]
-- Bahasa Pemrograman: [Bahasa pemrograman utama]
-- Framework: [Framework yang digunakan jika ada]
+- Engine: Unity
+- Bahasa Pemrograman: C#
 
 ## 👥 Tim Pengembang
 - **[Nama 1]** - [Peran]  
