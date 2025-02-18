@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ManagerMainmenu : MonoBehaviour
 {
@@ -16,7 +17,16 @@ public class ManagerMainmenu : MonoBehaviour
 
     [Header("----------- Function Mainmenu2----------------")]
 
+    public TextMeshProUGUI setJudulTeks;
+
     [SerializeField] private GameObject[] buttonOptions;
+
+
+    [SerializeField] private GameObject[] optionsDisplay;
+
+    private string[] judulOptions = { "Load", "Jurnal", "Pengaturan", "Tentang" };
+
+
 
     [SerializeField] private CanvasGroup mainMenu2CanvasGroup;
     [SerializeField] private GameObject mainMenu2CanvasGroupGameObject;
@@ -60,21 +70,63 @@ public class ManagerMainmenu : MonoBehaviour
     }
 
     public void StartGameplay(){
-         SceneManager.LoadScene("Gameplay");
+         SceneManager.LoadScene("GamePlay");
     }
 
 
-    public void LoadGame(){
-        if(isMainMenu2on == false){
+    public void OpenMainMenu2(int index)
+    {
+        if (!isMainMenu2on)
+        {
+            // Menonaktifkan semua button agar tidak bisa diklik selama transisi
             SetButtonsInteractable(false);
 
-            mainMenu2CanvasGroupGameObject.SetActive(true);
-            
-            StartCoroutine(TransitionToMainMenu2Canvas());
-            
+            // Pindah ke Main Menu 2
+            StartCoroutine(TransitionToMainMenu2(index));
+        }
+    }
+
+    private IEnumerator TransitionToMainMenu2(int index)
+    {
+        ShowOptionDisplay(index);
+        // Fade Out MainMenu1
+        StartCoroutine(FadeCanvasGroup(mainMenu1CanvasGroup, 1, 0));
+        yield return new WaitForSeconds(1f);
+        mainMenu1CanvasGroupGameObject.SetActive(false);
+
+        // Aktifkan Main Menu 2
+        mainMenu2CanvasGroupGameObject.SetActive(true);
+        StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 0, 1));
+
+        yield return new WaitForSeconds(1f); // Jeda
+
+        isMainMenu2on = true;
+
+        // Tampilkan judul dan display yang sesuai
+        
+    }
+
+    #region MAINMENU2
+
+    public void ShowOptionDisplay(int index)
+    {
+        // Menonaktifkan semua display terlebih dahulu
+        foreach (GameObject display in optionsDisplay)
+        {
+            display.SetActive(false);
         }
 
+        // Mengaktifkan display sesuai dengan indeks yang dipilih
+        if (index >= 0 && index < optionsDisplay.Length)
+        {
+            optionsDisplay[index].SetActive(true);
+
+            // Mengubah teks judul sesuai indeks
+            setJudulTeks.text = judulOptions[index];
+        }
     }
+
+    #endregion
 
     // Coroutine untuk mengubah alpha dengan smooth
     private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
@@ -139,16 +191,5 @@ public class ManagerMainmenu : MonoBehaviour
 
     }
 
-    private IEnumerator TransitionToMainMenu2Canvas()
-    {
-        StartCoroutine(FadeCanvasGroup(mainMenu1CanvasGroup,1,0));
-        yield return new WaitForSeconds(1f); // Jeda 1 detik
-        mainMenu1CanvasGroupGameObject.SetActive(false);
 
-        // Mengubah alpha dari game canvas menjadi 1 (tampil)
-        StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 0, 1));
-        yield return new WaitForSeconds(1f); // Jeda 1 detik
-        isMainMenu2on = true;
-
-    }
 }
