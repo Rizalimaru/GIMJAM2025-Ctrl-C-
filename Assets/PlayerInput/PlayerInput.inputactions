@@ -39,6 +39,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Ineraction",
+            "id": "c1bf0b81-7235-4558-b6a4-9f19a29a61ed",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "656b1859-1763-44ff-bf62-649ca95a1d4f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ec9196ca-ff24-4a3d-9072-ec4545def98f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
