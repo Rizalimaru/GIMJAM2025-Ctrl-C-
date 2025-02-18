@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class ManagerMainmenu : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class ManagerMainmenu : MonoBehaviour
 
     [SerializeField] private CanvasGroup mainMenu2CanvasGroup;
     [SerializeField] private GameObject mainMenu2CanvasGroupGameObject;
+
+    [Header("----------- Function SETTINGS----------------")]
+
+
+    public Toggle fullscreenCheck;
+    public TextMeshProUGUI fullscreenStatusText; // UI Text untuk status
    
     private bool isMainMenu2on = false;
 
@@ -37,7 +44,17 @@ public class ManagerMainmenu : MonoBehaviour
     
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        // Load setting sebelumnya
+        bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        fullscreenCheck.isOn = isFullscreen;
+        Screen.fullScreen = isFullscreen;
+
+        // Update teks status awal
+        UpdateFullscreenText(isFullscreen);
+
+        // Tambahkan listener untuk Toggle
+        fullscreenCheck.onValueChanged.AddListener(SetFullscreen);
         // Pastikan canvas game tidak terlihat pada awalnya
         mainMenu1CanvasGroup.alpha = 0;
         mainMenu1CanvasGroup.interactable = false;
@@ -124,6 +141,25 @@ public class ManagerMainmenu : MonoBehaviour
             // Mengubah teks judul sesuai indeks
             setJudulTeks.text = judulOptions[index];
         }
+    }
+
+    #endregion
+
+
+    #region SETTINGS
+    public void SetFullscreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
+        PlayerPrefs.Save();
+
+        // Update teks status saat toggle berubah
+        UpdateFullscreenText(isFullscreen);
+    }
+
+    void UpdateFullscreenText(bool isFullscreen)
+    {
+        fullscreenStatusText.text = isFullscreen ? "ON" : "OFF";
     }
 
     #endregion
