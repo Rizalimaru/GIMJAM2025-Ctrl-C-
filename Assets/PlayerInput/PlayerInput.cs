@@ -61,6 +61,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Ineraction"",
+            ""id"": ""c1bf0b81-7235-4558-b6a4-9f19a29a61ed"",
+            ""actions"": [
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""656b1859-1763-44ff-bf62-649ca95a1d4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ec9196ca-ff24-4a3d-9072-ec4545def98f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -68,6 +96,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        // Ineraction
+        m_Ineraction = asset.FindActionMap("Ineraction", throwIfNotFound: true);
+        m_Ineraction_Interact = m_Ineraction.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -171,8 +202,58 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Ineraction
+    private readonly InputActionMap m_Ineraction;
+    private List<IIneractionActions> m_IneractionActionsCallbackInterfaces = new List<IIneractionActions>();
+    private readonly InputAction m_Ineraction_Interact;
+    public struct IneractionActions
+    {
+        private @PlayerInput m_Wrapper;
+        public IneractionActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Interact => m_Wrapper.m_Ineraction_Interact;
+        public InputActionMap Get() { return m_Wrapper.m_Ineraction; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(IneractionActions set) { return set.Get(); }
+        public void AddCallbacks(IIneractionActions instance)
+        {
+            if (instance == null || m_Wrapper.m_IneractionActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_IneractionActionsCallbackInterfaces.Add(instance);
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+        }
+
+        private void UnregisterCallbacks(IIneractionActions instance)
+        {
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+        }
+
+        public void RemoveCallbacks(IIneractionActions instance)
+        {
+            if (m_Wrapper.m_IneractionActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IIneractionActions instance)
+        {
+            foreach (var item in m_Wrapper.m_IneractionActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_IneractionActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public IneractionActions @Ineraction => new IneractionActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IIneractionActions
+    {
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

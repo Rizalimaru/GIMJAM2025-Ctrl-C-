@@ -8,32 +8,39 @@ public class PlayerController : MonoBehaviour
 {
     private Animator playerAnimator;
     private PlayerInput playerInput;
-    private float moveInput;
+    private float movement;
     public float moveSpeed = 5f;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
         playerInput = new PlayerInput();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
     {
         playerInput.Enable();
-        playerInput.Movement.Move.performed += ctx => moveInput = ctx.ReadValue<float>();
-        playerInput.Movement.Move.canceled += ctx => moveInput = 0;
-    }
-
-    private void OnDisable()
-    {
-        playerInput.Movement.Move.performed -= ctx => moveInput = ctx.ReadValue<float>();
-        playerInput.Movement.Move.canceled -= ctx => moveInput = 0;
-        playerInput.Disable();
     }
 
     private void Update()
     {
-        transform.Translate(Vector3.right * moveInput * moveSpeed * Time.deltaTime);
+        inputPlayer();
     }
 
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
+    private void inputPlayer()
+    {
+        movement = playerInput.Movement.Move.ReadValue<float>();
+    }
+
+    private void Move()
+    {
+        rb.MovePosition(rb.position + new Vector2(movement, 0) * (moveSpeed * Time.fixedDeltaTime));
+    }
 }
