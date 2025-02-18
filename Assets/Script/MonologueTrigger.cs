@@ -22,15 +22,5 @@ public class MonologueTrigger : MonoBehaviour
                 monologueManager.DisplayNextSentence();
             }
         }
-        // if (Input.GetKeyDown(KeyCode.Space) && !isMonologueActive) 
-        // {
-        //     monologueManager.StartMonologue(monologue);
-        //     isMonologueActive = true; // Tandai bahwa monolog telah dimulai
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.Return) && isMonologueActive) 
-        // {
-        //     monologueManager.DisplayNextSentence();
-        // }
     }
 }
