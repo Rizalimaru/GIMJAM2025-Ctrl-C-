@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AudioSettingMainMenu : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class AudioSettingMainMenu : MonoBehaviour
     public Button buttonMute;
 
     private float previousMasterVolume;
+
+    public TextMeshProUGUI muteStatusText;
 
     public static AudioSettingMainMenu Instance { get; private set; }
 
@@ -33,6 +36,7 @@ public class AudioSettingMainMenu : MonoBehaviour
         {
             InitializeSliders();
             UpdateMuteButtonSprite();
+            UpdateMuteStatusText();
             SetupSliderListeners();
             
             AudioManager.Instance.LoadVolumeSettings();
@@ -57,6 +61,11 @@ public class AudioSettingMainMenu : MonoBehaviour
         buttonMute.image.sprite = AudioManager.Instance.IsMasterMuted() ? spritemute[1] : spritemute[0];
     }
 
+    private void UpdateMuteStatusText()
+    {
+        muteStatusText.text = AudioManager.Instance.IsMasterMuted() ? "ON" : "OFF";
+    }
+
     private void SetupSliderListeners()
     {
         sliderMasterVolume.onValueChanged.AddListener(SetMasterVolume);
@@ -68,6 +77,8 @@ public class AudioSettingMainMenu : MonoBehaviour
     {
         AudioManager.Instance.SetVolume("MasterVolume", sliderValue);
         buttonMute.image.sprite = (sliderValue <= 0.0001f) ? spritemute[1] : spritemute[0];
+
+        UpdateMuteStatusText();
     }
 
     public void ButtonMute()
@@ -84,7 +95,9 @@ public class AudioSettingMainMenu : MonoBehaviour
             {
                 sliderMasterVolume.value = previousMasterVolume > 0.0001f ? previousMasterVolume : 1f;
             }
+
             UpdateMuteButtonSprite();
+            UpdateMuteStatusText();
         }
     }
 
