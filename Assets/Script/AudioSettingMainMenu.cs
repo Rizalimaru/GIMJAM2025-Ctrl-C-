@@ -10,34 +10,34 @@ public class AudioSettingMainMenu : MonoBehaviour
     public Sprite[] spritemute;
     public Button buttonMute;
 
-    private AudioManager audioManagerInstance;
     private float previousMasterVolume;
 
     public static AudioSettingMainMenu Instance { get; private set; }
 
     private void Start()
     {
-        audioManagerInstance.LoadVolumeSettings();
+    
+        Instance = this;
+        
     }
 
     private void Awake()
     {
-        audioManagerInstance = AudioManager.Instance;
 
         if (Instance == null)
         {
             Instance = this;
         }
 
-        if (audioManagerInstance != null)
+        if (AudioManager.Instance != null)
         {
             InitializeSliders();
             UpdateMuteButtonSprite();
             SetupSliderListeners();
             
+            AudioManager.Instance.LoadVolumeSettings();
 
-
-            audioManagerInstance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
+            AudioManager.Instance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
         }
         else
         {
@@ -54,19 +54,19 @@ public class AudioSettingMainMenu : MonoBehaviour
 
     private void UpdateMuteButtonSprite()
     {
-        buttonMute.image.sprite = audioManagerInstance.IsMasterMuted() ? spritemute[1] : spritemute[0];
+        buttonMute.image.sprite = AudioManager.Instance.IsMasterMuted() ? spritemute[1] : spritemute[0];
     }
 
     private void SetupSliderListeners()
     {
         sliderMasterVolume.onValueChanged.AddListener(SetMasterVolume);
-        sliderBackgroundMusic.onValueChanged.AddListener(value => audioManagerInstance.SetVolume("BackgroundMusic", value));
-        sliderSoundEffect.onValueChanged.AddListener(value => audioManagerInstance.SetVolume("SoundEffect", value));
+        sliderBackgroundMusic.onValueChanged.AddListener(value => AudioManager.Instance.SetVolume("BackgroundMusic", value));
+        sliderSoundEffect.onValueChanged.AddListener(value => AudioManager.Instance.SetVolume("SoundEffect", value));
     }
 
     public void SetMasterVolume(float sliderValue)
     {
-        audioManagerInstance.SetVolume("MasterVolume", sliderValue);
+        AudioManager.Instance.SetVolume("MasterVolume", sliderValue);
         buttonMute.image.sprite = (sliderValue <= 0.0001f) ? spritemute[1] : spritemute[0];
     }
 
@@ -74,8 +74,8 @@ public class AudioSettingMainMenu : MonoBehaviour
     {
         if (buttonMute.image != null)
         {
-            audioManagerInstance.ToggleMasterMute();
-            if (audioManagerInstance.IsMasterMuted())
+            AudioManager.Instance.ToggleMasterMute();
+            if (AudioManager.Instance.IsMasterMuted())
             {
                 previousMasterVolume = sliderMasterVolume.value;
                 sliderMasterVolume.value = 0.0001f; // Atur slider ke nilai minimum jika mute
@@ -90,7 +90,7 @@ public class AudioSettingMainMenu : MonoBehaviour
 
     public void PlaySFXSound(string soundName, int index)
     {
-        audioManagerInstance.PlaySFX(soundName, index);
+        AudioManager.Instance.PlaySFX(soundName, index);
     }
 
     public void PlayButton(){
@@ -100,6 +100,6 @@ public class AudioSettingMainMenu : MonoBehaviour
 
     public void StopBackgroundMusic()
     {
-        audioManagerInstance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 1f);
     }
 }

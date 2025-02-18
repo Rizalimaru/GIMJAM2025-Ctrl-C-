@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         LoadVolumeSettings();
     }
 
@@ -233,9 +234,6 @@ public class AudioManager : MonoBehaviour
     {
         // Simpan volume awal
         float startVolume = audioSource.volume;
-
-        // Hitung target volume
-        float targetVolume = 0f;
 
         // Hitung increment per frame
         float deltaVolume = startVolume / fadeOutDuration;
