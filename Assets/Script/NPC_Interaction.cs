@@ -30,14 +30,15 @@ public class NPC_Interaction : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {
+        {   
+            canTalk = false;
             question_mark.SetActive(false);
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (canTalk && Input.GetKeyDown(KeyCode.Space))
         {
             if (!isTalking) // Jika belum berbicara, mulai dialog
             {
