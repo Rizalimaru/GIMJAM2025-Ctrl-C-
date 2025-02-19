@@ -41,7 +41,6 @@ public class AudioSettingMainMenu : MonoBehaviour
             
             AudioManager.Instance.LoadVolumeSettings();
 
-            AudioManager.Instance.PlayBackgroundMusicWithTransition("Mainmenu", 0, 1f);
         }
         else
         {
