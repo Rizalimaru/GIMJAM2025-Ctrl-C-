@@ -9,6 +9,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private GameObject saveUI;
     [SerializeField] private GameObject preferencesUI;
     [SerializeField] private GameObject loadUI;
+    public GameObject panelConvoLog;
     private bool isPaused = false;
 
     void Start()
@@ -62,6 +63,11 @@ public class GameplayManager : MonoBehaviour
     {
 
         preferencesUI.SetActive(true);
+    }
+
+    public void CloseConvoLog()
+    {
+        panelConvoLog.SetActive(false);
     }
 
     public void OpenLoad()
