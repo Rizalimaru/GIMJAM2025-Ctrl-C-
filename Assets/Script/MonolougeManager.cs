@@ -23,6 +23,8 @@ public class MonologueManager : MonoBehaviour
     public TextMeshProUGUI convoLogText; // UI untuk menampilkan log
     public Button convoLogButton; // Tombol untuk membuka log percakapan
     public Button skipButton; // Tombol untuk skip dialog
+    public ScrollRect convoLogScrollRect; // ScrollRect untuk log percakapan
+    public RectTransform convoLogContent; // Content dari log percakapan
 
     private Queue<string> sentences; // Antrian dialog
     private List<(string characterName, string sentence)> dialogueHistory; // Log percakapan dengan nama karakter
@@ -105,8 +107,40 @@ public class MonologueManager : MonoBehaviour
         convoLogText.text = "";
         foreach (var entry in dialogueHistory)
         {
-            convoLogText.text += $"<b>{entry.characterName}:</b> {entry.sentence}\n";
+            string formattedSentence = FormatSentence(entry.sentence);
+            convoLogText.text += $"<b>{entry.characterName}</b>     {formattedSentence}\n";
         }
+
+        // Tunggu frame berikutnya sebelum scroll ke bawah
+        StartCoroutine(ScrollToBottom());
+    }
+    
+
+    private string FormatSentence(string sentence)
+    {
+        string[] words = sentence.Split(' ');
+        string formatted = "";
+        string line = "";
+        int maxLength = 45; // Maksimal karakter dalam satu baris sebelum turun
+        
+        foreach (string word in words)
+        {
+            if ((line + word).Length > maxLength)
+            {
+                formatted += line.TrimEnd() + "\n                 "; // Tambah tabulasi untuk kelanjutan kalimat
+                line = "";
+            }
+            line += word + " ";
+        }
+        
+        formatted += line.TrimEnd();
+        return formatted;
+    }
+
+    private IEnumerator ScrollToBottom()
+    {
+        yield return null; // Tunggu satu frame
+        convoLogScrollRect.verticalNormalizedPosition = 0f; // Scroll ke bawah
     }
 
     private void EndMonologue()

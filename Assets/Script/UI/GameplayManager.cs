@@ -5,20 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject panelconvoLog;
 
     public void Mainmenu(){
         SceneManager.LoadScene("Mainmenu");
-        Debug.Log("Kepencet");
+    }
+    public void CloseConvoLog(){
+        panelconvoLog.SetActive(false);
     }
 }
