@@ -10,7 +10,7 @@ public class TongSampahMiniGame : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;  // Smooth motion
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;  // Prevent tunneling
     }
@@ -58,6 +58,7 @@ public class TongSampahMiniGame : MonoBehaviour
     {
         if (other.gameObject.CompareTag("TrashBin"))
         {
+            ManagerMini.instance.AddProgress();
             Destroy(gameObject);
         }
     }
