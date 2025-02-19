@@ -1,33 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameplayManager : MonoBehaviour
 {
     [SerializeField] private GameObject uiPause;
     [SerializeField] private GameObject saveUI;
     [SerializeField] private GameObject preferencesUI;
-    [SerializeField] private GameObject loadUI;
     private bool isPaused = false;
+
+    public Toggle fullscreenCheck;
+    public TextMeshProUGUI fullscreenStatusText; // UI Text untuk status
 
     void Start()
     {
+        bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        fullscreenCheck.isOn = isFullscreen;
+        Screen.fullScreen = isFullscreen;
+
+        // Update teks status awal
+        UpdateFullscreenText(isFullscreen);
+
+        // Tambahkan listener untuk Toggle
+        fullscreenCheck.onValueChanged.AddListener(SetFullscreen);
+
+        
         if (uiPause != null)
             uiPause.SetActive(false); // Pastikan UI pause tidak aktif saat mulai
         if (saveUI != null)
             saveUI.SetActive(false);
         if (preferencesUI != null)
             preferencesUI.SetActive(false);
-        if (loadUI != null)
-            loadUI.SetActive(false);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (saveUI.activeSelf || preferencesUI.activeSelf || loadUI.activeSelf)
+            if (saveUI.activeSelf || preferencesUI.activeSelf )
             {
                 CloseAllMenus();
                 uiPause.SetActive(true);
@@ -64,16 +75,11 @@ public class GameplayManager : MonoBehaviour
         preferencesUI.SetActive(true);
     }
 
-    public void OpenLoad()
-    {
-        loadUI.SetActive(true);
-    }
 
     public void CloseAllMenus()
     {
         saveUI.SetActive(false);
         preferencesUI.SetActive(false);
-        loadUI.SetActive(false);
         uiPause.SetActive(true);
     }
 
@@ -82,5 +88,20 @@ public class GameplayManager : MonoBehaviour
         Time.timeScale = 1; // Pastikan waktu berjalan normal sebelum pindah scene
         SceneManager.LoadScene("Mainmenu");
         Debug.Log("Kembali ke Main Menu");
+    }
+
+    public void SetFullscreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
+        PlayerPrefs.Save();
+
+        // Update teks status saat toggle berubah
+        UpdateFullscreenText(isFullscreen);
+    }
+
+    void UpdateFullscreenText(bool isFullscreen)
+    {
+        fullscreenStatusText.text = isFullscreen ? "ON" : "OFF";
     }
 }
