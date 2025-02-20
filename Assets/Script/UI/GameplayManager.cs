@@ -14,6 +14,10 @@ public class GameplayManager : MonoBehaviour
     public Toggle fullscreenCheck;
     public TextMeshProUGUI fullscreenStatusText; // UI Text untuk status
 
+    public TextMeshProUGUI warningText;
+
+    public GameObject uiWarning;
+
     void Start()
     {
         instance = this;
@@ -34,13 +38,20 @@ public class GameplayManager : MonoBehaviour
             saveUI.SetActive(false);
         if (preferencesUI != null)
             preferencesUI.SetActive(false);
+        if (uiWarning != null)
+            uiWarning.SetActive(false);
+
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (saveUI.activeSelf || preferencesUI.activeSelf )
+            if (uiWarning.activeSelf) // Jika UI Warning aktif, tutup dulu
+            {
+                uiWarning.SetActive(false);
+            }
+            else if (saveUI.activeSelf || preferencesUI.activeSelf)
             {
                 CloseAllMenus();
                 uiPause.SetActive(true);
@@ -51,6 +62,7 @@ public class GameplayManager : MonoBehaviour
             }
         }
     }
+
 
     public void TogglePause()
     {
@@ -70,6 +82,15 @@ public class GameplayManager : MonoBehaviour
     {
         saveUI.SetActive(true);
     }
+
+    public void WarningSave(){
+        uiWarning.SetActive(true);
+    }
+
+    public void CloseWarningSave(){
+        uiWarning.SetActive(false);
+    }
+
 
     public void OpenPreferences()
     {

@@ -24,12 +24,8 @@ public class MainMenuSaveLoad : MonoBehaviour
 
     public void NewGame()
     {
-        int slot = FindEmptySlot(); // Cari slot kosong atau gunakan slot tertentu
-        if (slot == -1)
-        {
-            Debug.Log("Tidak ada slot kosong! Overwrite slot pertama.");
-            slot = 0; // Jika semua penuh, overwrite slot pertama
-        }
+        int slot = 0;
+     
 
         // Simpan data baru ke slot yang dipilih
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Auto Save");
@@ -46,18 +42,6 @@ public class MainMenuSaveLoad : MonoBehaviour
         
         // Pindah ke scene game
         SceneManager.LoadScene("GamePlay"); 
-    }
-
-    private int FindEmptySlot()
-    {
-        for (int i = 0; i < slotButtons.Length; i++)
-        {
-            if (!PlayerPrefs.HasKey(savePrefix + i + "_title")) // Jika slot kosong
-            {
-                return i; // Gunakan slot ini
-            }
-        }
-        return -1; // Semua slot penuh
     }
 
 
@@ -85,11 +69,6 @@ public class MainMenuSaveLoad : MonoBehaviour
                 slotButtons[i].interactable = false; // Tidak bisa diklik
             }
 
-            // Pastikan slot 0 tetap non-interactable setelah semua kondisi lain dijalankan
-            if (i == 0)
-            {
-                slotButtons[i].interactable = false;
-            }
 
             slotButtons[i].onClick.RemoveAllListeners();
             slotButtons[i].onClick.AddListener(() => LoadGame(slotIndex));
