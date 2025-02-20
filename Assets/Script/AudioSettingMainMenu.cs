@@ -19,7 +19,15 @@ public class AudioSettingMainMenu : MonoBehaviour
 
     private void Start()
     {
-    
+        
+        if (PlayerPrefs.GetInt("FirstRun", 1) == 1) // Cek apakah ini pertama kali dijalankan
+            {
+                PlayerPrefs.DeleteAll(); // Hapus semua save
+                PlayerPrefs.SetInt("FirstRun", 0); // Tandai bahwa game sudah dijalankan
+                PlayerPrefs.Save();
+            }
+        
+
         Instance = this;
         
     }

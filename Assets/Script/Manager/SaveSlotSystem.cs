@@ -15,6 +15,10 @@ public class SaveSlotSystem : MonoBehaviour
     public TextMeshProUGUI[] slotTimes;   // Menampilkan waktu
     public Image[] slotImages;   // Gambar thumbnail setiap slot
     public TextMeshProUGUI titleText; // Judul di atas slot
+
+
+    private int selectedSlot; // Menyimpan slot yang dipilih
+
     public Sprite defaultImage;   // Gambar default jika belum ada save
     private string savePrefix = "SaveSlot";
     public int progress;
@@ -172,43 +176,47 @@ public class SaveSlotSystem : MonoBehaviour
 
 
 
-    
-
     void SetMode(bool saveMode)
     {
         isSaving = saveMode;
-        titleText.text = isSaving ? "Pilih slot untuk menyimpan" : "Pilih slot untuk memuat game"; 
+        titleText.text = isSaving ? "Pilih slot untuk menyimpan" : "Pilih slot untuk memuat game";
 
         for (int i = 0; i < slotButtons.Length; i++)
         {
-            if (i == 0) 
+            if (isSaving)
             {
-                slotButtons[i].interactable = false; // Slot 0 dinonaktifkan
+                // Semua slot bisa dipilih kecuali slot 0 (karena auto-save)
+                slotButtons[i].interactable = (i != 0);
             }
             else
             {
-                slotButtons[i].interactable = !isSaving || PlayerPrefs.HasKey(savePrefix + i + "_title");
+                // Saat load mode, hanya slot yang sudah ada datanya yang bisa dipilih
+                slotButtons[i].interactable = PlayerPrefs.HasKey(savePrefix + i + "_title");
             }
         }
     }
 
 
+
+
     void SlotAction(int slot)
     {
-        if (slot == 0)
-        {
-            Debug.Log("Slot 0 digunakan untuk Auto Save dan tidak bisa dipilih.");
-            return; // Mencegah eksekusi lebih lanjut
-        }
 
         if (isSaving)
         {
-            SaveGame(slot);
+            selectedSlot = slot; // Simpan slot yang dipilih
+            GameplayManager.instance.WarningSave();
+            Debug.Log("Saving brpid");
         }
         else
         {
             LoadGame(slot);
         }
+    }
+    public void ConfirmSave()
+    {
+        SaveGame(selectedSlot); // Simpan game di slot yang dipilih
+        GameplayManager.instance.CloseWarningSave();
     }
 
 
@@ -252,6 +260,8 @@ public class SaveSlotSystem : MonoBehaviour
             SceneManager.LoadScene("GamePlay"); // Pindah ke scene utama
         }
     }
+
+    
 
     private void SaveImageToPrefs(string key, Sprite sprite)
     {
