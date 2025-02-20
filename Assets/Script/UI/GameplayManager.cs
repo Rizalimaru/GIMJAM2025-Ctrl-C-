@@ -5,7 +5,8 @@ using TMPro;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private GameObject uiPause;
+    public static GameplayManager instance;
+    public GameObject uiPause;
     [SerializeField] private GameObject saveUI;
     [SerializeField] private GameObject preferencesUI;
     private bool isPaused = false;
@@ -15,6 +16,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         fullscreenCheck.isOn = isFullscreen;
         Screen.fullScreen = isFullscreen;

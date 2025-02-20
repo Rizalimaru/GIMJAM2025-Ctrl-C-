@@ -25,18 +25,18 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        if (SaveSlotSystem.instance == null)
+        // Pas Load nanti akan set posisi player berdasarkan slot yang dipilih
+        int selectedSlot = PlayerPrefs.GetInt("SelectedSaveSlot", -1);
+
+        if (selectedSlot != -1) // Jika ada save slot yang dipilih
         {
-            Debug.LogError("SaveSlotSystem belum ada di scene ini!");
-            return;
+            float playerPosX = PlayerPrefs.GetFloat("SaveSlot" + selectedSlot + "_playerPosition", transform.position.x);
+
+    
+            transform.position = new Vector2(playerPosX,-2.02f);
         }
-
         
-        float savedX = PlayerPrefs.HasKey("SaveSlot0_playerPosition") ? 
-                    PlayerPrefs.GetFloat("SaveSlot0_playerPosition") : 
-                    0f;
 
-        transform.position = new Vector2(savedX, -2.02f);
     }
 
 

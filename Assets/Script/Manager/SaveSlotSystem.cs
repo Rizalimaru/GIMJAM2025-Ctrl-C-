@@ -23,7 +23,9 @@ public class SaveSlotSystem : MonoBehaviour
     private bool isSaving = false;  // Mode Save atau Load\
 
     void Awake()
-        {
+    {
+
+
         if (instance == null)
         {
             instance = this;
@@ -41,7 +43,6 @@ public class SaveSlotSystem : MonoBehaviour
     
 
     }
-
     void Start()
     {
         LoadSaveSlots();
@@ -51,6 +52,38 @@ public class SaveSlotSystem : MonoBehaviour
         saveButton.onClick.AddListener(() => SetMode(true));  // Aktifkan mode Save
         loadButton.onClick.AddListener(() => SetMode(false)); // Aktifkan mode Load
     }
+
+    public void NewGame()
+    {
+        // Hapus semua save slot
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            PlayerPrefs.DeleteKey(savePrefix + i + "_title");
+            PlayerPrefs.DeleteKey(savePrefix + i + "_date");
+            PlayerPrefs.DeleteKey(savePrefix + i + "_time");
+            PlayerPrefs.DeleteKey(savePrefix + i + "_progress");
+            PlayerPrefs.DeleteKey(savePrefix + i + "_playerPosition");
+            PlayerPrefs.DeleteKey(savePrefix + i + "_image");
+        }
+
+        // Hapus auto save
+        PlayerPrefs.DeleteKey(savePrefix + "0_title");
+        PlayerPrefs.DeleteKey(savePrefix + "0_date");
+        PlayerPrefs.DeleteKey(savePrefix + "0_time");
+        PlayerPrefs.DeleteKey(savePrefix + "0_progress");
+        PlayerPrefs.DeleteKey(savePrefix + "0_playerPosition");
+        PlayerPrefs.DeleteKey(savePrefix + "0_image");
+
+        PlayerPrefs.Save(); // Simpan perubahan
+
+        Debug.Log("Semua data telah direset. Memulai game baru...");
+        
+        progress = 0;
+
+        // Load scene pertama (misalnya, "GameScene" atau "Level1")
+        SceneManager.LoadScene("GamePlay");
+    }
+
 
     void LoadSaveSlots()
     {
@@ -110,15 +143,31 @@ public class SaveSlotSystem : MonoBehaviour
 
     public void AutoSaveSlot0()
     {
-        PlayerPrefs.SetString(savePrefix + "0_title", "Auto Save");
-        PlayerPrefs.SetString(savePrefix + "0_date", System.DateTime.Now.ToString("yyyy-MM-dd"));
-        PlayerPrefs.SetString(savePrefix + "0_time", System.DateTime.Now.ToString("HH:mm:ss"));
-        PlayerPrefs.SetFloat(savePrefix + "0_playerPosition", playerLastPosition[0]);
-        PlayerPrefs.SetInt(savePrefix + "0_progress", progress);
-        SaveImageToPrefs(savePrefix + "0_image", slotImages[0].sprite);
+        // Pastikan player memiliki posisi yang valid
+        float playerX = GameObject.FindGameObjectWithTag("Player").transform.position.x; 
 
-        PlayerPrefs.Save(); // Simpan perubahan ke PlayerPrefs
+        // Simpan data auto save di slot 0
+        PlayerPrefs.SetString(savePrefix + "0_title", "Auto Save");
+        PlayerPrefs.SetString(savePrefix + "0_date", System.DateTime.Now.ToString("dd/MM/yyyy"));
+        PlayerPrefs.SetString(savePrefix + "0_time", System.DateTime.Now.ToString("HH:mm"));
+        PlayerPrefs.SetFloat(savePrefix + "0_playerPosition", playerX);
+        PlayerPrefs.SetInt(savePrefix + "0_progress", progress);
+
+        // Simpan gambar jika perlu
+        if (slotImages.Length > 0 && slotImages[0] != null)
+        {
+            SaveImageToPrefs(savePrefix + "0_image", slotImages[0].sprite);
+        }
+
+        // Tetapkan slot yang digunakan
+        PlayerPrefs.SetInt("SelectedSaveSlot", 0);
+
+        // Simpan perubahan
+        PlayerPrefs.Save();
+
+        Debug.Log("Auto Save berhasil di slot 0 dengan posisi X: " + playerX);
     }
+
 
 
 
@@ -128,17 +177,30 @@ public class SaveSlotSystem : MonoBehaviour
     void SetMode(bool saveMode)
     {
         isSaving = saveMode;
-        titleText.text = isSaving ? "Pilih slot untuk menyimpan" : "Pilih slot untuk memuat game"; // Ubah teks judul
+        titleText.text = isSaving ? "Pilih slot untuk menyimpan" : "Pilih slot untuk memuat game"; 
 
-        foreach (var button in slotButtons)
+        for (int i = 0; i < slotButtons.Length; i++)
         {
-            button.interactable = !isSaving || button.interactable; 
-            // Saat save, semua bisa diklik, saat load hanya yang ada isinya
+            if (i == 0) 
+            {
+                slotButtons[i].interactable = false; // Slot 0 dinonaktifkan
+            }
+            else
+            {
+                slotButtons[i].interactable = !isSaving || PlayerPrefs.HasKey(savePrefix + i + "_title");
+            }
         }
     }
 
+
     void SlotAction(int slot)
     {
+        if (slot == 0)
+        {
+            Debug.Log("Slot 0 digunakan untuk Auto Save dan tidak bisa dipilih.");
+            return; // Mencegah eksekusi lebih lanjut
+        }
+
         if (isSaving)
         {
             SaveGame(slot);
@@ -149,10 +211,22 @@ public class SaveSlotSystem : MonoBehaviour
         }
     }
 
+
     public void SaveGame(int slot)
     {
-        string currentDate = DateTime.Now.ToString("yyyy/MM/dd");
+        GameplayManager.instance.CloseAllMenus();
+        GameplayManager.instance.uiPause.SetActive(true);
+        
+        string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
         string currentTime = DateTime.Now.ToString("HH:mm");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            playerLastPosition[slot] = player.transform.position.x;
+        }
+
+        PlayerPrefs.SetInt("SelectedSaveSlot", slot);
 
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
         PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
@@ -169,8 +243,13 @@ public class SaveSlotSystem : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(savePrefix + slot + "_title"))
         {
+            Time.timeScale = 1f;
             Debug.Log("Loading Save Slot " + (slot + 1));
-            SceneManager.LoadScene("GameScene"); // Ganti dengan nama scene utama
+            // Simpan informasi slot yang dipilih sebelum memuat scene
+            PlayerPrefs.SetInt("SelectedSaveSlot", slot);
+            PlayerPrefs.Save();
+
+            SceneManager.LoadScene("GamePlay"); // Pindah ke scene utama
         }
     }
 

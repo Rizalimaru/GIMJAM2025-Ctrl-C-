@@ -21,12 +21,54 @@ public class MainMenuSaveLoad : MonoBehaviour
         LoadSaveSlots();
     }
 
+
+    public void NewGame()
+    {
+        int slot = FindEmptySlot(); // Cari slot kosong atau gunakan slot tertentu
+        if (slot == -1)
+        {
+            Debug.Log("Tidak ada slot kosong! Overwrite slot pertama.");
+            slot = 0; // Jika semua penuh, overwrite slot pertama
+        }
+
+        // Simpan data baru ke slot yang dipilih
+        PlayerPrefs.SetString(savePrefix + slot + "_title", "Auto Save");
+        PlayerPrefs.SetString(savePrefix + slot + "_date", DateTime.Now.ToString("dd/MM/yyyy"));
+        PlayerPrefs.SetString(savePrefix + slot + "_time", DateTime.Now.ToString("HH:mm"));
+        PlayerPrefs.SetString(savePrefix + slot + "_image", ""); // Jika ada gambar, simpan di sini
+        PlayerPrefs.SetInt(savePrefix + slot + "_progress", 0); // Reset progress
+        PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", 0f); // Reset posisi karakter
+
+        PlayerPrefs.SetInt("SelectedSaveSlot", slot); // Tambahkan ini
+        PlayerPrefs.Save();
+
+        Debug.Log("New Game dimulai di slot " + slot);
+        
+        // Pindah ke scene game
+        SceneManager.LoadScene("GamePlay"); 
+    }
+
+    private int FindEmptySlot()
+    {
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            if (!PlayerPrefs.HasKey(savePrefix + i + "_title")) // Jika slot kosong
+            {
+                return i; // Gunakan slot ini
+            }
+        }
+        return -1; // Semua slot penuh
+    }
+
+
+
     void LoadSaveSlots()
     {
         for (int i = 0; i < slotButtons.Length; i++)
         {
             int slotIndex = i;
-            if (PlayerPrefs.HasKey(savePrefix + i + "_title")) // Cek apakah slot ada isinya
+
+            if (PlayerPrefs.HasKey(savePrefix + i + "_title")) // Jika slot ada isinya
             {
                 slotTitles[i].text = PlayerPrefs.GetString(savePrefix + i + "_title");
                 slotDates[i].text = PlayerPrefs.GetString(savePrefix + i + "_date");
@@ -40,21 +82,41 @@ public class MainMenuSaveLoad : MonoBehaviour
                 slotDates[i].text = "";
                 slotTimes[i].text = "";
                 slotImages[i].sprite = defaultImage;
-                slotButtons[i].interactable = false; // Tidak bisa di-load
+                slotButtons[i].interactable = false; // Tidak bisa diklik
             }
 
-            // Hapus listener sebelumnya biar tidak dobel
+            // Pastikan slot 0 tetap non-interactable setelah semua kondisi lain dijalankan
+            if (i == 0)
+            {
+                slotButtons[i].interactable = false;
+            }
+
             slotButtons[i].onClick.RemoveAllListeners();
             slotButtons[i].onClick.AddListener(() => LoadGame(slotIndex));
         }
     }
+
+
+
+    
 
     public void LoadGame(int slot)
     {
         if (PlayerPrefs.HasKey(savePrefix + slot + "_title"))
         {
             Debug.Log("Loading Save Slot " + (slot + 1));
-            SceneManager.LoadScene("GameScene"); // Ganti dengan nama scene utama
+
+
+
+            // Simpan informasi slot yang dipilih sebelum memuat scene buat nanti set position karakter
+            PlayerPrefs.SetInt("SelectedSaveSlot", slot);
+            PlayerPrefs.Save();
+
+            SceneManager.LoadScene("GamePlay");
+
+
+
+
         }
     }
 
