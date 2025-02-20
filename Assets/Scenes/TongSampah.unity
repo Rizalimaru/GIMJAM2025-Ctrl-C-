@@ -6006,6 +6006,10 @@ PrefabInstance:
       propertyPath: slotButtons.Array.data[3]
       value: 
       objectReference: {fileID: 611063029}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: playerLastPosition.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4675280494786200986, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1058.0575

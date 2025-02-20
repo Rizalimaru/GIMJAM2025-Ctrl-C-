@@ -23,11 +23,13 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public GameObject dialoguePanel;
+    public bool dialogEnd;
 
     private Queue<DialogueLine> dialogueQueue;  // Antrian dialog
 
     private void Start()
-    {
+    {   
+        dialogEnd = false;
         dialogueQueue = new Queue<DialogueLine>();
         dialoguePanel.SetActive(false);
     }
@@ -69,8 +71,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void EndDialogue()
-    {
+    public void EndDialogue()
+    {   
+        dialogEnd = true;
         dialoguePanel.SetActive(false);
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class ManagerMini : MonoBehaviour
 {
@@ -27,7 +29,14 @@ public class ManagerMini : MonoBehaviour
         if (collectedTrash >= totalTrash)
         {
             hasil.gameObject.SetActive(true);
+            Invoke("ReturnToGame", 2f);
             // Tambahkan efek kemenangan atau lanjutkan ke level berikutnya
         }
+    }
+
+    public void ReturnToGame()
+    {   
+        
+        SceneManager.LoadScene("GamePlay");
     }
 }

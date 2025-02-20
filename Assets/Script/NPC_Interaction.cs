@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NPC_Interaction : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class NPC_Interaction : MonoBehaviour
     public GameObject question_mark;
     public DialogueManager dialogueManager;
     public DialogueManager.Dialogue dialogue;
+    public string namaSceneLoad;
     private bool canTalk = false;
     private bool isTalking = false;
 
@@ -50,9 +52,24 @@ public class NPC_Interaction : MonoBehaviour
                 dialogueManager.DisplayNextSentence();
             }
         }
+
+        if(dialogueManager.dialogEnd)
+        {
+            isTalking = false;
+            dialogueManager.dialogEnd = false;
+            loadPuzzle();
+        }
     }
 
+    private void loadPuzzle()
+    {   
+        GameObject target = GameObject.Find("Player");
 
+
+        SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
+        SaveSlotSystem.instance.AutoSaveSlot0();
+        SceneManager.LoadScene(namaSceneLoad);
+    }
 
 
 }
