@@ -6,11 +6,12 @@ TagManager:
   tags:
   - NPC
   - TrashBin
+  - CopetEnemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Copet
   - Water
   - UI
   - 
