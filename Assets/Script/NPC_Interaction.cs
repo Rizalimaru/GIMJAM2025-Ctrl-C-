@@ -68,7 +68,7 @@ public class NPC_Interaction : MonoBehaviour
 
         SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
         SaveSlotSystem.instance.AutoSaveSlot0();
-        SceneManager.LoadScene(namaSceneLoad);
+        StartCoroutine(SceneController.instance.LoadScene(namaSceneLoad));
     }
 
 

@@ -35,7 +35,6 @@ public class ManagerMini : MonoBehaviour
 
     public void ReturnToGame()
     {   
-        
-        SceneManager.LoadScene("GamePlay");
+        StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
     }
 }

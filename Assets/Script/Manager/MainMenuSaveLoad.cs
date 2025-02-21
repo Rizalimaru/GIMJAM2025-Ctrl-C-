@@ -41,7 +41,7 @@ public class MainMenuSaveLoad : MonoBehaviour
         Debug.Log("New Game dimulai di slot " + slot);
         
         // Pindah ke scene game
-        SceneManager.LoadScene("GamePlay"); 
+        StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
     }
 
 
@@ -91,7 +91,7 @@ public class MainMenuSaveLoad : MonoBehaviour
             PlayerPrefs.SetInt("SelectedSaveSlot", slot);
             PlayerPrefs.Save();
 
-            SceneManager.LoadScene("GamePlay");
+            StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
 
 
 
