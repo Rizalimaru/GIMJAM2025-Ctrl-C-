@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5710375758647394031}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08, y: 1.73, z: 0}
+  m_LocalPosition: {x: 0.08, y: 2.71, z: 0}
   m_LocalScale: {x: 0.06891054, y: 0.06803548, z: 0.08413985}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -160,16 +160,16 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: b9fe625ed98113e42bb3198c33701eca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!70 &2487616136939747273
@@ -201,11 +201,11 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1, y: -0.2}
-  m_Size: {x: 1.9, y: 4.7}
+  m_Offset: {x: -0.100000024, y: -0.22427094}
+  m_Size: {x: 1.8999999, y: 3.7777054}
   m_Direction: 0
 --- !u!95 &732505222188823277
 Animator:
@@ -215,7 +215,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6436836648520314919}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0081bddd93418d04dbb7eb59e07e7ede, type: 2}
   m_CullingMode: 0
@@ -243,9 +243,5 @@ MonoBehaviour:
   question_mark: {fileID: 5710375758647394031}
   dialogueManager: {fileID: 0}
   dialogue:
-    lines:
-    - characterName: Jono
-      sentence: Selamat Pagi
-    - characterName: Iskandar
-      sentence: Selamat pagi juga
-  namaSceneLoad: TongSampah
+    lines: []
+  namaSceneLoad: 

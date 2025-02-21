@@ -5,12 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class NPC_Interaction : MonoBehaviour
 {
-
     private Collider2D coliider;
     public GameObject question_mark;
+    public GameObject LeftDialogImage;
+    public GameObject RightDialogImage;
+    public Sprite leftSprite;  // Tambahkan variabel untuk sprite kiri
+    public Sprite rightSprite; // Tambahkan variabel untuk sprite kanan
     public DialogueManager dialogueManager;
     public DialogueManager.Dialogue dialogue;
     public string namaSceneLoad;
+    public string namaKiri;
+    public string namaKanan;
     private bool canTalk = false;
     private bool isTalking = false;
 
@@ -18,12 +23,17 @@ public class NPC_Interaction : MonoBehaviour
     {
         question_mark.SetActive(false);
         coliider = GetComponent<Collider2D>();
+        
+        dialogueManager.namaKiri = namaKiri;
+        dialogueManager.namaKanan = namaKanan;
+
+        SetDialogImages(); // Panggil fungsi untuk mengatur gambar dialog
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {   
+        {
             canTalk = true;
             question_mark.SetActive(true);
         }
@@ -32,7 +42,7 @@ public class NPC_Interaction : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {   
+        {
             canTalk = false;
             question_mark.SetActive(false);
         }
@@ -42,18 +52,18 @@ public class NPC_Interaction : MonoBehaviour
     {
         if (canTalk && Input.GetKeyDown(KeyCode.Space))
         {
-            if (!isTalking) // Jika belum berbicara, mulai dialog
+            if (!isTalking)
             {
                 dialogueManager.StartDialogue(dialogue);
-                isTalking = true; 
+                isTalking = true;
             }
-            else // Jika dialog sudah berjalan, lanjut ke kalimat berikutnya
+            else
             {
                 dialogueManager.DisplayNextSentence();
             }
         }
 
-        if(dialogueManager.dialogEnd)
+        if (dialogueManager.dialogEnd)
         {
             isTalking = false;
             dialogueManager.dialogEnd = false;
@@ -62,14 +72,24 @@ public class NPC_Interaction : MonoBehaviour
     }
 
     private void loadPuzzle()
-    {   
+    {
         GameObject target = GameObject.Find("Player");
-
-
         SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
         SaveSlotSystem.instance.AutoSaveSlot0();
         StartCoroutine(SceneController.instance.LoadScene(namaSceneLoad));
     }
 
+    // Fungsi untuk mengubah sprite pada dialog box
+    private void SetDialogImages()
+    {
+        if (LeftDialogImage != null && leftSprite != null)
+        {
+            LeftDialogImage.GetComponent<UnityEngine.UI.Image>().sprite = leftSprite;
+        }
 
+        if (RightDialogImage != null && rightSprite != null)
+        {
+            RightDialogImage.GetComponent<UnityEngine.UI.Image>().sprite = rightSprite;
+        }
+    }
 }
