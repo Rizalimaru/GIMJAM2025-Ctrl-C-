@@ -1,78 +1,167 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using TMPro;
 
 public class PThrow : MonoBehaviour
 {
+    public CopetMove copetMove;
     public GameObject sandalPrefab;
     public Transform throwPoint;
-    public GameObject crosshair; // Titik aim
-    public Slider powerBar; // Power bar UI
+    public GameObject crosshair;
+    public Slider powerBar;
+    public Transform maling;
+    public Collider2D crosshairCollider;
+    public Collider2D malingCollider;
+    public SpriteRenderer handSpriteRenderer;
+    public Sprite readyHandSprite;
+    public Sprite throwHandSprite;
+    
+    public GameObject gameOverUI; // UI Game Over
+    public Button restartButton; // Tombol restart
+    public TextMeshProUGUI timerText; // UI untuk menampilkan timer
 
     private bool isAiming = true;
     private bool isPowering = false;
     private float power = 0f;
     private bool increasing = true;
-    private Vector3 lockedTarget; // Simpan posisi aim yang terkunci
+    private Vector3 lockedTarget;
+    private bool isOnCooldown = false;
+    public float aimSpeed = 2f;
+    public float aimRange = 1.5f;
+    private float gameTimer;
+    private float gameTimeLimit = 5f; // Timer mundur dari 5 detik
+
+    void Start()
+    {
+        Time.timeScale = 1f;
+        handSpriteRenderer.sprite = readyHandSprite;
+        gameOverUI.SetActive(false); // Sembunyikan UI Game Over di awal
+        restartButton.onClick.AddListener(RestartScene);
+        
+        gameTimer = gameTimeLimit; // Set timer mulai dari 5 detik
+        UpdateTimerUI();
+    }
 
     void Update()
     {
-        if (isAiming)
+        if (maling == null) 
         {
-            // Aim crosshair ke arah mouse, tetapi tetap di Z = -5
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z - throwPoint.position.z)));
-            mousePos.z = -5f; 
-            crosshair.transform.position = mousePos;
+            return;
+        }
 
-            // Tekan klik kiri untuk mengunci aim dan mulai power
-            if (Input.GetMouseButtonDown(0))
+        if(gameTimer>= 0){
+            gameTimer -= Time.deltaTime;
+            UpdateTimerUI();
+        }
+
+    
+        // Kurangi timer setiap frame
+
+
+        // Jika timer habis, Game Over
+        if (gameTimer <= 0) 
+        {
+            GameOver();
+            return;
+        }
+
+        if (isAiming && !isOnCooldown)
+        {
+            Vector3 targetPosition = maling.position + new Vector3(
+                Mathf.Sin(Time.time * aimSpeed) * aimRange,
+                Mathf.Cos(Time.time * aimSpeed) * aimRange,
+                0
+            );
+            crosshair.transform.position = Vector3.Lerp(crosshair.transform.position, targetPosition, Time.deltaTime * aimSpeed);
+
+
+            if (Input.GetKeyDown(KeyCode.Space) && crosshairCollider.IsTouching(malingCollider))
             {
+                copetMove.Disable();
                 isAiming = false;
                 isPowering = true;
                 powerBar.gameObject.SetActive(true);
-
-                // Simpan posisi locked aim dengan koordinat dunia yang benar
-                lockedTarget = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z - throwPoint.position.z)));
-                lockedTarget.z = -5f;
+                lockedTarget = crosshair.transform.position;
             }
         }
         else if (isPowering)
         {
-            // Power bar naik turun otomatis
             if (increasing)
-                power += Time.deltaTime * 3;
+                power += Time.deltaTime * 1.5f;
             else
-                power -= Time.deltaTime * 3;
+                power -= Time.deltaTime * 1.5f;
 
             if (power >= 1f) increasing = false;
             if (power <= 0f) increasing = true;
 
             powerBar.value = power;
 
-            // Klik kiri untuk lempar sandal
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 isPowering = false;
                 powerBar.gameObject.SetActive(false);
                 ThrowSandal(power);
-
-                // Reset aim untuk lemparan berikutnya
-                isAiming = true;
-                power = 0f;
-                increasing = true;
+                handSpriteRenderer.sprite = throwHandSprite;
+                StartCoroutine(ThrowCooldown());
             }
+        }
+
+        // Jika maling kena dan hilang, hentikan timer
+        if (maling == null) 
+        {
+            gameObject.SetActive(false); // Matikan script jika maling sudah kena
         }
     }
 
     void ThrowSandal(float power)
     {
         Vector3 spawnPos = throwPoint.position;
-
-        // Hitung arah berdasarkan locked target
         Vector3 direction = (lockedTarget - spawnPos).normalized;
-
-        // Spawn sandal
         GameObject sandal = Instantiate(sandalPrefab, spawnPos, Quaternion.identity);
-        sandal.GetComponent<Sandal>().SetDirection(direction, power); // Kirim power juga
-}
+        sandal.GetComponent<Sandal>().SetDirection(direction, power);
+    }
 
+    IEnumerator ThrowCooldown()
+    {
+        if (copetMove != null && copetMove.gameObject != null) 
+        {
+            copetMove.Disable();
+        }
+
+        isOnCooldown = true;
+        yield return new WaitForSeconds(2f);
+        handSpriteRenderer.sprite = readyHandSprite;
+        isAiming = true;
+        isOnCooldown = false;
+
+        if (copetMove != null && copetMove.gameObject != null) 
+        {
+            copetMove.Enable();
+        }
+    }
+
+    void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverUI.SetActive(true); // Tampilkan UI Game Over
+        isAiming = false;
+        isPowering = false;
+        if (copetMove != null) copetMove.Disable();
+    }
+
+    void RestartScene()
+    {
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void UpdateTimerUI()
+    {
+        if (timerText != null)
+        {
+            timerText.text = Mathf.Ceil(gameTimer).ToString(); // Tampilkan angka bulat
+        }
+    }
 }

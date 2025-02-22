@@ -7,18 +7,18 @@ public class MiniGameTap : MonoBehaviour
     public Slider progressBar;
     public GameObject winImage;
     public RawImage handImage;
-    public Texture handTapTexture;
     public Texture handIdleTexture;
+    public Texture handTapTexture1;
+    public Texture handTapTexture2;
     public GameObject textEffectPrefab; // Prefab teks (+1)
     public Transform textEffectParent;  // Parent di dalam Canvas
 
     private float timer = 0f;
-    private float maxTime = 60f;     // Biar gampang dites
-    private float tapBoost = 1f;     // Tambahan progress per tap
-    private float decayRate = 0.1f;  // Progress turun perlahan
-    private bool isTapping = false;  // Deteksi apakah sedang tap
-
+    private float maxTime = 60f;   // Biar gampang dites
+    private float tapBoost = 0.5f; // Tambahan progress per tap
+    private float decayRate = 0.1f; // Progress turun perlahan
     private bool isFinished = false;
+    private bool useFirstTapTexture = true; // Untuk mengatur gambar tangan
 
     void Start()
     {
@@ -29,11 +29,8 @@ public class MiniGameTap : MonoBehaviour
 
     void Update()
     {
-        // Deteksi apakah tombol ditekan
-        isTapping = Input.GetMouseButton(0);
-
-        // Jika tidak tap, progress turun
-        if (!isTapping && timer > 0 && isFinished == false)
+        // Jika tidak tap, progress turun perlahan
+        if (!Input.GetMouseButton(0) && timer > 0 && !isFinished)
         {
             timer -= decayRate * Time.deltaTime;
             timer = Mathf.Max(timer, 0); // Mencegah nilai negatif
@@ -50,7 +47,7 @@ public class MiniGameTap : MonoBehaviour
         }
 
         // Tambahkan progress saat tap
-        if (Input.GetMouseButtonDown(0) & isFinished == false)
+        if (Input.GetMouseButtonDown(0) && !isFinished)
         {
             TapScreen();
         }
@@ -61,7 +58,10 @@ public class MiniGameTap : MonoBehaviour
         timer += tapBoost;
         timer = Mathf.Min(timer, maxTime);
 
-        handImage.texture = handTapTexture;
+        // Bergantian antara dua gambar tap
+        handImage.texture = useFirstTapTexture ? handTapTexture1 : handTapTexture2;
+        useFirstTapTexture = !useFirstTapTexture; // Berubah setiap kali ditekan
+
         Invoke("ResetHand", 0.1f);
 
         if (textEffectPrefab && textEffectParent)
@@ -78,19 +78,13 @@ public class MiniGameTap : MonoBehaviour
 
             GameObject textObj = Instantiate(textEffectPrefab, textEffectParent);
             textObj.GetComponent<RectTransform>().anchoredPosition = localPoint;
-
-            
-
-
-
             Destroy(textObj, 1f);
         }
     }
 
-
     void ResetHand()
     {
-        handImage.texture = handIdleTexture; // Kembali ke tangan normal
+        handImage.texture = handIdleTexture; // Kembali ke tangan default
     }
 
     void ShowWinScreen()
