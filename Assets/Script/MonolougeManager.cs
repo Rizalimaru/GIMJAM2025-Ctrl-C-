@@ -9,53 +9,50 @@ public class MonologueManager : MonoBehaviour
     [System.Serializable]
     public class Monologue
     {
-        public string characterName;  // Nama MC
-        public Sprite characterAvatar; // Avatar MC
+        public string characterName;
+        public Sprite characterAvatar;
         [TextArea(3, 10)]
-        public string[] sentences;  // Dialog MC
+        public string[] sentences;
     }
 
-    public TextMeshProUGUI nameText; // UI Nama MC
-    public TextMeshProUGUI dialogueText; // UI Dialog MC
-    public Image avatarImage; // UI Avatar MC
-    public GameObject dialoguePanel; // Panel dialog
-    public GameObject convoLogPanel; // Panel log percakapan
-    public TextMeshProUGUI convoLogText; // UI untuk menampilkan log
-    public Button convoLogButton; // Tombol untuk membuka log percakapan
-    public Button skipButton; // Tombol untuk skip dialog
-    public ScrollRect convoLogScrollRect; // ScrollRect untuk log percakapan
-    public RectTransform convoLogContent; // Content dari log percakapan
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI dialogueText;
+    public Image avatarImage;
+    public GameObject dialoguePanel;
 
-    private Queue<string> sentences; // Antrian dialog
-    private List<(string characterName, string sentence)> dialogueHistory; // Log percakapan dengan nama karakter
-    private string currentCharacter; // Nama karakter saat ini
+    private Queue<string> sentences;
+    private bool isTyping = false;
 
     private void Start()
     {
         sentences = new Queue<string>();
-        dialogueHistory = new List<(string characterName, string sentence)>();
-        dialoguePanel.SetActive(false); // Panel dialog tersembunyi di awal
-        convoLogPanel.SetActive(false); // Panel log juga tersembunyi
-
-        // Tambahkan event listener ke tombol
-        convoLogButton.onClick.AddListener(OpenConvoLog);
-        skipButton.onClick.AddListener(SkipDialogue);
+        dialoguePanel.SetActive(false);
     }
 
     public void StartMonologue(Monologue monologue)
     {
-        dialoguePanel.SetActive(true);  // Tampilkan panel dialog
-        currentCharacter = monologue.characterName;
-        nameText.text = currentCharacter;  // Set nama MC
-        avatarImage.sprite = monologue.characterAvatar; // Tampilkan avatar MC
-        sentences.Clear();  // Hapus dialog sebelumnya
+        dialoguePanel.SetActive(true);
+        nameText.text = monologue.characterName;
+        avatarImage.sprite = monologue.characterAvatar;
+        sentences.Clear();
 
         foreach (string sentence in monologue.sentences)
         {
-            sentences.Enqueue(sentence);  // Tambahkan dialog ke antrian
+            sentences.Enqueue(sentence);
         }
 
         DisplayNextSentence();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
+            if (!isTyping)
+            {
+                DisplayNextSentence();
+            }
+        }
     }
 
     public void DisplayNextSentence()
@@ -67,80 +64,20 @@ public class MonologueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
-        dialogueHistory.Add((currentCharacter, sentence)); // Simpan ke log dialog dengan nama karakter
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(sentence)); // Efek mengetik
+        StartCoroutine(TypeSentence(sentence));
     }
 
     IEnumerator TypeSentence(string sentence)
     {
+        isTyping = true;
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.02f); // Efek mengetik
+            yield return new WaitForSeconds(0.02f);
         }
-    }
-
-    private void SkipDialogue()
-    {
-        StopAllCoroutines();
-        if (sentences.Count > 0)
-        {
-            while (sentences.Count > 1) // Hapus semua kecuali terakhir
-            {
-                dialogueHistory.Add((currentCharacter, sentences.Dequeue()));
-            }
-            string lastSentence = sentences.Dequeue();
-            dialogueHistory.Add((currentCharacter, lastSentence)); // Tambahkan dialog terakhir ke log
-            dialogueText.text = lastSentence; // Tampilkan dialog terakhir
-        }
-        else
-        {
-            EndMonologue();
-        }
-    }
-
-    private void OpenConvoLog()
-    {
-        convoLogPanel.SetActive(true);
-        convoLogText.text = "";
-        foreach (var entry in dialogueHistory)
-        {
-            string formattedSentence = FormatSentence(entry.sentence);
-            convoLogText.text += $"<b>{entry.characterName}</b>     {formattedSentence}\n";
-        }
-
-        // Tunggu frame berikutnya sebelum scroll ke bawah
-        StartCoroutine(ScrollToBottom());
-    }
-    
-
-    private string FormatSentence(string sentence)
-    {
-        string[] words = sentence.Split(' ');
-        string formatted = "";
-        string line = "";
-        int maxLength = 45; // Maksimal karakter dalam satu baris sebelum turun
-        
-        foreach (string word in words)
-        {
-            if ((line + word).Length > maxLength)
-            {
-                formatted += line.TrimEnd() + "\n                 "; // Tambah tabulasi untuk kelanjutan kalimat
-                line = "";
-            }
-            line += word + " ";
-        }
-        
-        formatted += line.TrimEnd();
-        return formatted;
-    }
-
-    private IEnumerator ScrollToBottom()
-    {
-        yield return null; // Tunggu satu frame
-        convoLogScrollRect.verticalNormalizedPosition = 0f; // Scroll ke bawah
+        isTyping = false;
     }
 
     private void EndMonologue()

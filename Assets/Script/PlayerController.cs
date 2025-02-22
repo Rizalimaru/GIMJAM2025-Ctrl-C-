@@ -1,63 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement; // Tambahkan ini untuk mengakses SceneManager
 
 public class PlayerController : MonoBehaviour
 {   
+    public PlayerController instance;
     public NPC_Interaction npc;
     private Animator playerAnimator;
-    private PlayerInput playerInput;
     private float movement;
+    private float verticalMovement; // Tambahkan variabel untuk gerakan vertikal
     public float moveSpeed = 5f;
-    private Rigidbody2D rb;
+    public bool canMove = true;
     private SpriteRenderer spriteRenderer; // Tambahkan SpriteRenderer
 
     private void Awake()
     {   
+        instance = this;
         playerAnimator = GetComponent<Animator>();
-        playerInput = new PlayerInput();
-        rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // Ambil komponen SpriteRenderer
-    }
-
-    void Start()
-    {
-        // Pas Load nanti akan set posisi player berdasarkan slot yang dipilih
-        int selectedSlot = PlayerPrefs.GetInt("SelectedSaveSlot", -1);
-
-        if (selectedSlot != -1) // Jika ada save slot yang dipilih
-        {
-            float playerPosX = PlayerPrefs.GetFloat("SaveSlot" + selectedSlot + "_playerPosition", transform.position.x);
-
-    
-            transform.position = new Vector2(playerPosX,-2.02f);
-        }
-        
-
-    }
-
-
-    private void OnEnable()
-    {
-        playerInput.Enable();
     }
 
     private void Update()
     {
         inputPlayer();
-        
-        // Animasi berjalan
-        playerAnimator.SetBool("isWalking", movement != 0);
-        
-        // Flip sprite berdasarkan movement
-        if (movement == 1)
+
+        // Animasi berjalan jika ada pergerakan
+        if(movement == 0 && verticalMovement == 0)
+        {
+            playerAnimator.SetBool("isWalking", false);
+            playerAnimator.SetBool("WalkingAtas", false);
+            playerAnimator.SetBool("WalkingBawah", false);
+        }
+        // Flip sprite berdasarkan arah horizontal
+        if (movement > 0)
         {
             spriteRenderer.flipX = true;
         }
-        else
+        else if (movement < 0)
         {
             spriteRenderer.flipX = false;
         }
@@ -70,11 +50,47 @@ public class PlayerController : MonoBehaviour
 
     private void inputPlayer()
     {
-        movement = playerInput.Movement.Move.ReadValue<float>();
+        if (!canMove)
+        {
+            return;
+        }
+
+        // Input horizontal (A & D)
+        movement = 0;
+        if (Input.GetKey(KeyCode.A))
+        {   
+            playerAnimator.SetBool("isWalking", true);
+            movement = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {   
+            playerAnimator.SetBool("isWalking", true);
+            movement = 1;
+        }
+
+        // Input vertikal hanya jika scene bernama "Kamar"
+        verticalMovement = 0;
+        if (SceneManager.GetActiveScene().name == "Kamar")
+        {
+            if (Input.GetKey(KeyCode.W))
+            {   
+                playerAnimator.SetBool("WalkingAtas", true);
+                playerAnimator.SetBool("WalkingBawah", false);
+                playerAnimator.SetBool("isWalking", false);
+                verticalMovement = 1;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {   
+                playerAnimator.SetBool("WalkingBawah", true);
+                playerAnimator.SetBool("WalkingAtas", false);
+                playerAnimator.SetBool("isWalking", false);
+                verticalMovement = -1;
+            }
+        }
     }
 
     private void Move()
     {   
-        rb.MovePosition(rb.position + new Vector2(movement, 0) * (moveSpeed * Time.fixedDeltaTime));
+        transform.position += new Vector3(movement * moveSpeed * Time.fixedDeltaTime, verticalMovement * moveSpeed * Time.fixedDeltaTime, 0);
     }
 }
