@@ -2,23 +2,30 @@ using UnityEngine;
 
 public class CopetMove : MonoBehaviour
 {
-    public float rotateAngle = 20f; // Seberapa jauh kepala berputar
-    public float rotateSpeed = 5f; // Kecepatan geleng-geleng kepala
-
-    public Transform head; // Referensi ke kepala copet
+    public float moveDistance = 3f;
+    public float moveSpeed = 2f;
+    private Vector3 startPos;
 
     void Start()
     {
-
-
-        // Jika tidak ada, pakai objek utama
-        if (head == null) head = transform;
+        startPos = transform.position;
     }
 
     void Update()
     {
-        // Geleng-geleng kepala
-        float headRotation = Mathf.Sin(Time.time * rotateSpeed) * rotateAngle;
-        head.localRotation = Quaternion.Euler(0, 0, headRotation);
+        if (!enabled) return; // Jika disabled, tidak bergerak
+
+        float offset = Mathf.Sin(Time.time * moveSpeed) * moveDistance;
+        transform.position = new Vector3(startPos.x + offset, startPos.y, startPos.z);
+    }
+
+    public void Disable()
+    {
+        enabled = false; // Menonaktifkan script CopetMove
+    }
+
+    public void Enable()
+    {
+        enabled = true; // Menonaktifkan script CopetMove
     }
 }
