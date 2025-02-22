@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TongSampah.unity
     guid: 53a955bd4f197204fa6d3da5c584c46f
+  - enabled: 1
+    path: Assets/Scenes/CutScene/CutSceneKipas.unity
+    guid: fc0387c8df5adec418003aaf4d6b7985
+  - enabled: 1
+    path: Assets/Scenes/Kamar.unity
+    guid: 275d1ab4fcb515e44a106b40c4d0d20c
+  - enabled: 1
+    path: Assets/Scenes/CutScene/CutSceneCermin.unity
+    guid: e1552bea3a36eee4bb70b6372b196f29
   m_configObjects: {}

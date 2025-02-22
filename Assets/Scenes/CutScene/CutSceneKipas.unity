@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 495493658}
   - component: {fileID: 495493657}
   - component: {fileID: 495493656}
+  - component: {fileID: 495493661}
   m_Layer: 5
   m_Name: Timeline
   m_TagString: Untagged
@@ -323,6 +324,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &495493661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495493655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e71f8c3ddcf974da5de59887d8c076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 495493656}
+  nextSceneName: Kamar
 --- !u!1 &639434462
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +499,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 3103784959
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -812,6 +827,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1921763548
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9402484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.9743924
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.07856151
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699239755799363736, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811383463552950816, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
+      propertyPath: m_Name
+      value: SceneTransitionManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -819,3 +891,4 @@ SceneRoots:
   - {fileID: 639434465}
   - {fileID: 495493660}
   - {fileID: 1606835042}
+  - {fileID: 1921763548}

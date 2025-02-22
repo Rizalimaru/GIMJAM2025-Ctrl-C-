@@ -9,13 +9,11 @@ public class InteractiveObjectKamar : MonoBehaviour
     private SpriteRenderer outlineRenderer;
     public float outlineScaleX;
     public float outlineScaleY;
-    public GameObject OptionPanel;
     public bool objectReady = false;
 
 
     void Start()
     {   
-        OptionPanel.SetActive(false);
         originalSpriteRenderer = GetComponent<SpriteRenderer>();
         if (originalSpriteRenderer == null)
         {
@@ -52,11 +50,4 @@ public class InteractiveObjectKamar : MonoBehaviour
             outlineObject.SetActive(false);
     }
 
-    void Update()
-    {
-        if(objectReady && Input.GetMouseButtonDown(0))
-        {
-            OptionPanel.SetActive(true);
-        }
-    }
 }
