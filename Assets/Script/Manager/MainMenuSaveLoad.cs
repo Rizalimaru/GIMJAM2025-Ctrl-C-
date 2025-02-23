@@ -14,6 +14,8 @@ public class MainMenuSaveLoad : MonoBehaviour
     public TextMeshProUGUI titleText; // Judul di atas slot
     private string savePrefix = "SaveSlot";
 
+    public string triggerKey = "HasTriggered";
+
     void Start()
     {
         titleText.text = "Pilih slot untuk memuat game"; // Set judul untuk Load Mode
@@ -27,6 +29,8 @@ public class MainMenuSaveLoad : MonoBehaviour
 
         AudioManager.Instance.PlaySFX("Button", 0);
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",2f);
+        
+        PlayerPrefs.SetInt(triggerKey, 0);
      
 
         // Simpan data baru ke slot yang dipilih
@@ -35,7 +39,7 @@ public class MainMenuSaveLoad : MonoBehaviour
         PlayerPrefs.SetString(savePrefix + slot + "_time", DateTime.Now.ToString("HH:mm"));
         PlayerPrefs.SetString(savePrefix + slot + "_image", ""); // Jika ada gambar, simpan di sini
         PlayerPrefs.SetInt(savePrefix + slot + "_progress", 0); // Reset progress
-        PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", 0f); // Reset posisi karakter
+        PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", -91.3f); // Reset posisi karakter
 
         PlayerPrefs.SetInt("SelectedSaveSlot", slot); // Tambahkan ini
         PlayerPrefs.Save();
@@ -43,7 +47,7 @@ public class MainMenuSaveLoad : MonoBehaviour
         Debug.Log("New Game dimulai di slot " + slot);
         
         // Pindah ke scene game
-        StartCoroutine(SceneController.instance.LoadScene("Kamar"));
+        StartCoroutine(SceneController.instance.LoadScene("CutSceneIntro"));
     }
 
 

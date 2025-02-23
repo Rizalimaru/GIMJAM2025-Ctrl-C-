@@ -16,6 +16,25 @@ public class PlayerController : MonoBehaviour
 
 
     private bool isMoving = false; // Menyimpan status gerakan
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "GamePlay")
+        {
+            int selectedSlot = PlayerPrefs.GetInt("SelectedSaveSlot", -1);
+
+            if (selectedSlot != -1 && PlayerPrefs.HasKey("SaveSlot" + selectedSlot + "_playerPosition")) 
+            {
+                float playerPosX = PlayerPrefs.GetFloat("SaveSlot" + selectedSlot + "_playerPosition");
+                transform.position = new Vector2(playerPosX, -2.02f);
+                Debug.Log("ada");
+            }
+            else 
+            {
+                Debug.Log("tidak ada");
+                transform.position = new Vector2(-91.3f, -2.02f); // Posisi default jika tidak ada data tersimpan
+            }
+        }
+    }
 
     private void Awake()
     {   

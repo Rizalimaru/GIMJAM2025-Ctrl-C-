@@ -9,7 +9,7 @@ public class EventTriggerManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+ 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
