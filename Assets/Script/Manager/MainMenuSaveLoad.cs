@@ -12,7 +12,6 @@ public class MainMenuSaveLoad : MonoBehaviour
     public TextMeshProUGUI[] slotTimes;   // Menampilkan waktu
     public Image[] slotImages;   // Gambar thumbnail setiap slot
     public TextMeshProUGUI titleText; // Judul di atas slot
-    public Sprite defaultImage;   // Gambar default jika belum ada save
     private string savePrefix = "SaveSlot";
 
     void Start()
@@ -57,7 +56,6 @@ public class MainMenuSaveLoad : MonoBehaviour
                 slotTitles[i].text = PlayerPrefs.GetString(savePrefix + i + "_title");
                 slotDates[i].text = PlayerPrefs.GetString(savePrefix + i + "_date");
                 slotTimes[i].text = PlayerPrefs.GetString(savePrefix + i + "_time");
-                slotImages[i].sprite = LoadImageFromPrefs(savePrefix + i + "_image");
                 slotButtons[i].interactable = true; // Bisa diklik
             }
             else
@@ -65,7 +63,7 @@ public class MainMenuSaveLoad : MonoBehaviour
                 slotTitles[i].text = "Empty Slot";
                 slotDates[i].text = "";
                 slotTimes[i].text = "";
-                slotImages[i].sprite = defaultImage;
+
                 slotButtons[i].interactable = false; // Tidak bisa diklik
             }
 
@@ -99,9 +97,5 @@ public class MainMenuSaveLoad : MonoBehaviour
         }
     }
 
-    private Sprite LoadImageFromPrefs(string key)
-    {
-        // Implementasi pengambilan gambar jika diperlukan
-        return defaultImage;
-    }
+
 }

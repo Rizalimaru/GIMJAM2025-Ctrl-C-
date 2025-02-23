@@ -33,12 +33,20 @@ public class ManagerMainmenu : MonoBehaviour
 
     public Toggle fullscreenCheck;
     public TextMeshProUGUI fullscreenStatusText; // UI Text untuk status
+
+    [Header("----------- Journal----------------")]
+        
+    public GameObject jurnal;
+    public GameObject[] contentJurnal;
    
     private bool isMainMenu2on = false;
 
     private bool displayOptions = false;
+    private bool displayDelay = false;
 
 
+
+    
     
     // Start is called before the first frame update
     void Start()
@@ -71,9 +79,9 @@ public class ManagerMainmenu : MonoBehaviour
             StartCoroutine(TransitionToGameCanvas());
         }
         if(Input.GetKeyDown(KeyCode.Escape)){
-            if( displayOptions == true){
+            if( displayOptions == true  ){
 
-
+                SetButtonsInteractable(false);
                 displayOptions = false;
                 StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 1, 0));
                 StartCoroutine(BackMainMenu());
@@ -125,6 +133,7 @@ public class ManagerMainmenu : MonoBehaviour
         foreach (GameObject display in optionsDisplay)
         {
             display.SetActive(false);
+
         }
 
         // Mengaktifkan display sesuai dengan indeks yang dipilih
@@ -135,20 +144,18 @@ public class ManagerMainmenu : MonoBehaviour
         }
 
         if( displayOptions == false)
-        {
-           
+        {   
+            SetButtonsInteractable(false);
             StartCoroutine(TransitionDisplay());
         }
-
-
-
-
     }
 
     IEnumerator TransitionDisplay(){
         StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 0, 1));
         yield return new WaitForSeconds(1f);
-         displayOptions = true;
+        displayOptions = true;
+        SetButtonsInteractable(true);
+
     }
 
 
@@ -160,7 +167,37 @@ public class ManagerMainmenu : MonoBehaviour
             {
                 display.SetActive(false);
             }
+        SetButtonsInteractable(true);
         //SetButtonsInteractable(true);
+    }
+
+    public void ShowJurnalUtama()
+    {
+        // Sembunyikan semua konten
+        foreach (GameObject content in contentJurnal)
+        {
+            content.SetActive(false);
+        }
+
+        // Tampilkan jurnal utama
+        jurnal.SetActive(true);
+    }
+    public void ShowContent(int index)
+    {
+        // Sembunyikan jurnal utama
+        jurnal.SetActive(false);
+
+        // Sembunyikan semua konten dulu
+        foreach (GameObject content in contentJurnal)
+        {
+            content.SetActive(false);
+        }
+
+        // Tampilkan konten yang dipilih
+        if (index >= 0 && index < contentJurnal.Length)
+        {
+            contentJurnal[index].SetActive(true);
+        }
     }
 
 
@@ -188,7 +225,7 @@ public class ManagerMainmenu : MonoBehaviour
     // Coroutine untuk mengubah alpha dengan smooth
     private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
     {
-        float duration = 1f; // Durasi fade dalam detik
+        float duration = 0.8f; // Durasi fade dalam detik
         float timeElapsed = 0f;
 
         // Menentukan alpha awal dan alpha tujuan
