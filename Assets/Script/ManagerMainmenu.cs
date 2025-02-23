@@ -18,15 +18,11 @@ public class ManagerMainmenu : MonoBehaviour
 
     [Header("----------- Function Mainmenu2----------------")]
 
-    public TextMeshProUGUI setJudulTeks;
 
     [SerializeField] private GameObject[] buttonOptions;
 
 
     [SerializeField] private GameObject[] optionsDisplay;
-
-    private string[] judulOptions = { "Load", "Jurnal", "Pengaturan", "Tentang" };
-
 
 
     [SerializeField] private CanvasGroup mainMenu2CanvasGroup;
@@ -39,6 +35,8 @@ public class ManagerMainmenu : MonoBehaviour
     public TextMeshProUGUI fullscreenStatusText; // UI Text untuk status
    
     private bool isMainMenu2on = false;
+
+    private bool displayOptions = false;
 
 
     
@@ -56,9 +54,6 @@ public class ManagerMainmenu : MonoBehaviour
         // Tambahkan listener untuk Toggle
         fullscreenCheck.onValueChanged.AddListener(SetFullscreen);
         // Pastikan canvas game tidak terlihat pada awalnya
-        mainMenu1CanvasGroup.alpha = 0;
-        mainMenu1CanvasGroup.interactable = false;
-        mainMenu1CanvasGroup.blocksRaycasts = false;
     }
 
     // Update is called once per frame
@@ -71,15 +66,17 @@ public class ManagerMainmenu : MonoBehaviour
             isTransitioning = true;
 
             // Mengubah alpha dari title screen menjadi 0 (sembunyi)
-            StartCoroutine(FadeCanvasGroup(titleCanvasGroup, 1, 0));
+            StartCoroutine(FadeCanvasGroup2(titleCanvasGroup, 1, 0));
 
-            // Menunggu sebentar sebelum memulai transisi canvas game
             StartCoroutine(TransitionToGameCanvas());
         }
         if(Input.GetKeyDown(KeyCode.Escape)){
-            if(mainMenu2CanvasGroupGameObject.activeSelf && isMainMenu2on == true){
-                isMainMenu2on = false;
-                StartCoroutine(backMainMenu1());
+            if( displayOptions == true){
+
+
+                displayOptions = false;
+                StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 1, 0));
+                StartCoroutine(BackMainMenu());
             }
         }
 
@@ -90,33 +87,30 @@ public class ManagerMainmenu : MonoBehaviour
          SceneManager.LoadScene("GamePlay");
     }
 
-
     public void OpenMainMenu2(int index)
     {
         if (!isMainMenu2on)
         {
             // Menonaktifkan semua button agar tidak bisa diklik selama transisi
-            SetButtonsInteractable(false);
+            // SetButtonsInteractable(false);
 
             // Pindah ke Main Menu 2
             StartCoroutine(TransitionToMainMenu2(index));
         }
     }
 
+
     private IEnumerator TransitionToMainMenu2(int index)
     {
-        ShowOptionDisplay(index);
-        // Fade Out MainMenu1
-        StartCoroutine(FadeCanvasGroup(mainMenu1CanvasGroup, 1, 0));
-        yield return new WaitForSeconds(1f);
-        mainMenu1CanvasGroupGameObject.SetActive(false);
-
-        // Aktifkan Main Menu 2
         mainMenu2CanvasGroupGameObject.SetActive(true);
+        ShowOptionDisplay(index);
         StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 0, 1));
+        // Fade Out MainMenu1
+        yield return new WaitForSeconds(1f);
 
+        
         yield return new WaitForSeconds(1f); // Jeda
-
+        SetButtonsInteractable(true);
         isMainMenu2on = true;
 
         // Tampilkan judul dan display yang sesuai
@@ -134,14 +128,41 @@ public class ManagerMainmenu : MonoBehaviour
         }
 
         // Mengaktifkan display sesuai dengan indeks yang dipilih
-        if (index >= 0 && index < optionsDisplay.Length)
+        if (index >= 0 && index < optionsDisplay.Length )
         {
             optionsDisplay[index].SetActive(true);
 
-            // Mengubah teks judul sesuai indeks
-            setJudulTeks.text = judulOptions[index];
         }
+
+        if( displayOptions == false)
+        {
+           
+            StartCoroutine(TransitionDisplay());
+        }
+
+
+
+
     }
+
+    IEnumerator TransitionDisplay(){
+        StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 0, 1));
+        yield return new WaitForSeconds(1f);
+         displayOptions = true;
+    }
+
+
+    IEnumerator BackMainMenu(){
+
+        //SetButtonsInteractable(false);
+        yield return new WaitForSeconds(1.1f);
+        foreach (GameObject display in optionsDisplay)
+            {
+                display.SetActive(false);
+            }
+        //SetButtonsInteractable(true);
+    }
+
 
     #endregion
 
@@ -166,6 +187,36 @@ public class ManagerMainmenu : MonoBehaviour
 
     // Coroutine untuk mengubah alpha dengan smooth
     private IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
+    {
+        float duration = 1f; // Durasi fade dalam detik
+        float timeElapsed = 0f;
+
+        // Menentukan alpha awal dan alpha tujuan
+        canvasGroup.alpha = startAlpha;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+
+        // Melakukan interpolasi alpha
+        while (timeElapsed < duration)
+        {
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Menyelesaikan alpha
+        canvasGroup.alpha = endAlpha;
+
+        // Setelah selesai fade, kita bisa mengatur interaksi dan raycasts jika diperlukan
+        if (endAlpha == 0)
+        {
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+    }
+
+
+    private IEnumerator FadeCanvasGroup2(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
     {
         float duration = 0.9f; // Durasi fade dalam detik
         float timeElapsed = 0f;
@@ -196,19 +247,39 @@ public class ManagerMainmenu : MonoBehaviour
 
     private void SetButtonsInteractable(bool state)
     {
-        foreach (GameObject button in buttonOptions)
+        foreach (GameObject buttonObj in buttonOptions)
         {
-            button.GetComponent<UnityEngine.UI.Button>().interactable = state;
+            ButtonSelector selector = buttonObj.GetComponent<ButtonSelector>();
+
+            if (selector != null)
+            {
+                selector.SetButtonInteractable(state);
+            }
         }
     }
+
+    
+
+
+
+
+    private void HapusTintButton()
+    {
+        foreach (GameObject btnObj in buttonOptions)
+        {
+            if (btnObj.TryGetComponent<ButtonSelector>(out ButtonSelector buttonSelector))
+            {
+                buttonSelector.DeselectButton();
+            }
+        }
+    }
+
 
 
     private IEnumerator backMainMenu1(){
         StartCoroutine(FadeCanvasGroup(mainMenu2CanvasGroup, 1, 0));
         yield return new WaitForSeconds(1f);
         mainMenu2CanvasGroupGameObject.SetActive(false);
-
-        mainMenu1CanvasGroupGameObject.SetActive(true);
 
         StartCoroutine(FadeCanvasGroup(mainMenu1CanvasGroup,0,1));
         SetButtonsInteractable(true);
@@ -221,8 +292,6 @@ public class ManagerMainmenu : MonoBehaviour
         titleCanvasGroupGameObject.SetActive(false);
         mainMenu1CanvasGroupGameObject.SetActive(true);
 
-        // Mengubah alpha dari game canvas menjadi 1 (tampil)
-        StartCoroutine(FadeCanvasGroup(mainMenu1CanvasGroup, 0, 1));
         SetButtonsInteractable(true);
 
     }

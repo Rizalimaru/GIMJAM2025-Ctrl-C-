@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,24 +5,56 @@ public class ButtonSelector : MonoBehaviour
 {
     public GameObject objectSettings;
     public Button button;
-    // Start is called before the first frame update
+    private ColorBlock originalColors;
+    private bool isSelected = false;
+
     void Start()
     {
-        
+        // Simpan warna asli tombol
+        originalColors = button.colors;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(objectSettings.activeSelf){
-            button.Select();
+        if (objectSettings.activeSelf)
+        {
+            SelectButton();
+        }
+        else
+        {
+            DeselectButton();
+        }
+    }
 
-            button.transition = Selectable.Transition.None;
+    public void DeselectButton()
+    {
+        button.OnDeselect(null);
+        button.transition = Selectable.Transition.ColorTint;
+        isSelected = false;
+    }
+
+    public void SelectButton()
+    {
+        button.Select();
+        button.transition = Selectable.Transition.None;
+        isSelected = true;
+    }
+
+    public void SetButtonInteractable(bool state)
+    {
+        button.interactable = state;
+
+        ColorBlock colors = button.colors;
+
+        if (!state && isSelected)
+        {
+            // Paksa warna tombol tetap seperti "selected"
+            colors.disabledColor = colors.selectedColor;
+            button.colors = colors;
         }
-        else{
-            button.OnDeselect(null);
-            button.transition = Selectable.Transition.ColorTint;
+        else
+        {
+            button.colors = originalColors; // Kembalikan ke warna asli saat aktif
         }
-        
     }
 }
