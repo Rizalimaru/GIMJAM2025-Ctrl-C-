@@ -24,6 +24,9 @@ public class MainMenuSaveLoad : MonoBehaviour
     public void NewGame()
     {
         int slot = 0;
+
+        AudioManager.Instance.PlaySFX("Button", 0);
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",2f);
      
 
         // Simpan data baru ke slot yang dipilih
@@ -79,6 +82,8 @@ public class MainMenuSaveLoad : MonoBehaviour
 
     public void LoadGame(int slot)
     {
+        AudioManager.Instance.PlaySFX("Button",0);
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu",2f);
         if (PlayerPrefs.HasKey(savePrefix + slot + "_title"))
         {
             Debug.Log("Loading Save Slot " + (slot + 1));

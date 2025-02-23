@@ -20,6 +20,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,3f);
         instance = this;
         bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         fullscreenCheck.isOn = isFullscreen;

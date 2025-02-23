@@ -14,6 +14,7 @@ public class ManagerMainmenu : MonoBehaviour
     [SerializeField] private GameObject mainMenu1CanvasGroupGameObject;
 
 
+
     private bool isTransitioning = false; // Flag untuk mencegah spam klik
 
     [Header("----------- Function Mainmenu2----------------")]
@@ -51,6 +52,7 @@ public class ManagerMainmenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Mainmenu",0,2f);
         // Load setting sebelumnya
         bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         fullscreenCheck.isOn = isFullscreen;
@@ -70,6 +72,7 @@ public class ManagerMainmenu : MonoBehaviour
         // Periksa apakah tombol apapun ditekan dan pastikan tidak ada transisi yang sedang berlangsung
         if (Input.anyKeyDown && !isTransitioning)
         {
+            AudioManager.Instance.PlaySFX("Button",0);
             // Mengatur flag untuk menandakan transisi sedang berlangsung
             isTransitioning = true;
 
@@ -93,6 +96,10 @@ public class ManagerMainmenu : MonoBehaviour
 
     public void StartGameplay(){
          SceneManager.LoadScene("GamePlay");
+    }
+
+    public void QuitGame(){
+        Application.Quit();
     }
 
     public void OpenMainMenu2(int index)
@@ -129,6 +136,7 @@ public class ManagerMainmenu : MonoBehaviour
 
     public void ShowOptionDisplay(int index)
     {
+        AudioManager.Instance.PlaySFX("Button",0);
         // Menonaktifkan semua display terlebih dahulu
         foreach (GameObject display in optionsDisplay)
         {
@@ -141,7 +149,12 @@ public class ManagerMainmenu : MonoBehaviour
         {
             optionsDisplay[index].SetActive(true);
 
+            if(index == 1){
+                AudioManager.Instance.PlaySFX("Button",1);
+            }
+
         }
+
 
         if( displayOptions == false)
         {   

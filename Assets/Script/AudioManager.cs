@@ -129,6 +129,7 @@ public class AudioManager : MonoBehaviour
 
     IEnumerator FadeInAndPlayBackgroundMusic(AudioSource audioSource, float fadeInDuration)
     {
+        audioSource.Play();
         // Simpan volume awal
         float startVolume = 0f;
 
@@ -152,7 +153,7 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = Mathf.Clamp(audioSource.volume, 0f, 1f);
 
         // Mainkan musik setelah selesai fade in
-        audioSource.Play();
+
     }
 
     //pause background music
@@ -218,7 +219,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-        public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
+    public void StopBackgroundMusicWithTransition(string groupName, float fadeOutDuration)
     {
         BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
         if (group != null)
@@ -298,6 +299,33 @@ public class AudioManager : MonoBehaviour
             group.soundEffects[index].Play();
         }
     }
+
+    public void SetPlayOnAwakeAndPlay(string groupName, bool state)
+    {
+        SoundEffectGroup group = System.Array.Find(audioSFXGroups, g => g.groupName == groupName);
+        if (group != null)
+        {
+            foreach (AudioSource sfx in group.soundEffects)
+            {
+                sfx.playOnAwake = state;
+
+                if (state) 
+                {
+                    sfx.Stop(); // Hentikan suara dulu agar bisa di-reset ke awal
+                    sfx.time = 0; // Reset waktu audio ke awal
+                    sfx.Play();  // Mainkan kembali dari awal
+                }
+                else 
+                {
+                    sfx.Stop(); // Hentikan suara
+                }
+            }
+        }
+    }
+
+
+
+
 
     public void StopSFX(string groupName, int index)
     {

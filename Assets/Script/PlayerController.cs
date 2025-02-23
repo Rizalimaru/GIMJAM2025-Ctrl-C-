@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     private SpriteRenderer spriteRenderer; // Tambahkan SpriteRenderer
 
+
+    private bool isMoving = false; // Menyimpan status gerakan
+
     private void Awake()
     {   
         instance = this;
@@ -25,21 +28,38 @@ public class PlayerController : MonoBehaviour
     {
         inputPlayer();
 
-        // Animasi berjalan jika ada pergerakan
-        if(movement == 0 && verticalMovement == 0)
+        bool hasMovement = (movement != 0 || verticalMovement != 0);
+
+        if (!hasMovement) // Jika tidak bergerak
         {
+            if (isMoving) // Hanya stop audio jika sebelumnya bergerak
+            {
+                AudioManager.Instance.SetPlayOnAwakeAndPlay("Gameplay", false);
+                isMoving = false;
+            }
+
+            // Reset animasi
             playerAnimator.SetBool("isWalking", false);
             playerAnimator.SetBool("WalkingAtas", false);
             playerAnimator.SetBool("WalkingBawah", false);
         }
-        // Flip sprite berdasarkan arah horizontal
-        if (movement > 0)
+        else // Jika bergerak
         {
-            spriteRenderer.flipX = true;
-        }
-        else if (movement < 0)
-        {
-            spriteRenderer.flipX = false;
+            if (!isMoving) // Hanya play audio saat pertama kali bergerak
+            {
+                AudioManager.Instance.SetPlayOnAwakeAndPlay("Gameplay", true);
+                isMoving = true;
+            }
+
+            // Flip sprite berdasarkan arah horizontal
+            if (movement > 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else if (movement < 0)
+            {
+                spriteRenderer.flipX = false;
+            }
         }
     }
 
@@ -50,40 +70,36 @@ public class PlayerController : MonoBehaviour
 
     private void inputPlayer()
     {
-        if (!canMove)
-        {
-            return;
-        }
+        if (!canMove) return;
+
+        movement = 0;
+        verticalMovement = 0;
 
         // Input horizontal (A & D)
-        movement = 0;
         if (Input.GetKey(KeyCode.A))
-        {   
+        {
             playerAnimator.SetBool("isWalking", true);
             movement = -1;
         }
         else if (Input.GetKey(KeyCode.D))
-        {   
+        {
             playerAnimator.SetBool("isWalking", true);
             movement = 1;
         }
 
-        // Input vertikal hanya jika scene bernama "Kamar"
-        verticalMovement = 0;
+        // Input vertikal hanya jika di scene "Kamar"
         if (SceneManager.GetActiveScene().name == "Kamar")
         {
             if (Input.GetKey(KeyCode.W))
-            {   
+            {
                 playerAnimator.SetBool("WalkingAtas", true);
                 playerAnimator.SetBool("WalkingBawah", false);
-                playerAnimator.SetBool("isWalking", false);
                 verticalMovement = 1;
             }
             else if (Input.GetKey(KeyCode.S))
-            {   
+            {
                 playerAnimator.SetBool("WalkingBawah", true);
                 playerAnimator.SetBool("WalkingAtas", false);
-                playerAnimator.SetBool("isWalking", false);
                 verticalMovement = -1;
             }
         }
