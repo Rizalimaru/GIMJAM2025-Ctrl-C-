@@ -2628,6 +2628,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1096515693 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7028501821085415979, guid: 808a4d5d147175f4eb2a59f55d21c41a, type: 3}
+  m_PrefabInstance: {fileID: 1884560864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1129721332 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6172331202918759996, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
@@ -2958,6 +2969,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1884560894}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: progress.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: slotDates.Array.data[0]
       value: 
       objectReference: {fileID: 94134625}
@@ -2973,6 +2988,10 @@ PrefabInstance:
       propertyPath: slotDates.Array.data[3]
       value: 
       objectReference: {fileID: 491844397}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: slotProgress.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: slotTimes.Array.data[0]
       value: 
@@ -3037,6 +3056,22 @@ PrefabInstance:
       propertyPath: slotButtons.Array.data[3]
       value: 
       objectReference: {fileID: 751607454}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: slotProgress.Array.data[0]
+      value: 
+      objectReference: {fileID: 2142143728}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: slotProgress.Array.data[1]
+      value: 
+      objectReference: {fileID: 1096515693}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: slotProgress.Array.data[2]
+      value: 
+      objectReference: {fileID: 1966357992}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: slotProgress.Array.data[3]
+      value: 
+      objectReference: {fileID: 1528002306}
     - target: {fileID: 3149622076224449878, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: convoLog
       value: 
@@ -4282,6 +4317,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1528002306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6646134418179581512, guid: 808a4d5d147175f4eb2a59f55d21c41a, type: 3}
+  m_PrefabInstance: {fileID: 1884560864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1548840336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5517,6 +5563,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1966357992 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7237168537949333967, guid: 808a4d5d147175f4eb2a59f55d21c41a, type: 3}
+  m_PrefabInstance: {fileID: 1884560864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1972488734
 GameObject:
   m_ObjectHideFlags: 0
@@ -6138,6 +6195,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2142143728 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1674684217555473504, guid: 808a4d5d147175f4eb2a59f55d21c41a, type: 3}
+  m_PrefabInstance: {fileID: 1884560864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &664846309626598777 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2152828487815382559, guid: 808a4d5d147175f4eb2a59f55d21c41a, type: 3}
