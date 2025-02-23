@@ -38,14 +38,14 @@ public class JumbledSentencesGame : MonoBehaviour
                 return;
             }
         // Set teks bahasa asing di atas
-        foreignSentenceText.text = "Saya sedang memainkan permainan ini.";
+        foreignSentenceText.text = "Need I book recomdation about nation this histry culture or. Svmthing easy learn so can I some this langguage country.";
 
         // Acak kata-kata
         shuffledWords = correctWords.OrderBy(x => Random.value).ToList();
 
         float slotSpacingX = 200f; // Jarak horizontal antar slot
         float slotSpacingY = -50; // Jarak vertikal antar slot
-        int maxPerRow = 5; // Maksimal 5 prefab per baris
+        int maxPerRow = 7; // Maksimal 5 prefab per baris
 
         // Buat slot untuk jawaban
         for (int i = 0; i < correctWords.Count; i++)

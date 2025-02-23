@@ -13,6 +13,9 @@ public class SaveSlotSystem : MonoBehaviour
     public TextMeshProUGUI[] slotTitles;  // Menampilkan "Save Slot X"
     public TextMeshProUGUI[] slotDates;   // Menampilkan tanggal
     public TextMeshProUGUI[] slotTimes;   // Menampilkan waktu
+
+    public TextMeshProUGUI[] slotProgress;   // Menampilkan waktu
+
     public TextMeshProUGUI titleText; // Judul di atas slot
 
 
@@ -20,8 +23,13 @@ public class SaveSlotSystem : MonoBehaviour
 
     public Sprite defaultImage;   // Gambar default jika belum ada save
     private string savePrefix = "SaveSlot";
-    public int progress;
+    public int[] progress;
     public float[] playerLastPosition;
+
+
+    public int totalNPCs = 7;  // Total NPC yang bisa diinteraksi
+    public int interactedNPCs;   // NPC yang sudah diinteraksi
+
     
     private bool isSaving = false;  // Mode Save atau Load\
 
@@ -67,6 +75,7 @@ public class SaveSlotSystem : MonoBehaviour
             PlayerPrefs.DeleteKey(savePrefix + i + "_progress");
             PlayerPrefs.DeleteKey(savePrefix + i + "_playerPosition");
             PlayerPrefs.DeleteKey(savePrefix + i + "_image");
+            PlayerPrefs.DeleteKey(savePrefix + i + "_interactedNPCs"); // Reset NPC interaction
         }
 
         // Hapus auto save
@@ -76,12 +85,14 @@ public class SaveSlotSystem : MonoBehaviour
         PlayerPrefs.DeleteKey(savePrefix + "0_progress");
         PlayerPrefs.DeleteKey(savePrefix + "0_playerPosition");
         PlayerPrefs.DeleteKey(savePrefix + "0_image");
+        PlayerPrefs.DeleteKey(savePrefix + "0_interactedNPCs"); // Reset NPC interaction untuk auto-save
 
         PlayerPrefs.Save(); // Simpan perubahan
 
         Debug.Log("Semua data telah direset. Memulai game baru...");
         
-        progress = 0;
+        progress = new int[slotButtons.Length];
+        interactedNPCs = 0; // Reset jumlah NPC yang diinteraksi
 
         // Load scene pertama (misalnya, "GameScene" atau "Level1")
         SceneManager.LoadScene("GamePlay");
@@ -92,6 +103,11 @@ public class SaveSlotSystem : MonoBehaviour
     {
         for (int i = 0; i < slotButtons.Length; i++)
         {
+            if (PlayerPrefs.HasKey(savePrefix + i + "_interactedNPCs"))
+{
+                interactedNPCs = PlayerPrefs.GetInt(savePrefix + i + "_interactedNPCs");
+                progress[i] = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
+            }
             int slotIndex = i;
             if (PlayerPrefs.HasKey(savePrefix + i + "_title")) // Cek apakah slot ada isinya
             {
@@ -100,7 +116,10 @@ public class SaveSlotSystem : MonoBehaviour
                 slotTimes[i].text = PlayerPrefs.GetString(savePrefix + i + "_time");
 
                 playerLastPosition[i] = PlayerPrefs.GetFloat(savePrefix + i + "_playerPosition");
-                progress = PlayerPrefs.GetInt(savePrefix + i + "_progress");
+                progress[i] = PlayerPrefs.GetInt(savePrefix + i + "_progress");
+
+
+                slotProgress[i].text = progress[i] + "%";
 
                 slotButtons[i].interactable = true; // Bisa diklik
             }
@@ -109,6 +128,7 @@ public class SaveSlotSystem : MonoBehaviour
                 slotTitles[i].text = "Empty Slot";
                 slotDates[i].text = "";
                 slotTimes[i].text = "";
+                slotProgress[i].text = progress[i] + "0%";
 
                 slotButtons[i].interactable = false; // Tidak bisa di-load
             }
@@ -127,7 +147,11 @@ public class SaveSlotSystem : MonoBehaviour
             slotDates[0].text = PlayerPrefs.GetString(savePrefix + "0_date");
             slotTimes[0].text = PlayerPrefs.GetString(savePrefix + "0_time");
             playerLastPosition[0] = PlayerPrefs.GetFloat(savePrefix + "0_playerPosition");
-            progress = PlayerPrefs.GetInt(savePrefix + "0_progress");
+
+            progress[0] = PlayerPrefs.GetInt(savePrefix + "0_progress");
+
+            slotProgress[0].text = progress[0] + "%";
+
 
             slotButtons[0].interactable = true; // Bisa diklik
         }
@@ -152,7 +176,7 @@ public class SaveSlotSystem : MonoBehaviour
         PlayerPrefs.SetString(savePrefix + "0_date", System.DateTime.Now.ToString("dd/MM/yyyy"));
         PlayerPrefs.SetString(savePrefix + "0_time", System.DateTime.Now.ToString("HH:mm"));
         PlayerPrefs.SetFloat(savePrefix + "0_playerPosition", playerX);
-        PlayerPrefs.SetInt(savePrefix + "0_progress", progress);
+        PlayerPrefs.SetInt(savePrefix + "0_progress", progress[0]); // Perbaikan di sini!
 
 
 
@@ -227,12 +251,16 @@ public class SaveSlotSystem : MonoBehaviour
             playerLastPosition[slot] = player.transform.position.x;
         }
 
+        // Hitung progress berdasarkan NPC yang sudah diinteraksi
+        progress[slot] = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
+
         PlayerPrefs.SetInt("SelectedSaveSlot", slot);
 
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
         PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
         PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
-        PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress);
+        PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress[slot]);
+        PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs); // Simpan NPC yang sudah diinteraksi
         PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
 
         PlayerPrefs.Save();
