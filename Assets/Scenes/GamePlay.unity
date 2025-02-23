@@ -6779,34 +6779,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VisualNovelCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3741407973895385091, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6852095906779487391, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1598553651}
-    - target: {fileID: 8386860963566803689, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8386860963566803689, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
-      propertyPath: m_Color.a
-      value: 0.46666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 8386860963566803689, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8386860963566803689, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8386860963566803689, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
