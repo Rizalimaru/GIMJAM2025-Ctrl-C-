@@ -139,27 +139,12 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
-        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, gameObject.name); 
-
-        SaveSlotSystem.instance.AutoSaveSlot();
-
-        Invoke("LoadInteraction",0.2f);
-        
 
         dialogEnd = true;
         dialoguePanel.SetActive(false);
     }
-    public void LoadInteraction()
-    {
-        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        
-        Debug.Log("Memuat interaksi NPC untuk slot: " + currentSlot);
 
-        SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
-        SaveSlotSystem.instance.LoadSaveSlots();
-        SaveSlotSystem.instance.LoadAutoSaveSlot();
-    }
+
 
 }

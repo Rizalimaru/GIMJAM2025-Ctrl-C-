@@ -289,7 +289,7 @@ public class SaveSlotSystem : MonoBehaviour
         {
             if (npc != null)
             {
-                string npcID = npc.name; // Gunakan nama sebagai ID
+                string npcID = npc.name.ToLower(); // Gunakan nama sebagai ID
                 bool hasInteracted = !npc.activeSelf; // Jika NPC nonaktif, berarti sudah diinteraksi
 
                 if (hasInteracted)
@@ -329,12 +329,13 @@ public class SaveSlotSystem : MonoBehaviour
         {
             if (npc != null)
             {
-                string npcID = npc.name; // Gunakan nama GameObject sebagai ID NPC
+                string npcID = npc.name.ToLower(); // Gunakan nama GameObject sebagai ID NPC
                 bool hasInteracted = PlayerPrefs.GetInt("NPC_" + slot + "_" + npcID, 0) == 1;
 
                 if (hasInteracted)
                 {
                     npc.GetComponent<Collider2D>().enabled = false;
+                    Debug.Log("Collider NPC " + npcID + " dinonaktifkan.");
 
                 }
             }

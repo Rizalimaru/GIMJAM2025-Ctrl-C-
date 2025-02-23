@@ -84,6 +84,7 @@ public class NPC_Interaction : MonoBehaviour
 
         if (dialogueManager.dialogEnd)
         {
+            MarkNPCAsInteracted();
             isTalking = false;
             dialogueManager.dialogEnd = false;
         }
@@ -116,13 +117,22 @@ public class NPC_Interaction : MonoBehaviour
     private void MarkNPCAsInteracted()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        string npcID = gameObject.name; // Gunakan nama GameObject sebagai ID
+        string npcname =  gameObject.name.ToLower();
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcname);
+        SaveSlotSystem.instance.AutoSaveSlot();
 
-        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcID);
+        PlayerPrefs.Save(); // Pastikan data tersimpan sebelum load
 
-        // Sembunyikan NPC setelah interaksi (jika ingin NPC menghilang)
-        gameObject.SetActive(false);
+        // Gunakan lambda expression agar bisa mengirim parameter
+        Invoke(nameof(DelayedLoadNPC), 0.2f);
     }
+
+    private void DelayedLoadNPC()
+    {
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+        SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
+    }
+
 
 
     private void SetDialogImages()
