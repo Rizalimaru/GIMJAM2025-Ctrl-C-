@@ -18,6 +18,8 @@ public class SaveSlotSystem : MonoBehaviour
 
     public TextMeshProUGUI titleText; // Judul di atas slot
 
+    public Slider progressSlider;
+
 
     private int selectedSlot; // Menyimpan slot yang dipilih
 
@@ -62,6 +64,9 @@ public class SaveSlotSystem : MonoBehaviour
         // Atur tombol utama
         saveButton.onClick.AddListener(() => SetMode(true));  // Aktifkan mode Save
         loadButton.onClick.AddListener(() => SetMode(false)); // Aktifkan mode Load
+
+        int lastSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+        progressSlider.value = progress[lastSlot];
     }
 
     public void NewGame()
@@ -265,6 +270,8 @@ public class SaveSlotSystem : MonoBehaviour
 
         PlayerPrefs.Save();
         LoadSaveSlots();
+
+        progressSlider.value = progress[slot];
     }
 
     public void LoadGame(int slot)
@@ -276,6 +283,8 @@ public class SaveSlotSystem : MonoBehaviour
             // Simpan informasi slot yang dipilih sebelum memuat scene
             PlayerPrefs.SetInt("SelectedSaveSlot", slot);
             PlayerPrefs.Save();
+
+            progressSlider.value = progress[slot];
 
             SceneManager.LoadScene("GamePlay"); // Pindah ke scene utama
         }

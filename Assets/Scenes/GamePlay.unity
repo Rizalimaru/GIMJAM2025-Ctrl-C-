@@ -1948,6 +1948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 877972126}
   - component: {fileID: 877972127}
+  - component: {fileID: 877972128}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -2022,12 +2023,26 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &877972128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877972125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea70047f85da56145a387944dba7748b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 877972127}
+  percentageText: {fileID: 579402509}
 --- !u!1 &904130696 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8262551437823724397, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
@@ -2836,6 +2851,10 @@ PrefabInstance:
       propertyPath: saveButton
       value: 
       objectReference: {fileID: 1884560894}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: progressSlider
+      value: 
+      objectReference: {fileID: 877972127}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: progress.Array.size
       value: 4
