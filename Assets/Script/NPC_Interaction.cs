@@ -101,15 +101,29 @@ public class NPC_Interaction : MonoBehaviour
                 
             }
             isPuzzleSolved = true;
-            puzzleActive = true;
-            Invoke("tungguActive", 2);
+            
+            Invoke("tungguActive", 2f);
         }
     }
 
     private void tungguActive()
     {
         puzzleActive = false;
+
     }
+
+
+    private void MarkNPCAsInteracted()
+    {
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+        string npcID = gameObject.name; // Gunakan nama GameObject sebagai ID
+
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcID);
+
+        // Sembunyikan NPC setelah interaksi (jika ingin NPC menghilang)
+        gameObject.SetActive(false);
+    }
+
 
     private void SetDialogImages()
     {

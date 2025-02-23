@@ -65,6 +65,9 @@ public class SaveSlotSystem : MonoBehaviour
     }
     void Start()
     {
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        LoadNPCInteractions(currentSlot);
         LoadSaveSlots();
         LoadAutoSaveSlot();
 
@@ -331,18 +334,22 @@ public class SaveSlotSystem : MonoBehaviour
 
                 if (hasInteracted)
                 {
-                    npc.SetActive(false); // Sembunyikan NPC jika sudah diinteraksi
+                    npc.GetComponent<Collider2D>().enabled = false;
+
                 }
             }
         }
     }
 
-
     public void SaveNPCInteraction(int slot, string npcID)
     {
-        PlayerPrefs.SetInt("NPC_" + slot + "_" + npcID, 1);
+        string key = "NPC_" + slot + "_" + npcID;
+        PlayerPrefs.SetInt(key, 1); // Simpan bahwa NPC ini sudah diinteraksi
         PlayerPrefs.Save();
+
+        Debug.Log("NPC " + npcID + " disimpan di slot " + slot);
     }
+
 
 
 

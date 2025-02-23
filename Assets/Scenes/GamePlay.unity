@@ -2577,6 +2577,11 @@ Transform:
   - {fileID: 822413435}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1165512500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6436836648520314919, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+  m_PrefabInstance: {fileID: 1892420417}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1177135342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2866,12 +2871,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: NPCAmount.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: NPCAmount.Array.data[0]
       value: 
       objectReference: {fileID: 397685456}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: NPCAmount.Array.data[1]
+      value: 
+      objectReference: {fileID: 1165512500}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: NPCAmount.Array.data[2]
+      value: 
+      objectReference: {fileID: 2049662088}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: slotDates.Array.data[0]
       value: 
@@ -5476,6 +5489,10 @@ PrefabInstance:
       value: Runa
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaKanan
       value: CS
       objectReference: {fileID: 0}
@@ -6189,6 +6206,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035309620}
   m_CullTransparentMesh: 1
+--- !u!1 &2049662088 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6436836648520314919, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+  m_PrefabInstance: {fileID: 1390489728}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2054418935 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6192405038427381811, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
