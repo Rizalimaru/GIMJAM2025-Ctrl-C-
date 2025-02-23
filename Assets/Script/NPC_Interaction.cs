@@ -20,18 +20,31 @@ public class NPC_Interaction : MonoBehaviour
     public int lineBeforeLoadScene;
     private bool canTalk = false;
     private bool isTalking = false;
-    
-    private void Awake()
-    {
-        question_mark.SetActive(false);
-        coliider = GetComponent<Collider2D>();
+    private int currentLineIndex = 0; // Menyimpan baris dialog saat ini
 
+
+    void Start()
+    {
         dialogueManager.namaKiri = namaKiri;
         dialogueManager.namaKanan = namaKanan;
         dialogueManager.lineBeforeLoadScene = lineBeforeLoadScene;
         dialogueManager.nextSceneName = namaSceneLoad;
 
         SetDialogImages();
+    }
+    private void Awake()
+    {
+        question_mark.SetActive(false);
+        coliider = GetComponent<Collider2D>();
+
+        
+        dialogueManager.namaKiri = namaKiri;
+        dialogueManager.namaKanan = namaKanan;
+        dialogueManager.lineBeforeLoadScene = lineBeforeLoadScene;
+        dialogueManager.nextSceneName = namaSceneLoad;
+
+        SetDialogImages();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,22 +71,45 @@ public class NPC_Interaction : MonoBehaviour
         {
             if (!isTalking)
             {
-                dialogueManager.StartDialogue(dialogue);
+                dialogueManager.StartDialogue(dialogue, namaKiri, namaKanan, leftSprite, rightSprite);
                 isTalking = true;
+                currentLineIndex = 0; // Reset indeks saat mulai dialog
             }
             else
             {
                 dialogueManager.DisplayNextSentence();
+                currentLineIndex++; // Naikkan indeks setiap kali pemain lanjut dialog
             }
         }
 
+        // Jika dialog mencapai lineBeforeLoadScene, ganti scene
+        if (isTalking && currentLineIndex == lineBeforeLoadScene)
+        {
+            isTalking = false;
+            dialogueManager.dialogEnd = false;
+            LoadPuzzle();
+        }
+
+        // Jika dialog selesai tanpa pergantian scene, reset
         if (dialogueManager.dialogEnd)
         {
             isTalking = false;
             dialogueManager.dialogEnd = false;
-            loadPuzzle();
         }
     }
+
+    private void LoadPuzzle()
+    {
+        GameObject target = GameObject.Find("Player");
+
+        // Simpan posisi terakhir pemain
+        SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
+        SaveSlotSystem.instance.AutoSaveSlot0();
+
+        // Pastikan hanya NPC ini yang memuat scene yang benar
+        StartCoroutine(SceneController.instance.LoadScene(namaSceneLoad));
+    }
+
 
     private void loadPuzzle()
     {
