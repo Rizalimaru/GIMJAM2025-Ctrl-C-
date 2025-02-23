@@ -43,7 +43,7 @@ public class MainMenuSaveLoad : MonoBehaviour
         Debug.Log("New Game dimulai di slot " + slot);
         
         // Pindah ke scene game
-        StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
+        StartCoroutine(SceneController.instance.LoadScene("Kamar"));
     }
 
 
