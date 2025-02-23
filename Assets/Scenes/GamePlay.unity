@@ -833,6 +833,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &397685456 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6436836648520314919, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+  m_PrefabInstance: {fileID: 1482736951}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &420393191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2859,6 +2864,14 @@ PrefabInstance:
       propertyPath: progress.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: NPCAmount.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: NPCAmount.Array.data[0]
+      value: 
+      objectReference: {fileID: 397685456}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: slotDates.Array.data[0]
       value: 
@@ -6954,7 +6967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7811383463552950816, guid: 2aedaaa0a0bc56c41b9518adb05aebd2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -6,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class SaveSlotSystem : MonoBehaviour
 {   
+
+    [Header("NPC INTERAKSI BUAT SAVE")]
+
+    public GameObject[] NPCAmount; // Menyimpan daftar NPC dalam slot saat ini
+
     public static SaveSlotSystem instance;
     public Button saveButton;   // Tombol utama untuk Save
     public Button loadButton;   // Tombol utama untuk Load
@@ -19,6 +25,7 @@ public class SaveSlotSystem : MonoBehaviour
     public TextMeshProUGUI titleText; // Judul di atas slot
 
     public Slider progressSlider;
+
 
 
     private int selectedSlot; // Menyimpan slot yang dipilih
@@ -59,7 +66,7 @@ public class SaveSlotSystem : MonoBehaviour
     void Start()
     {
         LoadSaveSlots();
-        LoadAutoSaveSlot0();
+        LoadAutoSaveSlot();
 
         // Atur tombol utama
         saveButton.onClick.AddListener(() => SetMode(true));  // Aktifkan mode Save
@@ -144,55 +151,62 @@ public class SaveSlotSystem : MonoBehaviour
         }
     }
 
-    void LoadAutoSaveSlot0()
+    void LoadAutoSaveSlot()
     {
-        if (PlayerPrefs.HasKey(savePrefix + "0_title")) // Cek apakah ada data auto-save
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        if (PlayerPrefs.HasKey(savePrefix + currentSlot + "_title")) // Cek apakah ada auto-save di slot aktif
         {
-            slotTitles[0].text = PlayerPrefs.GetString(savePrefix + "0_title");
-            slotDates[0].text = PlayerPrefs.GetString(savePrefix + "0_date");
-            slotTimes[0].text = PlayerPrefs.GetString(savePrefix + "0_time");
-            playerLastPosition[0] = PlayerPrefs.GetFloat(savePrefix + "0_playerPosition");
+            slotTitles[currentSlot].text = PlayerPrefs.GetString(savePrefix + currentSlot + "_title");
+            slotDates[currentSlot].text = PlayerPrefs.GetString(savePrefix + currentSlot + "_date");
+            slotTimes[currentSlot].text = PlayerPrefs.GetString(savePrefix + currentSlot + "_time");
+            playerLastPosition[currentSlot] = PlayerPrefs.GetFloat(savePrefix + currentSlot + "_playerPosition");
 
-            progress[0] = PlayerPrefs.GetInt(savePrefix + "0_progress");
+            progress[currentSlot] = PlayerPrefs.GetInt(savePrefix + currentSlot + "_progress");
 
-            slotProgress[0].text = progress[0] + "%";
+            slotProgress[currentSlot].text = progress[currentSlot] + "%";
 
-
-            slotButtons[0].interactable = true; // Bisa diklik
+            slotButtons[currentSlot].interactable = true; // Bisa diklik
         }
         else
         {
-            slotTitles[0].text = "No Auto Save";
-            slotDates[0].text = "";
-            slotTimes[0].text = "";
-            slotButtons[0].interactable = false; // Tidak bisa di-load
+            slotTitles[currentSlot].text = "No Auto Save";
+            slotDates[currentSlot].text = "";
+            slotTimes[currentSlot].text = "";
+            slotProgress[currentSlot].text =  "0";
+            slotButtons[currentSlot].interactable = false; // Tidak bisa di-load
         }
     }
 
 
 
-    public void AutoSaveSlot0()
+
+    public void AutoSaveSlot()
     {
-        // Pastikan player memiliki posisi yang valid
-        float playerX = GameObject.FindGameObjectWithTag("Player").transform.position.x; 
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0); // Ambil slot aktif
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        // Simpan data auto save di slot 0
-        PlayerPrefs.SetString(savePrefix + "0_title", "Auto Save");
-        PlayerPrefs.SetString(savePrefix + "0_date", System.DateTime.Now.ToString("dd/MM/yyyy"));
-        PlayerPrefs.SetString(savePrefix + "0_time", System.DateTime.Now.ToString("HH:mm"));
-        PlayerPrefs.SetFloat(savePrefix + "0_playerPosition", playerX);
-        PlayerPrefs.SetInt(savePrefix + "0_progress", progress[0]); // Perbaikan di sini!
+        if (player == null)
+        {
+            Debug.LogWarning("Player tidak ditemukan saat auto-save.");
+            return;
+        }
 
+        float playerX = player.transform.position.x;
 
+        // Simpan data ke slot yang sedang aktif
+        PlayerPrefs.SetString(savePrefix + currentSlot + "_title", "Auto Save Slot " + (currentSlot + 1));
+        PlayerPrefs.SetString(savePrefix + currentSlot + "_date", System.DateTime.Now.ToString("dd/MM/yyyy"));
+        PlayerPrefs.SetString(savePrefix + currentSlot + "_time", System.DateTime.Now.ToString("HH:mm"));
+        PlayerPrefs.SetFloat(savePrefix + currentSlot + "_playerPosition", playerX);
+        PlayerPrefs.SetInt(savePrefix + currentSlot + "_progress", progress[currentSlot]);
 
-        // Tetapkan slot yang digunakan
-        PlayerPrefs.SetInt("SelectedSaveSlot", 0);
-
-        // Simpan perubahan
+        PlayerPrefs.SetInt("SelectedSaveSlot", currentSlot);
         PlayerPrefs.Save();
 
-        Debug.Log("Auto Save berhasil di slot 0 dengan posisi X: " + playerX);
+        Debug.Log("Auto Save berhasil di slot " + currentSlot + " dengan posisi X: " + playerX);
     }
+
 
 
 
@@ -260,19 +274,33 @@ public class SaveSlotSystem : MonoBehaviour
         progress[slot] = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
 
         PlayerPrefs.SetInt("SelectedSaveSlot", slot);
-
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
         PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
         PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
         PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress[slot]);
-        PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs); // Simpan NPC yang sudah diinteraksi
+        PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs);
         PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
+
+        // Simpan semua NPC yang sudah diinteraksi
+        foreach (GameObject npc in NPCAmount)
+        {
+            if (npc != null)
+            {
+                string npcID = npc.name; // Gunakan nama sebagai ID
+                bool hasInteracted = !npc.activeSelf; // Jika NPC nonaktif, berarti sudah diinteraksi
+
+                if (hasInteracted)
+                {
+                    SaveNPCInteraction(slot, npcID);
+                }
+            }
+        }
+
 
         PlayerPrefs.Save();
         LoadSaveSlots();
-
-        progressSlider.value = progress[slot];
     }
+
 
     public void LoadGame(int slot)
     {
@@ -280,26 +308,46 @@ public class SaveSlotSystem : MonoBehaviour
         {
             Time.timeScale = 1f;
             Debug.Log("Loading Save Slot " + (slot + 1));
-            // Simpan informasi slot yang dipilih sebelum memuat scene
+
             PlayerPrefs.SetInt("SelectedSaveSlot", slot);
             PlayerPrefs.Save();
 
-            progressSlider.value = progress[slot];
+            LoadNPCInteractions(slot); // Muat jumlah NPC yang diinteraksi dari slot
 
-            SceneManager.LoadScene("GamePlay"); // Pindah ke scene utama
+            SceneManager.LoadScene("GamePlay");
         }
     }
 
+
+
+    public void LoadNPCInteractions(int slot)
+    {
+        foreach (GameObject npc in NPCAmount)
+        {
+            if (npc != null)
+            {
+                string npcID = npc.name; // Gunakan nama GameObject sebagai ID NPC
+                bool hasInteracted = PlayerPrefs.GetInt("NPC_" + slot + "_" + npcID, 0) == 1;
+
+                if (hasInteracted)
+                {
+                    npc.SetActive(false); // Sembunyikan NPC jika sudah diinteraksi
+                }
+            }
+        }
+    }
+
+
+    public void SaveNPCInteraction(int slot, string npcID)
+    {
+        PlayerPrefs.SetInt("NPC_" + slot + "_" + npcID, 1);
+        PlayerPrefs.Save();
+    }
+
+
+
+
     
 
-    private void SaveImageToPrefs(string key, Sprite sprite)
-    {
-        // Implementasi penyimpanan gambar jika diperlukan
-    }
 
-    private Sprite LoadImageFromPrefs(string key)
-    {
-        // Implementasi pengambilan gambar jika diperlukan
-        return defaultImage;
-    }
 }

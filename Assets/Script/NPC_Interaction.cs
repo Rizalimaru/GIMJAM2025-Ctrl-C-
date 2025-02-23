@@ -98,17 +98,43 @@ public class NPC_Interaction : MonoBehaviour
         }
     }
 
-    private void LoadPuzzle()
+private void LoadPuzzle()
+{
+    GameObject target = GameObject.Find("Player");
+
+    // Pastikan Player ditemukan
+    if (target == null)
     {
-        GameObject target = GameObject.Find("Player");
-
-        // Simpan posisi terakhir pemain
-        SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
-        SaveSlotSystem.instance.AutoSaveSlot0();
-
-        // Pastikan hanya NPC ini yang memuat scene yang benar
-        SceneManager.LoadScene(namaSceneLoad);
+        Debug.LogWarning("Player tidak ditemukan saat LoadPuzzle.");
+        return;
     }
+
+    // Simpan posisi terakhir pemain
+    int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+    SaveSlotSystem.instance.playerLastPosition[currentSlot] = target.transform.position.x;
+
+    // Simpan NPC ID berdasarkan puzzle yang dimuat
+    if (namaSceneLoad == "TapTapBerhadiah")
+    {
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, "NPC_TapTapBerhadiah");
+        Debug.Log("BOCIL CUYYYYYYYYYYYYYY");
+    }
+    else if (namaSceneLoad == "Bunga")
+    {
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, "NPC_Bunga");
+        Debug.Log("BUNGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ");
+    }
+    else if (namaSceneLoad == "TongSampah")
+    {
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, "NPC_Bunga");
+        Debug.Log("BUNGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ");
+    }
+    SaveSlotSystem.instance.AutoSaveSlot();
+
+    // Pindah ke scene yang dimaksud
+    SceneManager.LoadScene(namaSceneLoad);
+}
+
 
 
 
