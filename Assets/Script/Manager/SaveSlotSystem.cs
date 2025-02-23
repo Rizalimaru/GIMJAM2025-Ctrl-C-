@@ -114,7 +114,7 @@ public class SaveSlotSystem : MonoBehaviour
     }
 
 
-    void LoadSaveSlots()
+    public void LoadSaveSlots()
     {
         for (int i = 0; i < slotButtons.Length; i++)
         {
@@ -154,7 +154,7 @@ public class SaveSlotSystem : MonoBehaviour
         }
     }
 
-    void LoadAutoSaveSlot()
+    public void LoadAutoSaveSlot()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
