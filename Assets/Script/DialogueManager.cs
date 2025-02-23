@@ -25,8 +25,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject dialoguePanel;
     public bool dialogEnd;
-    public int lineBeforeLoadScene;
-    public string nextSceneName;
+    [HideInInspector]public int lineBeforeLoadScene;
+    [HideInInspector]public string nextSceneName;
 
     [HideInInspector] public Image leftImage;
     [HideInInspector] public Image rightImage;
@@ -46,13 +46,14 @@ public class DialogueManager : MonoBehaviour
         dialogEnd = false;
         dialogueQueue = new Queue<DialogueLine>();
         dialoguePanel.SetActive(false);
-        currentLineIndex = 0;
+        currentLineIndex = -1;
         sceneChanged = false;
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, string leftName, string rightName, Sprite leftSprite, Sprite rightSprite)
     {
-        Debug.Log("Starting dialogue. lineBeforeLoadScene = " + lineBeforeLoadScene);
+        Debug.Log("Starting dialogue with " + leftName + " and " + rightName);
+        
         dialoguePanel.SetActive(true);
         dialogueQueue.Clear();
         
@@ -61,10 +62,20 @@ public class DialogueManager : MonoBehaviour
             dialogueQueue.Enqueue(line);
         }
 
-        currentLineIndex = 0;
+        currentLineIndex = -1;
         sceneChanged = false;
+
+        // Atur nama karakter di sini (tidak lagi dari variabel global)
+        namaKiri = leftName;
+        namaKanan = rightName;
+
+        // Set gambar NPC secara dinamis
+        leftImage.sprite = leftSprite;
+        rightImage.sprite = rightSprite;
+
         DisplayNextSentence();
     }
+
 
 
     public void DisplayNextSentence()
@@ -75,7 +86,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         
-        if (currentLineIndex == lineBeforeLoadScene && !sceneChanged)
+        if (currentLineIndex == lineBeforeLoadScene && !sceneChanged && nextSceneName != null && dialogueQueue.Count != 0)
         {
             sceneChanged = true;
             StartCoroutine(SceneController.instance.LoadScene(nextSceneName));
