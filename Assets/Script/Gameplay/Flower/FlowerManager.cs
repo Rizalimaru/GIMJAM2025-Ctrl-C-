@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class FlowerManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class FlowerManager : MonoBehaviour
     
     private float timeRemaining = 30f; // Waktu dalam detik
     private bool levelCompleted = false;
+
+    public List<string> exceptionObjects;
 
     void Awake()
     {
@@ -77,13 +80,46 @@ public class FlowerManager : MonoBehaviour
 
     void NextLevel()
     {
-        // Implementasi pindah level di sini
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+    
+        SaveSlotSystem.instance.ModifyProgress(currentSlot, 5);
+        SceneManager.UnloadSceneAsync("Bunga");
+        Scene scene = SceneManager.GetSceneByName("Gameplay");
+
+        foreach (GameObject obj in scene.GetRootGameObjects())
+        {
+            if(!exceptionObjects.Contains(obj.name))
+            {
+                obj.SetActive(true);
+            }
+        }
+        
     }
 
     public void RetryLevel()
     {
         Time.timeScale = 1f;
         Debug.Log("Mengulang level...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        // Reset timer
+        timeRemaining = 30f;
+
+        // Reset semua bunga
+        foreach (Flower flower in allFlowers)
+        {
+            flower.ResetFlower(); // Pastikan Anda memiliki fungsi ResetFlower di script Flower untuk mereset bunga ke status awalnya.
+        }
+
+        // Reset status level
+        levelCompleted = false;
+
+        // Menyembunyikan panel retry
+        retryPanel.SetActive(false);
+
+        // Update timer UI
+        UpdateTimerUI();
     }
+
+    
+
 }

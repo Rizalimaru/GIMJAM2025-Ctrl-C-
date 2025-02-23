@@ -95,4 +95,19 @@ public class Flower : MonoBehaviour
         transform.position = new Vector3(startPosition.x, startPosition.y, startPositionZ); // Pastikan Z tetap
         transform.localScale = originalScale;
     }
+
+    public void ResetFlower()
+    {
+        // Kembalikan posisi bunga ke posisi awal
+        transform.position = new Vector3(startPosition.x, startPosition.y, startPositionZ);
+
+        // Kembalikan skala bunga ke skala awal
+        transform.localScale = originalScale;
+
+        // Set status bunga ke belum ditempatkan
+        isPlaced = false;
+
+        // Aktifkan kembali collider untuk memungkinkan bunga dapat dipasang lagi
+        GetComponent<Collider2D>().enabled = true;
+    }
 }

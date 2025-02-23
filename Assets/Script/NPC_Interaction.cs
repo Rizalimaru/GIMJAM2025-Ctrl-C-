@@ -125,15 +125,21 @@ public class NPC_Interaction : MonoBehaviour
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
         string npcname = gameObject.name.ToLower();
         SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcname);
-        SaveSlotSystem.instance.AutoSaveSlot();
-        PlayerPrefs.Save();
+        
+        SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
+        SaveSlotSystem.instance.NyimpanProgress();
+        
+        
         Invoke(nameof(DelayedLoadNPC), 0.2f);
     }
 
     private void DelayedLoadNPC()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
+        
+        SaveSlotSystem.instance.AutoSaveSlot();
+        PlayerPrefs.Save();
+        
     }
 
     private void SetDialogImages()

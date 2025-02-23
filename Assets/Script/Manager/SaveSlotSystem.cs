@@ -63,21 +63,32 @@ public class SaveSlotSystem : MonoBehaviour
     
 
     }
+
+    void Update()
+    {
+        int lastSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        progressSlider.value = progress[lastSlot];
+    }
     void Start()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
         LoadNPCInteractions(currentSlot);
         LoadSaveSlots();
-        LoadAutoSaveSlot();
+        //LoadAutoSaveSlot();
 
         // Atur tombol utama
         saveButton.onClick.AddListener(() => SetMode(true));  // Aktifkan mode Save
         loadButton.onClick.AddListener(() => SetMode(false)); // Aktifkan mode Load
 
         int lastSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        progressSlider.value = progress[lastSlot];
+
+        // Mengambil nilai progress yang sudah disimpan, tanpa penambahan apapun
+        int loadedProgress = PlayerPrefs.GetInt(savePrefix + lastSlot + "_progress", 0); // Pastikan memuat nilai progress yang benar
+        progressSlider.value = loadedProgress; // Tetapkan progres yang benar tanpa modifikasi
     }
+
 
     public void NewGame()
     {
@@ -131,8 +142,8 @@ public class SaveSlotSystem : MonoBehaviour
                 playerLastPosition[i] = PlayerPrefs.GetFloat(savePrefix + i + "_playerPosition");
                 progress[i] = slotProgressValue;
 
-                // Tambahkan jumlah NPC & Progress Mini-Game ke UI
-                slotProgress[i].text =  progress[i] + "%";
+                // Update UI progress
+                slotProgress[i].text = progress[i] + "%";  // Tampilkan progress di UI
 
                 slotButtons[i].interactable = true;
             }
@@ -153,6 +164,7 @@ public class SaveSlotSystem : MonoBehaviour
     }
 
 
+
     public void LoadAutoSaveSlot()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
@@ -166,7 +178,13 @@ public class SaveSlotSystem : MonoBehaviour
 
             progress[currentSlot] = PlayerPrefs.GetInt(savePrefix + currentSlot + "_progress");
 
-            slotProgress[currentSlot].text = progress[currentSlot] + "%";
+            // Hitung persentase interaksi NPC yang sudah dilakukan
+            int npcProgress = (int)((float)interactedNPCs / totalNPCs * 100f);  // Menghitung persentase interaksi NPC dengan pembagian float
+
+            // Update progress berdasarkan jumlah NPC yang sudah diinteraksi
+            progress[currentSlot] += Mathf.Clamp(npcProgress, 0, 100);  // Pastikan nilai progress tidak lebih dari 100
+
+            slotProgress[currentSlot].text = progress[currentSlot] + "%";  // Update progress UI
 
             slotButtons[currentSlot].interactable = true; // Bisa diklik
         }
@@ -175,11 +193,10 @@ public class SaveSlotSystem : MonoBehaviour
             slotTitles[currentSlot].text = "No Auto Save";
             slotDates[currentSlot].text = "";
             slotTimes[currentSlot].text = "";
-            slotProgress[currentSlot].text =  "0";
+            slotProgress[currentSlot].text = "0%";
             slotButtons[currentSlot].interactable = false; // Tidak bisa di-load
         }
     }
-
 
 
 
@@ -201,13 +218,29 @@ public class SaveSlotSystem : MonoBehaviour
         PlayerPrefs.SetString(savePrefix + currentSlot + "_date", System.DateTime.Now.ToString("dd/MM/yyyy"));
         PlayerPrefs.SetString(savePrefix + currentSlot + "_time", System.DateTime.Now.ToString("HH:mm"));
         PlayerPrefs.SetFloat(savePrefix + currentSlot + "_playerPosition", playerX);
+
+        Debug.Log("Interacted NPCs: " + interactedNPCs + " / Total NPCs: " + totalNPCs);
+
+        
+        // Hitung progress berdasarkan interaksi NPC
+        int npcProgress  = (int)((float)interactedNPCs / totalNPCs * 100f);  // Menghitung persentase interaksi NPC
+
+        // Update progress
+        progress[currentSlot] += Mathf.Clamp(npcProgress, 0, 100); // Pastikan progress tidak lebih dari 100
+
+        // Simpan nilai progress yang sudah terupdate ke PlayerPrefs
         PlayerPrefs.SetInt(savePrefix + currentSlot + "_progress", progress[currentSlot]);
 
+        // Update slider langsung menggunakan nilai progress yang sudah disimpan
+        progressSlider.value = progress[currentSlot];
+
+        // Simpan slot yang aktif dan PlayerPrefs
         PlayerPrefs.SetInt("SelectedSaveSlot", currentSlot);
         PlayerPrefs.Save();
 
-        Debug.Log("Auto Save berhasil di slot " + currentSlot + " dengan posisi X: " + playerX);
+        Debug.Log("Auto Save berhasil di slot " + currentSlot + " dengan posisi X: " + playerX + " dan Progress: " + progress[currentSlot]);
     }
+
 
 
 
@@ -272,7 +305,7 @@ public class SaveSlotSystem : MonoBehaviour
             playerLastPosition[slot] = player.transform.position.x;
         }
 
-        // 🔹 Hitung ulang jumlah NPC yang sudah diinteraksi
+        // Hitung jumlah NPC yang sudah diinteraksi
         int interactedNPCsCount = 0;
         foreach (GameObject npc in NPCAmount)
         {
@@ -287,25 +320,29 @@ public class SaveSlotSystem : MonoBehaviour
                 }
                 else
                 {
-                    SaveNPCInteraction(slot, npcID); // 🔹 Pastikan NPC langsung tersimpan
+                    SaveNPCInteraction(slot, npcID); // Simpan NPC jika belum
                 }
             }
         }
-        
-        interactedNPCs = interactedNPCsCount; // 🔹 Pastikan interactedNPCs diperbarui sebelum disimpan
-        progress[slot] = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
+
+        interactedNPCs = interactedNPCsCount; // Pastikan interactedNPCs diperbarui
+
+        // Menghitung progress berdasarkan interaksi NPC
+        int newProgress = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
+        progress[slot] = newProgress;  // Ganti progress yang baru, bukan tambah
 
         PlayerPrefs.SetInt("SelectedSaveSlot", slot);
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
         PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
         PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
-        PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress[slot]);
+        PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress[slot]); // Simpan progress baru
         PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs);
         PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
 
         PlayerPrefs.Save();
         LoadSaveSlots();
     }
+
 
 
 
@@ -381,18 +418,37 @@ public class SaveSlotSystem : MonoBehaviour
 
     public void ModifyProgress(int slot, int amount)
     {
+        // Ambil progress saat ini dari PlayerPrefs
         int currentProgress = PlayerPrefs.GetInt(savePrefix + slot + "_progress", 0);
-        int newProgress = Mathf.Clamp(currentProgress + amount, 0, 100);
 
+        // Tambahkan nilai amount ke currentProgress
+        int newProgress = currentProgress + amount;
+
+        // Batasi progress agar tidak melebihi 100
+        newProgress = Mathf.Clamp(newProgress, 0, 100);
+
+        // Simpan progress yang baru ke PlayerPrefs
         PlayerPrefs.SetInt(savePrefix + slot + "_progress", newProgress);
         PlayerPrefs.Save();
 
-        progress[slot] = newProgress; // 🔹 Pastikan progress[] diperbarui juga
+        // Perbarui array progress[]
+        progress[slot] = newProgress;
 
-        LoadSaveSlots(); // 🔹 Pastikan tampilan UI juga diperbarui
+        // Perbarui tampilan UI
+        LoadSaveSlots();
 
         Debug.Log("Progress di slot " + slot + " berubah menjadi " + newProgress + "%");
     }
+
+
+    public void NyimpanProgress()
+    {
+        int lastSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+        // Mengambil nilai progress yang sudah disimpan, tanpa penambahan apapun
+        int loadedProgress = PlayerPrefs.GetInt(savePrefix + lastSlot + "_progress", 0); // Pastikan memuat nilai progress yang benar
+        progressSlider.value = loadedProgress; // Tetapkan progres yang benar tanpa modifikas
+    }
+
 
 
         
