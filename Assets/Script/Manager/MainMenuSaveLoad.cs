@@ -12,6 +12,8 @@ public class MainMenuSaveLoad : MonoBehaviour
     public TextMeshProUGUI[] slotTimes;   // Menampilkan waktu
     public TextMeshProUGUI[] slotProgress;   // Menampilkan progress dalam persen
 
+    public String[] nameNpc;
+
     public TextMeshProUGUI titleText; // Judul di atas slot
     private string savePrefix = "SaveSlot";
     public string triggerKey = "HasTriggered";
@@ -31,28 +33,40 @@ public class MainMenuSaveLoad : MonoBehaviour
 
         PlayerPrefs.SetInt(triggerKey, 0);
 
+        foreach (string npcName in nameNpc)
+        {
+            // Ganti nama NPC menjadi format lowercase (sesuai dengan format key yang digunakan)
+            string npcID = npcName.ToLower();
+            
+            // Hapus key terkait NPC di PlayerPrefs
+            PlayerPrefs.DeleteKey("NPC_" + slot + "_" + npcID);
+        }
+
+        
+        PlayerPrefs.SetInt("SelectedSaveSlot", 0); // Pastikan slot yang dipilih adalah 0
+        // 🔹 Pastikan jumlah interaksi NPC juga direset
+        PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", 0);
+
         // Simpan data baru ke slot yang dipilih
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Auto Save");
         PlayerPrefs.SetString(savePrefix + slot + "_date", DateTime.Now.ToString("dd/MM/yyyy"));
         PlayerPrefs.SetString(savePrefix + slot + "_time", DateTime.Now.ToString("HH:mm"));
         PlayerPrefs.SetString(savePrefix + slot + "_image", ""); // Jika ada gambar, simpan di sini
         PlayerPrefs.SetInt(savePrefix + slot + "_progress", 0); // Reset progress ke 0%
-        PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", -91.3f); // Reset posisi karakter
+        PlayerPrefs.SetFloat("SaveSlot" + slot + "_playerPosition", -91.3f); // Gunakan format key yang sama
 
-        PlayerPrefs.SetInt("SelectedSaveSlot", slot);
+        
+
+
         PlayerPrefs.Save();
 
-        Debug.Log("New Game dimulai di slot " + slot);
-
-        // Set progress di UI
-        if (slotProgress.Length > slot)
-        {
-            slotProgress[slot].text = "0%";
-        }
+        Debug.Log("New Game dimulai di slot " + slot + ". Semua interaksi NPC telah direset.");
 
         // Pindah ke scene game
         StartCoroutine(SceneController.instance.LoadScene("CutSceneIntro"));
     }
+
+
 
     void LoadSaveSlots()
     {

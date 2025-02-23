@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
+using UnityEngine.SceneManagement;
 
 public class MiniGameTap : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class MiniGameTap : MonoBehaviour
     public Texture handTapTexture2;
     public GameObject textEffectPrefab; // Prefab teks (+1)
     public Transform textEffectParent;  // Parent di dalam Canvas
+
+    public List<string> exceptionObjects;
 
     private float timer = 0f;
     private float maxTime = 60f;   // Biar gampang dites
@@ -90,7 +94,19 @@ public class MiniGameTap : MonoBehaviour
 
     void ShowWinScreen()
     {
-        StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+    
+        SaveSlotSystem.instance.ModifyProgress(currentSlot, 5);
+        SceneManager.UnloadSceneAsync("TapTapBerhadiah");
+        Scene scene = SceneManager.GetSceneByName("Gameplay");
+
+        foreach (GameObject obj in scene.GetRootGameObjects())
+        {
+            if(!exceptionObjects.Contains(obj.name))
+            {
+                obj.SetActive(true);
+            }
+        }
         
     }
 }
