@@ -89,7 +89,7 @@ public class DialogueManager : MonoBehaviour
         if (currentLineIndex == lineBeforeLoadScene && !sceneChanged && nextSceneName != null && dialogueQueue.Count != 0)
         {
             sceneChanged = true;
-            StartCoroutine(SceneController.instance.LoadScene(nextSceneName));
+            SceneManager.LoadScene(nextSceneName);
             return;
         }
         

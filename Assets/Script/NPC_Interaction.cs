@@ -107,17 +107,10 @@ public class NPC_Interaction : MonoBehaviour
         SaveSlotSystem.instance.AutoSaveSlot0();
 
         // Pastikan hanya NPC ini yang memuat scene yang benar
-        StartCoroutine(SceneController.instance.LoadScene(namaSceneLoad));
+        SceneManager.LoadScene(namaSceneLoad);
     }
 
 
-    private void loadPuzzle()
-    {
-        GameObject target = GameObject.Find("Player");
-        SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
-        SaveSlotSystem.instance.AutoSaveSlot0();
-        StartCoroutine(SceneController.instance.LoadScene(namaSceneLoad));
-    }
 
     private void SetDialogImages()
     {
