@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bunga.unity
     guid: b170441b208bc5a498f01db1d9f783dc
+  - enabled: 1
+    path: Assets/Scenes/CopetMaling.unity
+    guid: caa3ce7797230e044ba648de2fa385ff
   m_configObjects: {}

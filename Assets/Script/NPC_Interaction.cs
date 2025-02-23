@@ -19,6 +19,7 @@ public class NPC_Interaction : MonoBehaviour
     public string namaKiri;
     public string namaKanan;
     public int lineBeforeLoadScene;
+    public bool useLoadPuzzle = true; // Opsi di Inspector
 
     private bool canTalk = false;
     private bool isTalking = false;
@@ -79,7 +80,11 @@ public class NPC_Interaction : MonoBehaviour
         {
             isTalking = false;
             dialogueManager.dialogEnd = false;
-            LoadPuzzle();
+            
+            if (useLoadPuzzle)
+                LoadPuzzle();
+            else
+                balekKekamar();
         }
 
         if (dialogueManager.dialogEnd)
@@ -98,32 +103,30 @@ public class NPC_Interaction : MonoBehaviour
             Scene scene = SceneManager.GetSceneByName("Gameplay");
             foreach (GameObject obj in scene.GetRootGameObjects())
             {
-                    obj.SetActive(false);
-                
+                obj.SetActive(false);
             }
             isPuzzleSolved = true;
-            
             Invoke("tungguActive", 2f);
         }
+    }
+
+    private void balekKekamar()
+    {
+        StartCoroutine(SceneController.instance.LoadScene("Kamar"));
     }
 
     private void tungguActive()
     {
         puzzleActive = false;
-
     }
-
 
     private void MarkNPCAsInteracted()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        string npcname =  gameObject.name.ToLower();
+        string npcname = gameObject.name.ToLower();
         SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcname);
         SaveSlotSystem.instance.AutoSaveSlot();
-
-        PlayerPrefs.Save(); // Pastikan data tersimpan sebelum load
-
-        // Gunakan lambda expression agar bisa mengirim parameter
+        PlayerPrefs.Save();
         Invoke(nameof(DelayedLoadNPC), 0.2f);
     }
 
@@ -132,8 +135,6 @@ public class NPC_Interaction : MonoBehaviour
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
         SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
     }
-
-
 
     private void SetDialogImages()
     {
