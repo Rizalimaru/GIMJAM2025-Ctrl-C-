@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PThrow : MonoBehaviour
 {
@@ -31,6 +33,7 @@ public class PThrow : MonoBehaviour
     public float aimRange = 1.5f;
     private float gameTimer;
     private float gameTimeLimit = 5f; // Timer mundur dari 5 detik
+    public List<string> exceptionObjects;
 
     void Start()
     {
@@ -107,6 +110,7 @@ public class PThrow : MonoBehaviour
         if (maling == null) 
         {
             gameObject.SetActive(false); // Matikan script jika maling sudah kena
+
         }
     }
 
@@ -177,5 +181,23 @@ public class PThrow : MonoBehaviour
         {
             timerText.text = Mathf.Ceil(gameTimer).ToString(); // Tampilkan angka bulat
         }
+    }
+
+    public void ReturnToGame()
+    {   
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+    
+        SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
+        SceneManager.UnloadSceneAsync("CopetMaling");
+        Scene scene = SceneManager.GetSceneByName("Gameplay");
+
+        foreach (GameObject obj in scene.GetRootGameObjects())
+        {
+            if(!exceptionObjects.Contains(obj.name))
+            {
+                obj.SetActive(true);
+            }
+        }
+
     }
 }

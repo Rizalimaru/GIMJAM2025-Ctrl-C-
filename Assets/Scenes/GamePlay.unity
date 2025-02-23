@@ -3300,8 +3300,96 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 716539866}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.size
+      propertyPath: lineBeforeLoadScene
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[0].sentence
+      value: Oh young lady! Thank you so much for helping me retrieve my bag!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[1].sentence
+      value: "You\u2019re welcome, ma\u2019am. Are you okay? Did you get hurt"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[2].sentence
+      value: "As long as my bag and its content is unscathed, I\u2019m doing alright."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[3].sentence
+      value: "Are you sure\u2026? You should be worried about yourself first, ma\u2019am"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[4].sentence
+      value: "Haha don\u2019t worry, a scratch would heal in no time but the money
+        I earned won\u2019t just magically come back if it got stolen."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[5].sentence
+      value: "I\u2019m sure your life is more important than your wealth but okay"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[6].sentence
+      value: "You see\u2026 Life hasn\u2019t exactly been going well for me recently.
+        My son\u2026 He got diagnosed with early-stage cancer. I\u2019ve been working
+        really, really hard to earn money for his chemotherapy. I just got my paycheck
+        today, maybe that\u2019s why that thief targeted me. Haha, I\u2019m sure
+        I was going to lose it if all my hard work got stolen\u2026 But thank God,
+        you were there to help me. Truly, I can\u2019t thank you enough"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[7].sentence
+      value: "The lady stepped forward to give me a hug. I can feel her trembling
+        hands and the warmth of her embrace, a silent gratitude that can\u2019t be
+        uttered with words. I returned the hug, gently giving pats on her back to
+        soothe this poor lady. With a long sigh, the lady pulled away from the hug
+        and gave me a soft smile.\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[8].sentence
+      value: "Well then, I need to back home soon, my son must\u2019ve been waiting
+        for me. Once again, thank you, sweetheart. May your life be blessed with
+        fortune and happiness.s"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[0].characterName
+      value: Lady
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[1].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[2].characterName
+      value: Lady
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[3].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[4].characterName
+      value: Lady
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[5].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[6].characterName
+      value: Lady
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[7].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[8].characterName
+      value: Lady
       objectReference: {fileID: 0}
     - target: {fileID: 6436836648520314919, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: m_Name

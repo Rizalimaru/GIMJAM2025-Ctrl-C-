@@ -1208,6 +1208,9 @@ MonoBehaviour:
   timerText: {fileID: 2038870993}
   aimSpeed: 2
   aimRange: 2
+  exceptionObjects:
+  - UI HUD
+  - UI Game
 --- !u!4 &1295506420
 Transform:
   m_ObjectHideFlags: 0
