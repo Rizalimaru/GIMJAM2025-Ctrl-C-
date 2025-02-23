@@ -44,6 +44,7 @@ public class MiniGameTap : MonoBehaviour
         {
             ShowWinScreen();
             isFinished = true;
+            return;
         }
 
         // Tambahkan progress saat tap
@@ -89,7 +90,7 @@ public class MiniGameTap : MonoBehaviour
 
     void ShowWinScreen()
     {
-        winImage.SetActive(true); // Tampilkan layar kemenangan
-        Debug.Log("Menang! Dialog muncul.");
+        StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
+        
     }
 }

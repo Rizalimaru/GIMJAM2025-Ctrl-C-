@@ -11925,12 +11925,13 @@ MonoBehaviour:
   - {fileID: 6012716435122026294}
   - {fileID: 4196133271228151406}
   - {fileID: 3868099023272202908}
-  slotImages:
-  - {fileID: 802368793}
-  - {fileID: 617748114}
-  - {fileID: 1721690907}
-  - {fileID: 1700789581}
+  slotProgress:
+  - {fileID: 5204124078287771050}
+  - {fileID: 4507872331364170721}
+  - {fileID: 4281508562509031429}
+  - {fileID: 233834378624100226}
   titleText: {fileID: 2107582001}
+  triggerKey: HasTriggered
 --- !u!1 &1208911025
 GameObject:
   m_ObjectHideFlags: 0
