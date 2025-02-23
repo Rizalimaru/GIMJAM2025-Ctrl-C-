@@ -13,7 +13,6 @@ public class SaveSlotSystem : MonoBehaviour
     public TextMeshProUGUI[] slotTitles;  // Menampilkan "Save Slot X"
     public TextMeshProUGUI[] slotDates;   // Menampilkan tanggal
     public TextMeshProUGUI[] slotTimes;   // Menampilkan waktu
-    public Image[] slotImages;   // Gambar thumbnail setiap slot
     public TextMeshProUGUI titleText; // Judul di atas slot
 
 
@@ -99,7 +98,7 @@ public class SaveSlotSystem : MonoBehaviour
                 slotTitles[i].text = PlayerPrefs.GetString(savePrefix + i + "_title");
                 slotDates[i].text = PlayerPrefs.GetString(savePrefix + i + "_date");
                 slotTimes[i].text = PlayerPrefs.GetString(savePrefix + i + "_time");
-                slotImages[i].sprite = LoadImageFromPrefs(savePrefix + i + "_image");
+
                 playerLastPosition[i] = PlayerPrefs.GetFloat(savePrefix + i + "_playerPosition");
                 progress = PlayerPrefs.GetInt(savePrefix + i + "_progress");
 
@@ -110,7 +109,7 @@ public class SaveSlotSystem : MonoBehaviour
                 slotTitles[i].text = "Empty Slot";
                 slotDates[i].text = "";
                 slotTimes[i].text = "";
-                slotImages[i].sprite = defaultImage;
+
                 slotButtons[i].interactable = false; // Tidak bisa di-load
             }
 
@@ -127,7 +126,6 @@ public class SaveSlotSystem : MonoBehaviour
             slotTitles[0].text = PlayerPrefs.GetString(savePrefix + "0_title");
             slotDates[0].text = PlayerPrefs.GetString(savePrefix + "0_date");
             slotTimes[0].text = PlayerPrefs.GetString(savePrefix + "0_time");
-            slotImages[0].sprite = LoadImageFromPrefs(savePrefix + "0_image");
             playerLastPosition[0] = PlayerPrefs.GetFloat(savePrefix + "0_playerPosition");
             progress = PlayerPrefs.GetInt(savePrefix + "0_progress");
 
@@ -138,7 +136,6 @@ public class SaveSlotSystem : MonoBehaviour
             slotTitles[0].text = "No Auto Save";
             slotDates[0].text = "";
             slotTimes[0].text = "";
-            slotImages[0].sprite = defaultImage;
             slotButtons[0].interactable = false; // Tidak bisa di-load
         }
     }
@@ -157,11 +154,7 @@ public class SaveSlotSystem : MonoBehaviour
         PlayerPrefs.SetFloat(savePrefix + "0_playerPosition", playerX);
         PlayerPrefs.SetInt(savePrefix + "0_progress", progress);
 
-        // Simpan gambar jika perlu
-        if (slotImages.Length > 0 && slotImages[0] != null)
-        {
-            SaveImageToPrefs(savePrefix + "0_image", slotImages[0].sprite);
-        }
+
 
         // Tetapkan slot yang digunakan
         PlayerPrefs.SetInt("SelectedSaveSlot", 0);
@@ -241,7 +234,6 @@ public class SaveSlotSystem : MonoBehaviour
         PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
         PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress);
         PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
-        SaveImageToPrefs(savePrefix + slot + "_image", slotImages[slot].sprite);
 
         PlayerPrefs.Save();
         LoadSaveSlots();
