@@ -747,7 +747,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2563,8 +2563,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1878156471}
-  - {fileID: 1906120070}
   - {fileID: 1681567011}
+  - {fileID: 1906120070}
   - {fileID: 1263137115}
   - {fileID: 330646953}
   - {fileID: 805104809}
@@ -3276,6 +3276,10 @@ PrefabInstance:
       value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: panelChat
+      value: 
+      objectReference: {fileID: 1189825418560803679}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: leftSprite
       value: 
       objectReference: {fileID: 21300000, guid: 9e493596061f41647b7130ce2c19ca2a, type: 3}
@@ -3312,6 +3316,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size
       value: 21
       objectReference: {fileID: 0}
@@ -3319,6 +3327,26 @@ PrefabInstance:
       propertyPath: namaSceneLoad.Array.data[0]
       value: 66
       objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[0]
+      value: 
+      objectReference: {fileID: 1189825418560803679}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[1]
+      value: 
+      objectReference: {fileID: 1427723255}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[2]
+      value: 
+      objectReference: {fileID: 1916892415}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[3]
+      value: 
+      objectReference: {fileID: 152110743}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[4]
+      value: 
+      objectReference: {fileID: 1162852727}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforeLoadScene.Array.size
       value: 1
@@ -5467,9 +5495,37 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[0]
+      value: 
+      objectReference: {fileID: 1189825418560803679}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[1]
+      value: 
+      objectReference: {fileID: 1427723255}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[3]
+      value: 
+      objectReference: {fileID: 1916892415}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[4]
+      value: 
+      objectReference: {fileID: 152110743}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: objectsToHide.Array.data[5]
+      value: 
+      objectReference: {fileID: 2083978330}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[0].sentence
       value: "Do you need a hand? I don\u2019t mind helping.\r\n"
@@ -6775,6 +6831,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
+--- !u!1 &1189825418560803679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3741407973895385091, guid: faf48fbb8deea224d90e9a8862542c1a, type: 3}
+  m_PrefabInstance: {fileID: 1189825418560803678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1336474345754891901
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -80,19 +80,23 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
+        NPC_Interaction npc = FindObjectOfType<NPC_Interaction>();
+        if (npc != null && npc.puzzleActive) return; 
+
+
         if (dialogueQueue.Count == 0)
         {
             EndDialogue();
             return;
         }
-        
-        if (currentLineIndex == lineBeforeLoadScene && !sceneChanged && nextSceneName != null && dialogueQueue.Count != 0)
+
+        if (currentLineIndex == lineBeforeLoadScene && !sceneChanged && nextSceneName != null)
         {
             sceneChanged = true;
-            SceneManager.LoadScene(nextSceneName);
+            SceneManager.LoadScene(nextSceneName, LoadSceneMode.Additive);
             return;
         }
-        
+
         DialogueLine currentLine = dialogueQueue.Dequeue();
         nameText.text = currentLine.characterName;
         StopAllCoroutines();
@@ -101,6 +105,7 @@ public class DialogueManager : MonoBehaviour
         UpdateCharacterOpacity(currentLine.characterName);
         currentLineIndex++;
     }
+
 
     IEnumerator TypeSentence(string sentence)
     {

@@ -6,7 +6,7 @@ using TMPro;
 
 public class NPC_Interaction : MonoBehaviour
 {
-    private Collider2D coliider;
+    private Collider2D colliderNPC;
     public GameObject question_mark;
     public GameObject LeftDialogImage;
     public GameObject RightDialogImage;
@@ -14,37 +14,28 @@ public class NPC_Interaction : MonoBehaviour
     public Sprite rightSprite;
     public DialogueManager dialogueManager;
     public DialogueManager.Dialogue dialogue;
+
     public string namaSceneLoad;
     public string namaKiri;
     public string namaKanan;
     public int lineBeforeLoadScene;
+
     private bool canTalk = false;
     private bool isTalking = false;
-    private int currentLineIndex = 0; // Menyimpan baris dialog saat ini
-
+    private int currentLineIndex = 0; 
+    public bool puzzleActive = false; // Cek apakah puzzle sedang berjalan
+    public bool isPuzzleSolved = false; // Cek apakah puzzle sudah selesai
 
     void Start()
     {
-        dialogueManager.namaKiri = namaKiri;
-        dialogueManager.namaKanan = namaKanan;
-        dialogueManager.lineBeforeLoadScene = lineBeforeLoadScene;
-        dialogueManager.nextSceneName = namaSceneLoad;
-
         SetDialogImages();
     }
+
     private void Awake()
     {
         question_mark.SetActive(false);
-        coliider = GetComponent<Collider2D>();
-
-        
-        dialogueManager.namaKiri = namaKiri;
-        dialogueManager.namaKanan = namaKanan;
-        dialogueManager.lineBeforeLoadScene = lineBeforeLoadScene;
-        dialogueManager.nextSceneName = namaSceneLoad;
-
+        colliderNPC = GetComponent<Collider2D>();
         SetDialogImages();
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -69,28 +60,28 @@ public class NPC_Interaction : MonoBehaviour
     {
         if (canTalk && Input.GetKeyDown(KeyCode.Space))
         {
-            if (!isTalking)
+            if (puzzleActive) return; // Blokir dialog jika puzzle masih aktif
+
+            if (!isTalking )
             {
                 dialogueManager.StartDialogue(dialogue, namaKiri, namaKanan, leftSprite, rightSprite);
                 isTalking = true;
-                currentLineIndex = 0; // Reset indeks saat mulai dialog
+                currentLineIndex = 0; 
             }
             else
             {
                 dialogueManager.DisplayNextSentence();
-                currentLineIndex++; // Naikkan indeks setiap kali pemain lanjut dialog
+                currentLineIndex++; 
             }
         }
 
-        // Jika dialog mencapai lineBeforeLoadScene, ganti scene
-        if (isTalking && currentLineIndex == lineBeforeLoadScene)
+        if (isTalking && currentLineIndex == lineBeforeLoadScene && isPuzzleSolved == false)
         {
             isTalking = false;
             dialogueManager.dialogEnd = false;
             LoadPuzzle();
         }
 
-        // Jika dialog selesai tanpa pergantian scene, reset
         if (dialogueManager.dialogEnd)
         {
             isTalking = false;
@@ -100,17 +91,25 @@ public class NPC_Interaction : MonoBehaviour
 
     private void LoadPuzzle()
     {
-        GameObject target = GameObject.Find("Player");
-
-        // Simpan posisi terakhir pemain
-        SaveSlotSystem.instance.playerLastPosition[0] = target.transform.position.x;
-        SaveSlotSystem.instance.AutoSaveSlot0();
-
-        // Pastikan hanya NPC ini yang memuat scene yang benar
-        SceneManager.LoadScene(namaSceneLoad);
+        if (!puzzleActive ) 
+        {
+            SceneManager.LoadScene(namaSceneLoad, LoadSceneMode.Additive);
+            Scene scene = SceneManager.GetSceneByName("Gameplay");
+            foreach (GameObject obj in scene.GetRootGameObjects())
+            {
+                    obj.SetActive(false);
+                
+            }
+            isPuzzleSolved = true;
+            puzzleActive = true;
+            Invoke("tungguActive", 2);
+        }
     }
 
-
+    private void tungguActive()
+    {
+        puzzleActive = false;
+    }
 
     private void SetDialogImages()
     {

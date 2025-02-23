@@ -2624,6 +2624,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressBar: {fileID: 1160278345}
   hasil: {fileID: 327065615}
+  exceptionObjects:
+  - UI HUD
+  - UI Game
 --- !u!1 &1892281473
 GameObject:
   m_ObjectHideFlags: 0
