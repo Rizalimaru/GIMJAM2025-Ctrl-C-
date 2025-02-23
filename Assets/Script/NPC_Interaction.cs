@@ -126,8 +126,8 @@ private void LoadPuzzle()
     }
     else if (namaSceneLoad == "TongSampah")
     {
-        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, "NPC_Bunga");
-        Debug.Log("BUNGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ");
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, "NPC_TongSampah");
+        Debug.Log("TONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG ");
     }
     SaveSlotSystem.instance.AutoSaveSlot();
 
