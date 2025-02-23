@@ -35,8 +35,12 @@ public class ManagerMini : MonoBehaviour
 
     public void ReturnToGame()
     {   
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+    
+        SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
         SceneManager.UnloadSceneAsync("TongSampah");
         Scene scene = SceneManager.GetSceneByName("Gameplay");
+
         foreach (GameObject obj in scene.GetRootGameObjects())
         {
             if(!exceptionObjects.Contains(obj.name))

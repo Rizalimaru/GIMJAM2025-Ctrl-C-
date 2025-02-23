@@ -675,6 +675,9 @@ MonoBehaviour:
   handTapTexture2: {fileID: 2800000, guid: f1111a608afda0a40ab9d65b8ac54c3b, type: 3}
   textEffectPrefab: {fileID: 3540957371084103794, guid: e6f827ab170fa28498573b150bf97068, type: 3}
   textEffectParent: {fileID: 214806322}
+  exceptionObjects:
+  - UI HUD
+  - UI Game
 --- !u!4 &1218663369
 Transform:
   m_ObjectHideFlags: 0

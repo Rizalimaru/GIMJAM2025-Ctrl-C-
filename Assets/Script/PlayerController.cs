@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
             {
                 float playerPosX = PlayerPrefs.GetFloat("SaveSlot" + selectedSlot + "_playerPosition");
                 transform.position = new Vector2(playerPosX, -2.02f);
-                Debug.Log("ada");
+
+                Debug.Log("ada di slot " + selectedSlot);
             }
             else 
             {

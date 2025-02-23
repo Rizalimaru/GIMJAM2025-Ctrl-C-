@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System.Collections;
 using TMPro;
+using System.Collections;
 
 public class PThrow : MonoBehaviour
 {
@@ -38,7 +37,7 @@ public class PThrow : MonoBehaviour
         Time.timeScale = 1f;
         handSpriteRenderer.sprite = readyHandSprite;
         gameOverUI.SetActive(false); // Sembunyikan UI Game Over di awal
-        restartButton.onClick.AddListener(RestartScene);
+        restartButton.onClick.AddListener(RestartGame); // Mengganti restartScene dengan RestartGame
         
         gameTimer = gameTimeLimit; // Set timer mulai dari 5 detik
         UpdateTimerUI();
@@ -51,14 +50,11 @@ public class PThrow : MonoBehaviour
             return;
         }
 
-        if(gameTimer>= 0){
+        if(gameTimer >= 0)
+        {
             gameTimer -= Time.deltaTime;
             UpdateTimerUI();
         }
-
-    
-        // Kurangi timer setiap frame
-
 
         // Jika timer habis, Game Over
         if (gameTimer <= 0) 
@@ -75,7 +71,6 @@ public class PThrow : MonoBehaviour
                 0
             );
             crosshair.transform.position = Vector3.Lerp(crosshair.transform.position, targetPosition, Time.deltaTime * aimSpeed);
-
 
             if (Input.GetKeyDown(KeyCode.Space) && crosshairCollider.IsTouching(malingCollider))
             {
@@ -151,10 +146,29 @@ public class PThrow : MonoBehaviour
         if (copetMove != null) copetMove.Disable();
     }
 
-    void RestartScene()
+    void RestartGame()
     {
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Reset timer and UI
+        gameTimer = gameTimeLimit;
+        UpdateTimerUI();
+
+        // Reset game objects and states here
+        if (copetMove != null)
+        {
+            copetMove.Enable();
+        }
+
+        // Reset other states if necessary (for example, position, animation, etc.)
+        handSpriteRenderer.sprite = readyHandSprite;
+        powerBar.gameObject.SetActive(false);
+
+        // Set the gameOverUI inactive to hide it after restart
+        gameOverUI.SetActive(false);
+
+        // Reset game logic
+        isAiming = true;
+        isPowering = false;
+        isOnCooldown = false;
     }
 
     void UpdateTimerUI()
