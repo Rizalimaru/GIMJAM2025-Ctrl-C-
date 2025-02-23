@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CutScene/CutSceneCermin.unity
     guid: e1552bea3a36eee4bb70b6372b196f29
+  - enabled: 1
+    path: Assets/Scenes/CutScene/DoorCutScene.unity
+    guid: f93b0a09d00d0bc4994192bf80bf6a3e
+  - enabled: 1
+    path: Assets/Scenes/TapTapBerhadiah.unity
+    guid: 16571762d91afed478969f57b685c65c
   m_configObjects: {}

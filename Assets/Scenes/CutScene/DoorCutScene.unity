@@ -190,7 +190,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 550071340}
   - component: {fileID: 550071339}
   - component: {fileID: 550071343}
+  - component: {fileID: 550071344}
   m_Layer: 5
   m_Name: Timeline
   m_TagString: Untagged
@@ -602,6 +603,20 @@ PlayableDirector:
     value: {fileID: 511088360}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &550071344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550071338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e71f8c3ddcf974da5de59887d8c076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 550071343}
+  nextSceneName: GamePlay
 --- !u!1 &1458522920
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class NPC_Interaction : MonoBehaviour
 {
@@ -9,25 +10,28 @@ public class NPC_Interaction : MonoBehaviour
     public GameObject question_mark;
     public GameObject LeftDialogImage;
     public GameObject RightDialogImage;
-    public Sprite leftSprite;  // Tambahkan variabel untuk sprite kiri
-    public Sprite rightSprite; // Tambahkan variabel untuk sprite kanan
+    public Sprite leftSprite;
+    public Sprite rightSprite;
     public DialogueManager dialogueManager;
     public DialogueManager.Dialogue dialogue;
     public string namaSceneLoad;
     public string namaKiri;
     public string namaKanan;
+    public int lineBeforeLoadScene;
     private bool canTalk = false;
     private bool isTalking = false;
-
+    
     private void Awake()
     {
         question_mark.SetActive(false);
         coliider = GetComponent<Collider2D>();
-        
+
         dialogueManager.namaKiri = namaKiri;
         dialogueManager.namaKanan = namaKanan;
+        dialogueManager.lineBeforeLoadScene = lineBeforeLoadScene;
+        dialogueManager.nextSceneName = namaSceneLoad;
 
-        SetDialogImages(); // Panggil fungsi untuk mengatur gambar dialog
+        SetDialogImages();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -79,7 +83,6 @@ public class NPC_Interaction : MonoBehaviour
         StartCoroutine(SceneController.instance.LoadScene(namaSceneLoad));
     }
 
-    // Fungsi untuk mengubah sprite pada dialog box
     private void SetDialogImages()
     {
         if (LeftDialogImage != null && leftSprite != null)
