@@ -1209,7 +1209,7 @@ MonoBehaviour:
   aimSpeed: 2
   aimRange: 2
   exceptionObjects:
-  - s
+  - DialogIbu
   - UI Game
   - CanvasOptionTolong
 --- !u!4 &1295506420

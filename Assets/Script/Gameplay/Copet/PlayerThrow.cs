@@ -36,6 +36,7 @@ public class PThrow : MonoBehaviour
     public float aimRange = 1.5f;
     private float gameTimer;
     private float gameTimeLimit = 5f; // Timer mundur dari 5 detik
+    private bool gameKelar = false;
     public List<string> exceptionObjects;
 
     void Start()
@@ -117,8 +118,10 @@ void Update()
 
     if (maling == null) 
     {
-        ReturnToGame();
-        return;
+        if(gameKelar== false)
+        {
+            ReturnToGame();
+        }
     }
 }
 
@@ -251,7 +254,15 @@ void RestartGame()
             timerText.text = Mathf.Ceil(gameTimer).ToString(); // Tampilkan angka bulat
         }
     }
-
+    
+    IEnumerator loadBalikinTas()
+    {
+       SceneManager.LoadScene("CutSceneNgasihTas", LoadSceneMode.Additive);
+       yield return new WaitForSeconds(3f);
+       SceneManager.UnloadSceneAsync("CutSceneNgasihTas");
+       gameKelar = true;
+       ReturnToGame();
+    }
     public void ReturnToGame()
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
