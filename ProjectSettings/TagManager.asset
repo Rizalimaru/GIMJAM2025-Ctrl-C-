@@ -8,6 +8,7 @@ TagManager:
   - TrashBin
   - CopetEnemy
   - FlowerTarget
+  - Sandal
   layers:
   - Default
   - TransparentFX

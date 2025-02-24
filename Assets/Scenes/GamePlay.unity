@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &148743543
+--- !u!1 &133417042
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,156 +299,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 148743546}
-  - component: {fileID: 148743545}
-  - component: {fileID: 148743544}
-  - component: {fileID: 148743547}
+  - component: {fileID: 133417044}
+  - component: {fileID: 133417043}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: puzzleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!50 &148743544
-Rigidbody2D:
-  serializedVersion: 4
+  m_IsActive: 1
+--- !u!114 &133417043
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148743543}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!212 &148743545
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148743543}
+  m_GameObject: {fileID: 133417042}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &148743546
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb10039796dd934baea3f35bba08386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &133417044
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148743543}
+  m_GameObject: {fileID: 133417042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0552, y: -4.0121, z: 0}
-  m_LocalScale: {x: 50, y: 1.908807, z: 1}
+  m_LocalPosition: {x: -39.709766, y: 0.2584309, z: -0.022854738}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &148743547
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148743543}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 76.799995, y: 10.799999}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &152110743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,14 +1143,14 @@ MonoBehaviour:
     characterName: Runa
     characterAvatar: {fileID: 21300000, guid: 9e493596061f41647b7130ce2c19ca2a, type: 3}
     sentences:
-    - "From the distance, I saw an older gentleman standing by the side of a crossroad.
-      He keeps looking at both directions, seemingly wanting to cross the road and
-      yet he hasn\u2019t moved for a single inch since a few minutes ago. The continuous
-      stream of vehicles must be a daunting hurdle, can\u2019t blame him really.\r"
+    - "From the distance, I saw an older lady standing by the side of a crossroad.
+      She keeps looking at both directions, seemingly wanting to cross the road and
+      yet she hasn\u2019t moved for a single inch since a few minutes ago. The continuous
+      stream of vehicles must be a daunting hurdle, can\u2019t blame her really."
   mainCamera: {fileID: 1177135342}
   cutSceneCamera: {fileID: 835523356}
   player: {fileID: 218434758}
-  target: {fileID: 822413435}
+  target: {fileID: 1878156471}
   isCutSceneTriggered: 0
   transitionSpeed: 2
 --- !u!1001 &366857056
@@ -4737,6 +4623,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: npcName
+      value: NPC_Florist
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaKiri
       value: Runa
       objectReference: {fileID: 0}
@@ -4781,6 +4671,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: puzzleScenes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaSceneLoad.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -4794,7 +4688,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size
-      value: 21
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: puzzleScenes.Array.data[0]
+      value: Bunga
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: exceptionObjects.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaSceneLoad.Array.data[0]
@@ -4829,7 +4731,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: exceptionObjects.Array.data[0]
+      value: DialogueManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforeLoadScene.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: lineBeforeLoadPuzzle.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
@@ -4839,6 +4749,10 @@ PrefabInstance:
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforePlayCutscene.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: lineBeforeLoadPuzzle.Array.data[0]
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforePlayCutscene.Array.data[0]
@@ -4865,7 +4779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[4].sentence
-      value: "es, about that\u2026 A cat snuck into the store just a few minutes
+      value: "Yes, about that\u2026 A cat snuck into the store just a few minutes
         ago. I didn\u2019t know about it and accidentally stepped on its tail. The
         startled cat ran all over the shop and knocked over my bouquet on its way
         out! Now it\u2019s all ruined\u2026 Ah, why did this happen when my client
@@ -4886,62 +4800,62 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[8].sentence
-      value: "Hah\u2026 I can rest easy now that the bouquet has been fixed."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[9].sentence
       value: "I\u2019m glad to hear that. \u2026 Speaking of which, what is this
         bouquet for? It seems to have a very specific flowers and arrangement for
         it."
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[10].sentence
+      propertyPath: dialogue.lines.Array.data[9].sentence
       value: My client said this is for their wedding anniversary. I tried to make
         a bouquet that convey their everlasting love and commitment.
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[11].sentence
+      propertyPath: dialogue.lines.Array.data[10].sentence
       value: Oh? It has a specific meaning? I thought you could arrange any flower
         into a bouquet as long as they look pretty together.
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[12].sentence
+      propertyPath: dialogue.lines.Array.data[11].sentence
       value: "Haha, while yes you can arrange a bouquet however you like, each flower
         has their own meaning behind them. For example, roses are known to be a symbol
         for love and romance but white rose specifically means commitment and eternal
-        love, that\u2019s why it\u2019s popular for wedding and anniversary"
+        love, that\u2019s why it\u2019s popular for wedding and anniversary."
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[13].sentence
+      propertyPath: dialogue.lines.Array.data[12].sentence
       value: Heh, I never knew about that before.
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[14].sentence
+      propertyPath: dialogue.lines.Array.data[13].sentence
       value: "To have such a beautiful and deep meaning for a fragile, fleeting existence\u2026
         Flowers are very interesting, isn\u2019t it?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[14].sentence
+      value: ..Yeahh
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[15].sentence
-      value: "To have such a beautiful and deep meaning for a fragile, fleeting existence\u2026
-        Flowers are very interesting, isn\u2019t it?"
-      objectReference: {fileID: 0}
-    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[16].sentence
-      value: "\u2026Yeah"
-      objectReference: {fileID: 0}
-    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[17].sentence
       value: "Well that being said, here, take this flower. It\u2019s a token of
         my gratitude."
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[18].sentence
+      propertyPath: dialogue.lines.Array.data[16].sentence
       value: "Eh? You don\u2019t mind giving it to me?"
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[19].sentence
+      propertyPath: dialogue.lines.Array.data[17].sentence
+      value: "Of course I don\u2019t mind! It\u2019s a fitting gift for a kind and
+        beautiful soul like yours."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[18].sentence
       value: "Of course I don\u2019t mind! It\u2019s a fitting gift for a kind and
         beautiful soul like yours"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[19].sentence
+      value: "Aw, thank you\u2026"
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[20].sentence
@@ -4961,7 +4875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[2].characterName
-      value: Runa
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[3].characterName
@@ -4981,39 +4895,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[7].characterName
-      value: Runa
+      value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[8].characterName
-      value: Florist
+      value: Runa
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[9].characterName
-      value: Runa
+      value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[10].characterName
-      value: Florist
+      value: Runa
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[11].characterName
-      value: Runa
+      value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[12].characterName
-      value: Florist
+      value: Runa
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[13].characterName
-      value: Runa
-      objectReference: {fileID: 0}
-    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[14].characterName
       value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-      propertyPath: dialogue.lines.Array.data[15].characterName
+      propertyPath: dialogue.lines.Array.data[14].characterName
       value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[15].characterName
+      value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[16].characterName
@@ -5025,11 +4939,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[18].characterName
-      value: Runa
+      value: Florist
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[19].characterName
-      value: Florist
+      value: Runa
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[20].characterName
@@ -6764,7 +6678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6846761590205838567, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.14
+      value: 20.54
       objectReference: {fileID: 0}
     - target: {fileID: 6846761590205838567, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7745,6 +7659,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: npcName
+      value: NPC_CS
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaKiri
       value: Runa
       objectReference: {fileID: 0}
@@ -7782,7 +7700,7 @@ PrefabInstance:
       objectReference: {fileID: 716539866}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforeLoadScene
-      value: 5
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: objectsToHide.Array.size
@@ -7791,6 +7709,10 @@ PrefabInstance:
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: exceptionObjects.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: objectsToHide.Array.data[0]
@@ -7816,6 +7738,18 @@ PrefabInstance:
       propertyPath: objectsToHide.Array.data[5]
       value: 
       objectReference: {fileID: 2083978330}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: exceptionObjects.Array.data[0]
+      value: DialogueManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: exceptionObjects.Array.data[1]
+      value: EventSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: exceptionObjects.Array.data[2]
+      value: NPC
+      objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[0].sentence
       value: "Do you need a hand? I don\u2019t mind helping.\r\n"
@@ -9505,13 +9439,25 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b9fe625ed98113e42bb3198c33701eca, type: 3}
+    - target: {fileID: 453734711166103670, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861057902525589103, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710375758647394031, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaKiri
       value: Runa
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaKanan
-      value: Nenek
+      value: Grandma
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: leftSprite
@@ -9538,20 +9484,115 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 716539866}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: lineBeforeLoadScene
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size
-      value: 4
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[0].sentence
-      value: Halo nek
+      value: "Excuse me, Ma\u2019am? Are you planning to cross the road?"
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[1].sentence
-      value: Galo Juga
+      value: "Yes\u2026 I wanted to go back home but none of these cars are willing
+        to let me pass through."
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[2].sentence
-      value: Ada yang bisa saya bantu
+      value: Would you like some assistance? I can help you get to the other side
+        of the road.I can help you get to the other side of the road.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[3].sentence
+      value: "You\u2019re willing to\u2026? Well, if you don\u2019t mind\u2026"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[4].sentence
+      value: "Thank you very much, Dear. You\u2019re such an angel for helping this
+        old lady."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[5].sentence
+      value: "It\u2019s nothing really. I was going to cross the road anyway."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[6].sentence
+      value: "Dear, you remind me a lot about my granddaughter. You\u2019re just
+        as sweet and as kind as her! Oh, I can\u2019t wait to see her in person again"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[7].sentence
+      value: "\u2026I\u2019m guessing you haven\u2019t been able to meet your granddaughter
+        in a while?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[8].sentence
+      value: "Unfortunately, yes. My granddaughter and her family moved abroad 6
+        years ago. Due to circumstances, they haven\u2019t been able to come back
+        to this country. A few weeks ago, my son called, saying that they could finally
+        visit me during this holiday. They\u2019ll be arriving at the airport tomorrow
+        morning."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[9].sentence
+      value: "Oh, that\u2019s a wonderful news."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[10].sentence
+      value: "Absolutely! I was so elated I thought I\u2019d buy some snacks she
+        used to like back when she was younger as a homecoming gift. Now that I think
+        about it though\u2026 I\u2019m a little worried\u2026"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[11].sentence
+      value: Why is that?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[12].sentence
+      value: "She graduated from high school recently and well\u2026 She\u2019s pretty
+        much an adult now. I\u2019m afraid these snacks are too childish for her
+        taste\u2026 However, I don\u2019t know what kind of gift youngsters nowadays
+        like to receive so I\u2019m at a lost"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[13].sentence
+      value: "Ah I see\u2026\u201D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[14].sentence
+      value: "A gift for a young adult woman like me huh? Hmm\u2026 Oh that\u2019s
+        right-\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[15].sentence
+      value: "I might have something that\u2019s suitable for your granddaughter,
+        Ma\u2019am. Here."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[16].sentence
+      value: "\u2026Flowers?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[17].sentence
+      value: "Yeah, it might not be an expensive fancy gift but in my opinion, it
+        has much deeper value behind it. It doesn\u2019t matter what kind of gift
+        you\u2019re giving to your granddaughter, as long as you\u2019re sincere
+        with your intention, I\u2019m sure she\u2019ll love it regardless."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[18].sentence
+      value: "Ah, I understand now\u2026 My, I never expected I\u2019d meet such
+        a wise young lady today, I hope you can find your new beginnings like how
+        this daisy, small yet its resilience blooming amidst adversity hahaha!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[19].sentence
+      value: Well, this old lady better be going then. I still need to prepare the
+        house before my son and my granddaughter arrive tomorrow. Once again, thank
+        you so much for helping me, Dear. Have a nice day.
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[0].characterName
@@ -9559,11 +9600,79 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[1].characterName
-      value: Nenek
+      value: Grandma
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.data[2].characterName
       value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[3].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[4].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[5].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[6].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[7].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[8].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[9].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[10].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[11].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[12].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[13].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[14].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[15].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[16].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[17].characterName
+      value: Runa
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[18].characterName
+      value: Grandma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: dialogue.lines.Array.data[19].characterName
+      value: Grandma
       objectReference: {fileID: 0}
     - target: {fileID: 6436836648520314919, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: m_Name
@@ -9571,7 +9680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6846761590205838567, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.48
+      value: -5.61
       objectReference: {fileID: 0}
     - target: {fileID: 6846761590205838567, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9620,7 +9729,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 989187314}
   - {fileID: 218434758}
-  - {fileID: 148743546}
   - {fileID: 1189825418560803678}
   - {fileID: 1229021022}
   - {fileID: 851162266225870256}
@@ -9642,3 +9750,4 @@ SceneRoots:
   - {fileID: 33621550}
   - {fileID: 1601371663}
   - {fileID: 349903409}
+  - {fileID: 133417044}

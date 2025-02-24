@@ -23,6 +23,9 @@ public class PThrow : MonoBehaviour
     public Button restartButton; // Tombol restart
     public TextMeshProUGUI timerText; // UI untuk menampilkan timer
 
+    private bool isGameOver = false; // 🔹 Flag untuk menandakan game sudah berakhir
+
+
     private bool isAiming = true;
     private bool isPowering = false;
     private float power = 0f;
@@ -46,23 +49,25 @@ public class PThrow : MonoBehaviour
         UpdateTimerUI();
     }
 
-    void Update()
+void Update()
+{
+    if (isGameOver) return; // 🔹 Cegah semua input jika game over
+
+    if (gameTimer >= 0)
     {
+        gameTimer -= Time.deltaTime;
+        UpdateTimerUI();
+    }
 
-        if(gameTimer >= 0)
-        {
-            gameTimer -= Time.deltaTime;
-            UpdateTimerUI();
-        }
+    if (gameTimer <= 0) 
+    {
+        GameOver();
+        return;
+    }
 
-        // Jika timer habis, Game Over
-        if (gameTimer <= 0) 
-        {
-            GameOver();
-            return;
-        }
-
-        if (isAiming && !isOnCooldown)
+    if (isAiming && !isOnCooldown)
+    {
+        if (maling != null)
         {
             Vector3 targetPosition = maling.position + new Vector3(
                 Mathf.Sin(Time.time * aimSpeed) * aimRange,
@@ -70,45 +75,50 @@ public class PThrow : MonoBehaviour
                 0
             );
             crosshair.transform.position = Vector3.Lerp(crosshair.transform.position, targetPosition, Time.deltaTime * aimSpeed);
-
-            if (Input.GetKeyDown(KeyCode.Space) && crosshairCollider.IsTouching(malingCollider))
-            {
-                copetMove.Disable();
-                isAiming = false;
-                isPowering = true;
-                powerBar.gameObject.SetActive(true);
-                lockedTarget = crosshair.transform.position;
-            }
         }
-        else if (isPowering)
+        else
         {
-            if (increasing)
-                power += Time.deltaTime * 1.5f;
-            else
-                power -= Time.deltaTime * 1.5f;
-
-            if (power >= 1f) increasing = false;
-            if (power <= 0f) increasing = true;
-
-            powerBar.value = power;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                isPowering = false;
-                powerBar.gameObject.SetActive(false);
-                ThrowSandal(power);
-                handSpriteRenderer.sprite = throwHandSprite;
-                StartCoroutine(ThrowCooldown());
-            }
-        }
-
-        // Jika maling kena dan hilang, hentikan timer
-        if (maling == null) 
-        {
-            ReturnToGame();
             return;
         }
+
+        if (!isGameOver && Input.GetKeyDown(KeyCode.Space) && crosshairCollider.IsTouching(malingCollider))
+        {
+            copetMove.Disable();
+            isAiming = false;
+            isPowering = true;
+            powerBar.gameObject.SetActive(true);
+            lockedTarget = crosshair.transform.position;
+        }
     }
+    else if (isPowering)
+    {
+        if (increasing)
+            power += Time.deltaTime * 1.5f;
+        else
+            power -= Time.deltaTime * 1.5f;
+
+        if (power >= 1f) increasing = false;
+        if (power <= 0f) increasing = true;
+
+        powerBar.value = power;
+
+        if (!isGameOver && Input.GetKeyDown(KeyCode.Space))
+        {
+            isPowering = false;
+            powerBar.gameObject.SetActive(false);
+            ThrowSandal(power);
+            handSpriteRenderer.sprite = throwHandSprite;
+            StartCoroutine(ThrowCooldown());
+        }
+    }
+
+    if (maling == null) 
+    {
+        ReturnToGame();
+        return;
+    }
+}
+
 
     void ThrowSandal(float power)
     {
@@ -139,38 +149,79 @@ public class PThrow : MonoBehaviour
 
     void GameOver()
     {
+        if (isGameOver) return;
+        
+        isGameOver = true;
         Time.timeScale = 0f;
-        gameOverUI.SetActive(true); // Tampilkan UI Game Over
+        gameOverUI.SetActive(true);
         isAiming = false;
         isPowering = false;
-        if (copetMove != null) copetMove.Disable();
-    }
+        isOnCooldown = false;
 
-    void RestartGame()
-    {
-        // Reset timer and UI
-        gameTimer = gameTimeLimit;
-        UpdateTimerUI();
-        Time.timeScale = 1f;
-        // Reset game objects and states here
-
-        if (copetMove != null)
-        {
-            copetMove.Enable();
-        }
-
-        // Reset other states if necessary (for example, position, animation, etc.)
-        handSpriteRenderer.sprite = readyHandSprite;
         powerBar.gameObject.SetActive(false);
 
-        // Set the gameOverUI inactive to hide it after restart
-        gameOverUI.SetActive(false);
+        if (copetMove != null) copetMove.Disable();
 
-        // Reset game logic
-        isAiming = true;
-        isPowering = false;
-        isOnCooldown = false;
+
+
     }
+
+
+
+
+
+void RestartGame()
+{
+    if (!gameOverUI.activeSelf) return;
+
+    Debug.Log("🔄 RestartGame() dipanggil!");
+
+    // Hapus semua sandal yang sudah dilempar
+    foreach (GameObject sandal in GameObject.FindGameObjectsWithTag("Sandal"))
+    {
+        Destroy(sandal);
+    }
+
+    // Reset timer dan UI
+    gameTimer = gameTimeLimit;
+    UpdateTimerUI();
+    Time.timeScale = 1f;
+
+    // 🔹 Reset game objects dan states
+    if (copetMove != null)
+    {
+        copetMove.Enable();
+    }
+
+    handSpriteRenderer.sprite = readyHandSprite;
+    powerBar.gameObject.SetActive(false);
+
+    // Sembunyikan UI Game Over setelah restart
+    gameOverUI.SetActive(false);
+
+    // 🔹 Reset game logic
+    isAiming = true;   // ✅ Aktifkan kembali aim
+    isPowering = false;
+    isOnCooldown = false;
+    isGameOver = false; // ✅ Pastikan game tidak dalam status game over lagi
+
+    // 🔹 Pastikan crosshair bergerak kembali
+    if (maling != null)
+        {
+            Vector3 targetPosition = maling.position + new Vector3(
+                Mathf.Sin(Time.time * aimSpeed) * aimRange,
+                Mathf.Cos(Time.time * aimSpeed) * aimRange,
+                0
+            );
+            crosshair.transform.position = targetPosition; // 🔥 LANGSUNG SET POSISI CROSSHAIR
+            Debug.Log("🔄 Crosshair di-reset ke posisi target: " + targetPosition);
+        }
+
+    
+
+    
+}
+
 
     void UpdateTimerUI()
     {

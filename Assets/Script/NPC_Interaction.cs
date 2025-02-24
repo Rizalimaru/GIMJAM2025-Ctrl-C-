@@ -19,17 +19,20 @@ public class NPC_Interaction : MonoBehaviour
     public string namaKiri;
     public string namaKanan;
     public int lineBeforeLoadScene;
-    public bool useLoadPuzzle = true; // Opsi di Inspector
-    public bool usePlayCutscene = false; // Opsi tambahan untuk Play Cutscene
-    public List<string> cutsceneScenes; // List cutscene yang akan dimainkan
-    public List<int> lineBeforePlayCutscene; // Line sebelum cutscene dimainkan
+    public bool useLoadPuzzle = true;
+    public bool usePlayCutscene = false;
+    public List<string> cutsceneScenes;
+    public List<int> lineBeforePlayCutscene;
 
     private bool canTalk = false;
     private bool isTalking = false;
-    private int currentLineIndex = 0; 
-    public bool puzzleActive = false; // Cek apakah puzzle sedang berjalan
-    public bool isPuzzleSolved = false; // Cek apakah puzzle sudah selesai
-    private bool canReturnToRoom = false; // Tambahan untuk cek apakah bisa kembali ke kamar
+    private static int currentLineIndex = 0; // Menggunakan variabel static
+    public bool puzzleActive = false;
+    public bool isPuzzleSolved = false;
+    private bool canReturnToRoom = false;
+    public static int savedLineIndex = -1; // Simpan index terakhir sebelum puzzle
+
+    private string lastInteractedNPC;
 
     void Start()
     {
@@ -62,21 +65,21 @@ public class NPC_Interaction : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
+        Debug.Log("Current Line Index: " + currentLineIndex);
         if (canTalk && Input.GetKeyDown(KeyCode.Space))
         {
-            if (puzzleActive) return; // Blokir dialog jika puzzle masih aktif
+            if (puzzleActive) return;
 
-            if (!isTalking )
+            if (!isTalking)
             {
                 dialogueManager.StartDialogue(dialogue, namaKiri, namaKanan, leftSprite, rightSprite);
                 isTalking = true;
-                currentLineIndex = 0; 
             }
             else
             {
                 dialogueManager.DisplayNextSentence();
-                currentLineIndex++; 
+                currentLineIndex++;
             }
         }
 
@@ -85,16 +88,18 @@ public class NPC_Interaction : MonoBehaviour
             PlayCutscene();
         }
 
-        if (isTalking && currentLineIndex == lineBeforeLoadScene && isPuzzleSolved == false)
-        {
-            isTalking = false;
-            dialogueManager.dialogEnd = false;
-            
-            if (useLoadPuzzle)
-                LoadPuzzle();
-            else
-                canReturnToRoom = true; // Set flag untuk kembali ke kamar nanti
-        }
+    if (isTalking && currentLineIndex == lineBeforeLoadScene && !isPuzzleSolved)
+    {
+        savedLineIndex = currentLineIndex; // Simpan index terakhir
+        isTalking = false;
+        dialogueManager.dialogEnd = false;
+        
+        if (useLoadPuzzle)
+            LoadPuzzle();
+        else
+            canReturnToRoom = true; 
+    }
+
 
         if (dialogueManager.dialogEnd)
         {
@@ -102,7 +107,7 @@ public class NPC_Interaction : MonoBehaviour
             isTalking = false;
             dialogueManager.dialogEnd = false;
             
-            if (canReturnToRoom) // Hanya kembali ke kamar setelah dialog selesai
+            if (canReturnToRoom)
             {
                 balekKekamar();
                 canReturnToRoom = false;
@@ -112,13 +117,17 @@ public class NPC_Interaction : MonoBehaviour
 
     private void LoadPuzzle()
     {
-        if (!puzzleActive ) 
+        if (!puzzleActive)
         {
+            AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay", 1f);
+            AudioManager.Instance.PlayBackgroundMusicWithTransition("Bunga", 0, 1f);
+
             SceneManager.LoadScene(namaSceneLoad, LoadSceneMode.Additive);
             Scene scene = SceneManager.GetSceneByName("Gameplay");
             foreach (GameObject obj in scene.GetRootGameObjects())
             {
                 obj.SetActive(false);
+                
             }
             isPuzzleSolved = true;
             Invoke("tungguActive", 2f);
@@ -148,21 +157,33 @@ public class NPC_Interaction : MonoBehaviour
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
         string npcname = gameObject.name.ToLower();
         SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcname);
-        
         SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
         SaveSlotSystem.instance.NyimpanProgress();
-        
         
         Invoke(nameof(DelayedLoadNPC), 0.2f);
     }
 
     private void DelayedLoadNPC()
     {
+        string npcname = gameObject.name.ToLower();
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        
         SaveSlotSystem.instance.AutoSaveSlot();
+
+        if (npcname == "ibunoo")
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                player.transform.position = new Vector3(-91.3f, player.transform.position.y, player.transform.position.z);
+                PlayerPrefs.SetFloat("PlayerX_" + currentSlot, -91.3f);
+                PlayerPrefs.SetFloat("PlayerY_" + currentSlot, player.transform.position.y);
+                PlayerPrefs.SetFloat("PlayerZ_" + currentSlot, player.transform.position.z);
+                PlayerPrefs.Save();
+            }
+        }
+
         PlayerPrefs.Save();
-        
     }
 
     private void SetDialogImages()

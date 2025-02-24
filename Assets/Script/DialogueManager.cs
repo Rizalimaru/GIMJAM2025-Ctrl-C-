@@ -34,7 +34,8 @@ public class DialogueManager : MonoBehaviour
     [HideInInspector] public string namaKanan;
 
     private Queue<DialogueLine> dialogueQueue;
-    private int currentLineIndex;
+    private static int currentLineIndex = -1;
+
     private bool sceneChanged;
 
     void Awake()
@@ -54,6 +55,7 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Starting dialogue with " + leftName + " and " + rightName);
         
+        currentLineIndex = -1;
         dialoguePanel.SetActive(true);
         dialogueQueue.Clear();
         
@@ -62,20 +64,32 @@ public class DialogueManager : MonoBehaviour
             dialogueQueue.Enqueue(line);
         }
 
-        currentLineIndex = -1;
+        currentLineIndex = NPC_Interaction.savedLineIndex; // Gunakan index yang tersimpan
         sceneChanged = false;
 
-        // Atur nama karakter di sini (tidak lagi dari variabel global)
         namaKiri = leftName;
         namaKanan = rightName;
 
-        // Set gambar NPC secara dinamis
         leftImage.sprite = leftSprite;
         rightImage.sprite = rightSprite;
 
+        Debug.Log($"Melanjutkan dari dialog index: {currentLineIndex}");
+        ContinueDialogueFromSavedIndex(); 
+    }   
+
+    private void ContinueDialogueFromSavedIndex()
+    {   
+        
+        for (int i = 0; i < currentLineIndex; i++)
+        {
+            if (dialogueQueue.Count > 0)
+            {
+                dialogueQueue.Dequeue();
+            }
+        }
+
         DisplayNextSentence();
     }
-
 
 
     public void DisplayNextSentence()
@@ -83,6 +97,7 @@ public class DialogueManager : MonoBehaviour
         NPC_Interaction npc = FindObjectOfType<NPC_Interaction>();
         if (npc != null && npc.puzzleActive) return; 
 
+        Debug.Log("DisplayNextSentence: Current Index = " + currentLineIndex + ", Queue Count = " + dialogueQueue.Count);
 
         if (dialogueQueue.Count == 0)
         {
@@ -93,17 +108,21 @@ public class DialogueManager : MonoBehaviour
         if (currentLineIndex == lineBeforeLoadScene && !sceneChanged && nextSceneName != null)
         {
             sceneChanged = true;
-            SceneManager.LoadScene(nextSceneName, LoadSceneMode.Additive);
             return;
         }
 
-        DialogueLine currentLine = dialogueQueue.Dequeue();
-        nameText.text = currentLine.characterName;
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(currentLine.sentence));
+        if (dialogueQueue.Count > 0)
+        {
+            DialogueLine currentLine = dialogueQueue.Dequeue();
+            nameText.text = currentLine.characterName;
+            StopAllCoroutines();
+            StartCoroutine(TypeSentence(currentLine.sentence));
 
-        UpdateCharacterOpacity(currentLine.characterName);
-        currentLineIndex++;
+            UpdateCharacterOpacity(currentLine.characterName);
+            
+            currentLineIndex++;
+            Debug.Log("Setelah DisplayNextSentence: Current Index = " + currentLineIndex);
+        }
     }
 
 
@@ -131,18 +150,14 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void ContinueDialogueAfterSceneLoad()
-    {
-        sceneChanged = false;
-        DisplayNextSentence();
-    }
-
     public void EndDialogue()
     {
 
 
         dialogEnd = true;
         dialoguePanel.SetActive(false);
+        NPC_Interaction.savedLineIndex = -1;
+        currentLineIndex = -1;
     }
 
 

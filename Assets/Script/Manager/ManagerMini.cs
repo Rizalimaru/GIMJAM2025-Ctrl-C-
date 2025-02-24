@@ -11,6 +11,7 @@ public class ManagerMini : MonoBehaviour
     public Slider progressBar;
     public TextMeshProUGUI hasil;
     public List<string> exceptionObjects;
+    public bool isSampahClear = false;
 
     private int totalTrash = 10; // Total jumlah sampah yang harus dikumpulkan
     private int collectedTrash = 0;
@@ -36,10 +37,11 @@ public class ManagerMini : MonoBehaviour
     public void ReturnToGame()
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-    
+        
         SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
         SceneManager.UnloadSceneAsync("TongSampah");
         Scene scene = SceneManager.GetSceneByName("Gameplay");
+
 
         foreach (GameObject obj in scene.GetRootGameObjects())
         {
