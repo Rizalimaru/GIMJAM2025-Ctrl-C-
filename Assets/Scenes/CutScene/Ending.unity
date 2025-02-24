@@ -1890,11 +1890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &594545457 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6436836648520314919, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
-  m_PrefabInstance: {fileID: 969258329}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &594545458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6846761590205838567, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
@@ -5865,65 +5860,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6846761590205838567, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
   m_PrefabInstance: {fileID: 428439516}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1561060054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1561060056}
-  - component: {fileID: 1561060055}
-  m_Layer: 0
-  m_Name: EndingTriggerEvent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1561060055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561060054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0505fa2ef454c45a876a8716bcdce1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monologueManager: {fileID: 1131757943}
-  monologue:
-    characterName: Runa
-    characterAvatar: {fileID: 21300000, guid: 9e493596061f41647b7130ce2c19ca2a, type: 3}
-    sentences:
-    - "From the distance, I saw an older lady standing by the side of a crossroad.
-      She keeps looking at both directions, seemingly wanting to cross the road and
-      yet she hasn\u2019t moved for a single inch since a few minutes ago. The continuous
-      stream of vehicles must be a daunting hurdle, can\u2019t blame her really."
-  mainCamera: {fileID: 0}
-  cutSceneCamera: {fileID: 0}
-  player: {fileID: 274145898}
-  target: {fileID: 594545457}
-  isCutSceneTriggered: 0
-  transitionSpeed: 2
---- !u!4 &1561060056
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561060054}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.089489, y: -1.7620353, z: 0.9379021}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1574014841
 GameObject:
   m_ObjectHideFlags: 0
@@ -7430,7 +7366,6 @@ SceneRoots:
   - {fileID: 1750898485}
   - {fileID: 1782830587}
   - {fileID: 2075506664}
-  - {fileID: 1561060056}
   - {fileID: 1110642142}
   - {fileID: 181467272}
   - {fileID: 1889722107}

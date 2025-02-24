@@ -77,6 +77,7 @@ public class NPC_Interaction : MonoBehaviour
         if (canTalk && Input.GetKeyDown(KeyCode.Space))
         {
             if (puzzleActive) return;
+            if(Time.timeScale == 0) return;
             
             if (!isTalking)
             {

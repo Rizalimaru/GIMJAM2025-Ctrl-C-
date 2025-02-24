@@ -160,7 +160,7 @@ public class DialogueManager : MonoBehaviour
             NPC_Interaction.savedLineIndex = -1;
             currentLineIndex = -1;
 
-            if (SaveSlotSystem.instance.progressSlider.value >= 90 && !hasPlayedEndingEvent)
+            if (SaveSlotSystem.instance.progressSlider.value >= 70 && !hasPlayedEndingEvent)
             {   
                 EndingCameraTrigger ending = FindObjectOfType<EndingCameraTrigger>();
 
