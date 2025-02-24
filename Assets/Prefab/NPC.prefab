@@ -241,7 +241,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   question_mark: {fileID: 5710375758647394031}
+  LeftDialogImage: {fileID: 0}
+  RightDialogImage: {fileID: 0}
+  leftSprite: {fileID: 0}
+  rightSprite: {fileID: 0}
   dialogueManager: {fileID: 0}
   dialogue:
     lines: []
   namaSceneLoad: 
+  namaKiri: 
+  namaKanan: 
+  lineBeforeLoadScene: 0
+  useLoadPuzzle: 1
+  usePlayCutscene: 0
+  cutsceneScenes: []
+  lineBeforePlayCutscene: 
+  puzzleActive: 0
+  isPuzzleSolved: 0

@@ -31,7 +31,7 @@ public class SaveSlotSystem : MonoBehaviour
     private int selectedSlot; // Menyimpan slot yang dipilih
 
     public Sprite defaultImage;   // Gambar default jika belum ada save
-    private string savePrefix = "SaveSlot";
+    public string savePrefix = "SaveSlot";
     public int[] progress;
     public float[] playerLastPosition;
 
@@ -425,6 +425,27 @@ public void SaveGame(int slot)
         PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs); // 🔹 Simpan ke PlayerPrefs
         PlayerPrefs.Save();
     }
+
+    public void AutoSaveSlotIbuIbu()
+    {
+        int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+        
+        // 🔹 Simpan informasi dasar slot
+        PlayerPrefs.SetString(savePrefix + currentSlot + "_title", "Auto Save Slot " + (currentSlot + 1));
+        PlayerPrefs.SetString(savePrefix + currentSlot + "_date", System.DateTime.Now.ToString("dd/MM/yyyy"));
+        PlayerPrefs.SetString(savePrefix + currentSlot + "_time", System.DateTime.Now.ToString("HH:mm"));
+
+        PlayerPrefs.SetInt(savePrefix + currentSlot + "_progress", progress[currentSlot]);
+
+        // 🔹 Update tampilan UI (progress slider)
+        progressSlider.value = progress[currentSlot];
+        // 🔹 Simpan slot yang aktif
+        PlayerPrefs.SetInt("SelectedSaveSlot", currentSlot);
+        PlayerPrefs.Save();
+
+        Debug.Log("✅ Auto Save berhasil di slot " + currentSlot + " dengan Progress: " + progress[currentSlot] + "%");
+    }
+
 
 
     public void SaveNPCInteraction(int slot, string npcID)

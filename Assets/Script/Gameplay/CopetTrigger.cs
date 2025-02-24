@@ -32,6 +32,7 @@ public class CopetTrigger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !hasTriggered)
         {
+            AudioManager.Instance.PlaySFX("Teriak",0);
             objectReady = true;
         }
     }

@@ -127,7 +127,6 @@ public class NPC_Interaction : MonoBehaviour
         if (!puzzleActive)
         {
             AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay", 1f);
-            AudioManager.Instance.PlayBackgroundMusicWithTransition("Bunga", 0, 1f);
 
             SceneManager.LoadScene(namaSceneLoad, LoadSceneMode.Additive);
             Scene scene = SceneManager.GetSceneByName("Gameplay");
@@ -179,19 +178,18 @@ public class NPC_Interaction : MonoBehaviour
     {
         string npcname = gameObject.name.ToLower();
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        SaveSlotSystem.instance.AutoSaveSlot();
+        
 
-        if (npcname == "ibunoo")
+        if (npcname == "npc_ibunoo")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
 
             if (player != null)
             {
-                player.transform.position = new Vector3(-91.3f, player.transform.position.y, player.transform.position.z);
-                PlayerPrefs.SetFloat("PlayerX_" + currentSlot, -91.3f);
-                PlayerPrefs.SetFloat("PlayerY_" + currentSlot, player.transform.position.y);
-                PlayerPrefs.SetFloat("PlayerZ_" + currentSlot, player.transform.position.z);
-                PlayerPrefs.Save();
+                PlayerPrefs.SetFloat(SaveSlotSystem.instance.savePrefix + currentSlot + "_playerPosition", -91.3f);
+
+                SaveSlotSystem.instance.AutoSaveSlotIbuIbu();
+
             }
         }
 
