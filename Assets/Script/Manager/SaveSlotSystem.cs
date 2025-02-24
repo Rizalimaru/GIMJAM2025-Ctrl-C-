@@ -290,79 +290,78 @@ public class SaveSlotSystem : MonoBehaviour
         GameplayManager.instance.CloseWarningSave();
     }
 
+public void SaveGame(int slot)
+{
+    Debug.Log("🟢 Progress sebelum disimpan: Slot " + slot + " -> " + progress[slot] + "%");
+    Debug.Log("🟢 Progress dari NPC: " + ((interactedNPCs * 100) / totalNPCs) + "%");
+    Debug.Log("🟢 Progress yang akan disimpan: " + Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100) + "%");
 
-    public void SaveGame(int slot)
+
+    // 🔹 Pastikan slot yang dipilih adalah slot yang benar
+    PlayerPrefs.SetInt("SelectedSaveSlot", slot);
+    PlayerPrefs.Save();  // Simpan langsung agar tidak ada kesalahan slot
+    
+    Debug.Log("🔹 Slot yang dipilih untuk menyimpan: " + slot);
+
+    GameplayManager.instance.CloseAllMenus();
+    GameplayManager.instance.uiPause.SetActive(true);
+    
+    string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
+    string currentTime = DateTime.Now.ToString("HH:mm");
+    GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+    if (player != null)
     {
-        GameplayManager.instance.CloseAllMenus();
-        GameplayManager.instance.uiPause.SetActive(true);
-        
-        string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
-        string currentTime = DateTime.Now.ToString("HH:mm");
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerLastPosition[slot] = player.transform.position.x;
+    }
 
-        if (player != null)
+    // 🔹 Hitung jumlah NPC yang sudah diinteraksi
+    int interactedNPCsCount = 0;
+    foreach (GameObject npc in NPCAmount)
+    {
+        if (npc != null)
         {
-            playerLastPosition[slot] = player.transform.position.x;
-        }
+            string npcID = npc.name.ToLower();
+            bool hasInteracted = PlayerPrefs.GetInt("NPC_" + slot + "_" + npcID, 0) == 1;
 
-        // Hitung jumlah NPC yang sudah diinteraksi
-        int interactedNPCsCount = 0;
-        foreach (GameObject npc in NPCAmount)
-        {
-            if (npc != null)
+            if (hasInteracted)
             {
-                string npcID = npc.name.ToLower();
-                bool hasInteracted = PlayerPrefs.GetInt("NPC_" + slot + "_" + npcID, 0) == 1;
-
-                if (hasInteracted)
-                {
-                    interactedNPCsCount++;
-                }
-                else
-                {
-                    SaveNPCInteraction(slot, npcID); // Simpan NPC jika belum
-                }
+                interactedNPCsCount++;
+            }
+            else
+            {
+                SaveNPCInteraction(slot, npcID);
             }
         }
-
-        interactedNPCs = interactedNPCsCount; // Pastikan interactedNPCs diperbarui
-
-        // Menghitung progress berdasarkan interaksi NPC
-        int newProgress = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
-        progress[slot] = newProgress;  // Ganti progress yang baru, bukan tambah
-
-  
-
-
-        // Log progress yang akan disimpan
-        Debug.Log("Progress saat ini: " + newProgress + "%");
-
-        // Simpan data ke PlayerPrefs
-        PlayerPrefs.SetInt("SelectedSaveSlot", slot);
-        PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
-        PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
-        PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
-        PlayerPrefs.SetInt(savePrefix + slot + "_progress", newProgress); // Simpan progress baru
-        PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs);
-        PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
-
-        // Menyimpan perubahan di PlayerPrefs
-        PlayerPrefs.Save();
-
-        // Debugging untuk memastikan data progress telah disimpan
-        Debug.Log("Progress disimpan ke slot " + slot + ": " + newProgress + "%");
-
-        // Jika ingin memperbarui slider progress di UI:
-        progressSlider.value = newProgress;  // Update slider dengan nilai terbaru
-
-        LoadNPCInteractions(slot);
-        LoadSaveSlots();
-
-
-
-        // Pastikan untuk TIDAK memanggil LoadSaveSlots() di sini jika tidak diperlukan
-        // LoadSaveSlots() hanya perlu dipanggil ketika loading data yang disimpan, bukan setelah save.
     }
+
+    interactedNPCs = interactedNPCsCount;
+
+    // 🔹 Pastikan progress yang disimpan adalah progress terbaru untuk slot ini
+    int newProgress = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
+    progress[slot] = newProgress;
+
+    Debug.Log("🔹 Progress yang disimpan ke slot " + slot + ": " + newProgress + "%");
+
+    // Simpan data ke PlayerPrefs
+    PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
+    PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
+    PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
+    PlayerPrefs.SetInt(savePrefix + slot + "_progress", newProgress); 
+    PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs);
+    PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
+
+    PlayerPrefs.Save();
+
+    // 🔹 Pastikan UI diperbarui
+    progressSlider.value = newProgress;  
+    LoadNPCInteractions(slot);
+    LoadSaveSlots(); 
+}
+
+
+
+
 
 
 
@@ -449,18 +448,19 @@ public class SaveSlotSystem : MonoBehaviour
         // Batasi progress agar tidak melebihi 100
         newProgress = Mathf.Clamp(newProgress, 0, 100);
 
+        // 🔹 Pastikan array progress[] diperbarui agar tidak hilang saat SaveGame()
+        progress[slot] = newProgress;
+
         // Simpan progress yang baru ke PlayerPrefs
         PlayerPrefs.SetInt(savePrefix + slot + "_progress", newProgress);
         PlayerPrefs.Save();
-
-        // Perbarui array progress[]
-        progress[slot] = newProgress;
 
         // Perbarui tampilan UI
         LoadSaveSlots();
 
         Debug.Log("Progress di slot " + slot + " berubah menjadi " + newProgress + "%");
     }
+
 
 
     public void NyimpanProgress()
