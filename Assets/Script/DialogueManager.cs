@@ -163,6 +163,11 @@ public class DialogueManager : MonoBehaviour
             if (SaveSlotSystem.instance.progressSlider.value >= 90 && !hasPlayedEndingEvent)
             {   
                 EndingCameraTrigger ending = FindObjectOfType<EndingCameraTrigger>();
+
+                AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay",1f);
+
+
+                AudioManager.Instance.PlayBackgroundMusicWithTransition("End",0,1f);
                 ending.PlayEvent();
 
                 // Tandai bahwa event sudah dijalankan

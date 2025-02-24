@@ -25,6 +25,11 @@ public class Timeline : MonoBehaviour
         if(nextSceneName == "Kamar"){
             AudioManager.Instance.StopBackgroundMusicWithTransition("Intro",1f);
         }
+
+
+        if(nextSceneName == "Mainmenu"){
+            AudioManager.Instance.StopBackgroundMusicWithTransition("End",1f);
+        }
         }
     }
 }
