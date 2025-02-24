@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    private void inputPlayer()
+  private void inputPlayer()
     {
         if (!canMove)
         {   
@@ -105,11 +105,13 @@ public class PlayerController : MonoBehaviour
         {
             playerAnimator.SetBool("isWalking", true);
             movement = -1;
+            spriteRenderer.flipX = false; // Tambahkan ini!
         }
         else if (Input.GetKey(KeyCode.D))
         {
             playerAnimator.SetBool("isWalking", true);
             movement = 1;
+            spriteRenderer.flipX = true; // Tambahkan ini!
         }
 
         // Input vertikal hanya jika di scene "Kamar"
@@ -129,6 +131,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     private void Move()
     {   

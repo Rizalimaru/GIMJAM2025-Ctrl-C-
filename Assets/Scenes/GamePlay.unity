@@ -6953,7 +6953,7 @@ PrefabInstance:
       objectReference: {fileID: 716539866}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforeLoadScene
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size

@@ -1209,7 +1209,7 @@ MonoBehaviour:
   aimSpeed: 2
   aimRange: 2
   exceptionObjects:
-  - UI HUD
+  - s
   - UI Game
   - CanvasOptionTolong
 --- !u!4 &1295506420

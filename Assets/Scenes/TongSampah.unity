@@ -2625,7 +2625,7 @@ MonoBehaviour:
   progressBar: {fileID: 1160278345}
   hasil: {fileID: 327065615}
   exceptionObjects:
-  - UI HUD
+  - 
   - UI Game
   - CanvasOptionTolong
 --- !u!1 &1892281473
