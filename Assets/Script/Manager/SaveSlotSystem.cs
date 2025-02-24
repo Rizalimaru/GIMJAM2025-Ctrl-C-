@@ -331,17 +331,36 @@ public class SaveSlotSystem : MonoBehaviour
         int newProgress = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
         progress[slot] = newProgress;  // Ganti progress yang baru, bukan tambah
 
+        // Log progress yang akan disimpan
+        Debug.Log("Progress saat ini: " + newProgress + "%");
+
+        // Simpan data ke PlayerPrefs
         PlayerPrefs.SetInt("SelectedSaveSlot", slot);
         PlayerPrefs.SetString(savePrefix + slot + "_title", "Save Slot " + (slot + 1));
         PlayerPrefs.SetString(savePrefix + slot + "_date", currentDate);
         PlayerPrefs.SetString(savePrefix + slot + "_time", currentTime);
-        PlayerPrefs.SetInt(savePrefix + slot + "_progress", progress[slot]); // Simpan progress baru
+        PlayerPrefs.SetInt(savePrefix + slot + "_progress", newProgress); // Simpan progress baru
         PlayerPrefs.SetInt(savePrefix + slot + "_interactedNPCs", interactedNPCs);
         PlayerPrefs.SetFloat(savePrefix + slot + "_playerPosition", playerLastPosition[slot]);
 
+        // Menyimpan perubahan di PlayerPrefs
         PlayerPrefs.Save();
+
+        // Debugging untuk memastikan data progress telah disimpan
+        Debug.Log("Progress disimpan ke slot " + slot + ": " + newProgress + "%");
+
+        // Jika ingin memperbarui slider progress di UI:
+        progressSlider.value = newProgress;  // Update slider dengan nilai terbaru
+
+        LoadNPCInteractions(slot);
         LoadSaveSlots();
+
+
+
+        // Pastikan untuk TIDAK memanggil LoadSaveSlots() di sini jika tidak diperlukan
+        // LoadSaveSlots() hanya perlu dipanggil ketika loading data yang disimpan, bukan setelah save.
     }
+
 
 
 
