@@ -29,6 +29,7 @@ public class ManagerMini : MonoBehaviour
         if (collectedTrash >= totalTrash)
         {
             hasil.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySFX("WinMini",0);
             Invoke("ReturnToGame", 2f);
             // Tambahkan efek kemenangan atau lanjutkan ke level berikutnya
         }
@@ -37,6 +38,7 @@ public class ManagerMini : MonoBehaviour
     public void ReturnToGame()
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
 
         AudioManager.Instance.StopBackgroundMusicWithTransition("Sampah", 1f);
 

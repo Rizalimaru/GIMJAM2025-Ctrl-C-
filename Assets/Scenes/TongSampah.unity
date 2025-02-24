@@ -808,7 +808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &327065614
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1186,6 +1186,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 953600034058267513, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
+      propertyPath: audioSFXGroups.Array.data[5].soundEffects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 953600034058267513, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
+      propertyPath: audioSFXGroups.Array.data[5].soundEffects.Array.data[0]
+      value: 
+      objectReference: {fileID: 661508352}
     - target: {fileID: 7323015901150554984, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.3064221
@@ -1231,6 +1239,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
+--- !u!82 &661508352 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 957500076839085107, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
+  m_PrefabInstance: {fileID: 661508351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &717162610
 GameObject:
   m_ObjectHideFlags: 0

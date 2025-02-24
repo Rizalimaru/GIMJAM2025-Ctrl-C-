@@ -37,8 +37,14 @@ public class MiniGameTap : MonoBehaviour
 
     void Update()
     {
+        // Jika sudah selesai, hentikan input
+        if (isFinished)
+        {
+            return;
+        }
+
         // Jika tidak tap, progress turun perlahan
-        if (!Input.GetMouseButton(0) && timer > 0 && !isFinished)
+        if (!Input.anyKeyDown && timer > 0)
         {
             timer -= decayRate * Time.deltaTime;
             timer = Mathf.Max(timer, 0); // Mencegah nilai negatif
@@ -47,7 +53,11 @@ public class MiniGameTap : MonoBehaviour
         // Update progress bar
         progressBar.value = timer;
 
-        // Jika progress penuh, tampilkan kemenangan
+        if (Mathf.Abs(timer - maxTime) < 0.1f) // Gunakan toleransi
+        {
+            timer = maxTime; // Pastikan nilainya benar-benar maxTime
+        }
+
         if (timer >= maxTime)
         {
             ShowWinScreen();
@@ -55,12 +65,14 @@ public class MiniGameTap : MonoBehaviour
             return;
         }
 
+
         // Tambahkan progress saat tap
-        if (Input.GetMouseButtonDown(0) && !isFinished)
+        if (Input.anyKeyDown)
         {
             TapScreen();
         }
     }
+
 
     void TapScreen()
     {
@@ -103,6 +115,8 @@ public class MiniGameTap : MonoBehaviour
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
         AudioManager.Instance.StopBackgroundMusicWithTransition("TapGame", 1f);
+
+        AudioManager.Instance.PlaySFX("WinMini",0);
 
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
 
