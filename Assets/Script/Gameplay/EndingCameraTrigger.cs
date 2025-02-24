@@ -93,6 +93,10 @@ public class EndingCameraTrigger : MonoBehaviour
         Vector3 startPos = cutSceneCamera.transform.position;
         Vector3 targetPos = mainCamera.transform.position;
 
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay",1f);
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("End",0,1f);
+
         mainCamera.SetActive(true);
         
         player.position = new Vector2(-6, -2.02f);

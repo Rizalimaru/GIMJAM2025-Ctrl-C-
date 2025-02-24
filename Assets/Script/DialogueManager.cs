@@ -164,10 +164,6 @@ public class DialogueManager : MonoBehaviour
             {   
                 EndingCameraTrigger ending = FindObjectOfType<EndingCameraTrigger>();
 
-                AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay",1f);
-
-
-                AudioManager.Instance.PlayBackgroundMusicWithTransition("End",0,1f);
                 ending.PlayEvent();
 
                 // Tandai bahwa event sudah dijalankan
