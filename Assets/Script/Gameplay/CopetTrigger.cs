@@ -37,7 +37,9 @@ public class CopetTrigger : MonoBehaviour
     }
 
     IEnumerator StartEvent()
-    {
+    {   
+        PlayerController player = FindObjectOfType<PlayerController>();
+        player.canMove = false;
         hasTriggered = true;
         dialogIbu.SetActive(true);
         yield return new WaitForSeconds(2);
@@ -52,6 +54,7 @@ public class CopetTrigger : MonoBehaviour
             yield return null;
         }
         canvasOption.SetActive(true);
+        player.canMove = true;
        
     }
 

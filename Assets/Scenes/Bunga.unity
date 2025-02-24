@@ -6993,6 +6993,7 @@ MonoBehaviour:
   exceptionObjects:
   - UI HUD
   - UI Game
+  - CanvasOptionTolong
 --- !u!4 &1939031294
 Transform:
   m_ObjectHideFlags: 0
