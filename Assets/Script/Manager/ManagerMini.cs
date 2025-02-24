@@ -30,6 +30,12 @@ public class ManagerMini : MonoBehaviour
         {
             hasil.gameObject.SetActive(true);
             AudioManager.Instance.PlaySFX("WinMini",0);
+
+            AudioManager.Instance.StopBackgroundMusicWithTransition("Sampah", 1f);
+            AchievementManager.instance.UnlockAchievement("Small Action Matters");
+
+            AudioManager.Instance.PlayBackgroundMusicWithTransition("GamePlay",0 ,1f);
+
             Invoke("ReturnToGame", 2f);
             // Tambahkan efek kemenangan atau lanjutkan ke level berikutnya
         }
@@ -40,9 +46,7 @@ public class ManagerMini : MonoBehaviour
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
 
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Sampah", 1f);
-
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
+        
     
         SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
         SceneManager.UnloadSceneAsync("TongSampah");

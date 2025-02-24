@@ -3926,10 +3926,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 4981404687293775592, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
-      propertyPath: m_Volume
-      value: 0.751
-      objectReference: {fileID: 0}
     - target: {fileID: 7323015901150554984, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.3064221
@@ -6867,7 +6863,7 @@ PrefabInstance:
       objectReference: {fileID: 716539866}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: lineBeforeLoadScene
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogue.lines.Array.size

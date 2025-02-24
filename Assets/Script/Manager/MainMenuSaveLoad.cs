@@ -29,6 +29,7 @@ public class MainMenuSaveLoad : MonoBehaviour
         int slot = 0;
 
         ManagerMainmenu.instance.DisableButtonNewGame();
+        AchievementManager.instance.ResetAchievements();
 
         AudioManager.Instance.PlaySFX("Button", 0);
         AudioManager.Instance.StopBackgroundMusicWithTransition("Mainmenu", 2f);

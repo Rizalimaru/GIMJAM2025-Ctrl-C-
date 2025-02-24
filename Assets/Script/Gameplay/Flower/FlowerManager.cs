@@ -83,6 +83,8 @@ public class FlowerManager : MonoBehaviour
 
     void NextLevel()
     {
+        AchievementManager.instance.UnlockAchievement("Theres Meaning Behind Every Existence");
+
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
         AudioManager.Instance.StopBackgroundMusicWithTransition("Bunga", 1f);

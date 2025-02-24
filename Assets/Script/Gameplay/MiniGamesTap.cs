@@ -114,6 +114,11 @@ public class MiniGameTap : MonoBehaviour
     void ShowWinScreen()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        AchievementManager.instance.UnlockAchievement("not Predator yet tho...");
+
+
+
         AudioManager.Instance.StopBackgroundMusicWithTransition("TapGame", 1f);
 
         AudioManager.Instance.PlaySFX("WinMini",0);

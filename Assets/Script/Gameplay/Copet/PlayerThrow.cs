@@ -256,7 +256,7 @@ void RestartGame()
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
-        
+        AchievementManager.instance.UnlockAchievement("AIM Master!");
 
         AudioManager.Instance.StopBackgroundMusicWithTransition("Maling",1f);
 

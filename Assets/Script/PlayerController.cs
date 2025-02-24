@@ -14,10 +14,15 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     private SpriteRenderer spriteRenderer; // Tambahkan SpriteRenderer
 
+    private float lastPositionX; // Simpan posisi X sebelumnya
+
+
 
     private bool isMoving = false; // Menyimpan status gerakan
     private void Start()
     {
+        lastPositionX = transform.position.x; // Inisialisasi posisi awal
+
         if (SceneManager.GetActiveScene().name == "GamePlay")
         {
             int selectedSlot = PlayerPrefs.GetInt("SelectedSaveSlot", -1);
@@ -44,44 +49,62 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>(); // Ambil komponen SpriteRenderer
     }
 
-    private void Update()
+private void Update()
+{
+    if (Time.timeScale == 0)
     {
-        inputPlayer();
-
-        bool hasMovement = (movement != 0 || verticalMovement != 0);
-
-        if (!hasMovement) // Jika tidak bergerak
+        if (isMoving)
         {
-            if (isMoving) // Hanya stop audio jika sebelumnya bergerak
-            {
-                AudioManager.Instance.SetPlayOnAwakeAndPlay("Gameplay", false);
-                isMoving = false;
-            }
-
-            // Reset animasi
-            playerAnimator.SetBool("isWalking", false);
-            playerAnimator.SetBool("WalkingAtas", false);
-            playerAnimator.SetBool("WalkingBawah", false);
+            AudioManager.Instance.SetPlayOnAwakeAndPlay("Gameplay", false);
+            isMoving = false;
         }
-        else // Jika bergerak
+        return;
+    }  
+    
+
+    inputPlayer();
+
+    bool hasMovement = (movement != 0 || verticalMovement != 0);
+
+    if (!canMove || !hasMovement) // Jika tidak bisa bergerak atau tidak ada input gerakan
+    {
+        if (isMoving) // Hanya stop audio jika sebelumnya bergerak
         {
-            if (!isMoving) // Hanya play audio saat pertama kali bergerak
+            AudioManager.Instance.SetPlayOnAwakeAndPlay("Gameplay", false);
+            isMoving = false;
+        }
+
+        // Reset animasi
+        playerAnimator.SetBool("isWalking", false);
+        playerAnimator.SetBool("WalkingAtas", false);
+        playerAnimator.SetBool("WalkingBawah", false);
+    }
+    else // Jika bergerak
+    {
+        float currentPositionX = transform.position.x;
+        
+        if (Mathf.Abs(currentPositionX - lastPositionX) > 0.01f) // Jika posisi X berubah signifikan
+        {
+            if (!isMoving) // Hanya play audio jika sebelumnya diam
             {
                 AudioManager.Instance.SetPlayOnAwakeAndPlay("Gameplay", true);
                 isMoving = true;
             }
+            lastPositionX = currentPositionX; // Update posisi terakhir
+        }
 
-            // Flip sprite berdasarkan arah horizontal
-            if (movement > 0)
-            {
-                spriteRenderer.flipX = true;
-            }
-            else if (movement < 0)
-            {
-                spriteRenderer.flipX = false;
-            }
+        // Flip sprite berdasarkan arah horizontal
+        if (movement > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (movement < 0)
+        {
+            spriteRenderer.flipX = false;
         }
     }
+}
+
 
     private void FixedUpdate()
     {
