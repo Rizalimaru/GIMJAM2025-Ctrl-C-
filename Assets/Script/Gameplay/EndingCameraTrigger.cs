@@ -14,11 +14,14 @@ public class EndingCameraTrigger : MonoBehaviour
     public bool isCutSceneTriggered = false;
     public float transitionSpeed = 2f;
     public Image Transistion;
+    public GameObject trasitionImage;
 
     private Coroutine transitionCoroutine;
+    private Animator animatorTransisi;
 
     void Start()
-    {
+    {   
+        animatorTransisi = trasitionImage.GetComponent<Animator>();
         cutSceneCamera.SetActive(false);
         target.SetActive(false);
 
@@ -84,6 +87,8 @@ public class EndingCameraTrigger : MonoBehaviour
     IEnumerator SwitchToMainCamera()
     {
         //StartCoroutine(SceneController.instance.LoadScene("Ending"));
+        animatorTransisi.SetTrigger("start");
+        yield return new WaitForSeconds(1f);
         float elapsedTime = 0f;
         Vector3 startPos = cutSceneCamera.transform.position;
         Vector3 targetPos = mainCamera.transform.position;
