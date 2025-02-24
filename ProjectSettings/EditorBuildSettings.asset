@@ -41,4 +41,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CutScene/CutScenefloris.unity
     guid: eb5c03f807930b0499226c616682ddec
+  - enabled: 1
+    path: Assets/Scenes/CutScene/CutSceneFlower.unity
+    guid: 68ec248207175f840a5c8ab2a266691d
+  - enabled: 1
+    path: Assets/Scenes/CutScene/Ending.unity
+    guid: 48fbe20e803ce3444835329c5e04dd62
+  - enabled: 1
+    path: Assets/Scenes/CutScene/CutSceneEnding.unity
+    guid: 7aa18723993cfc947a8eb34d2e3d54c5
   m_configObjects: {}

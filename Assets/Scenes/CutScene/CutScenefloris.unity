@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 1059345289}
   - component: {fileID: 1059345288}
   - component: {fileID: 1059345287}
+  - component: {fileID: 1059345292}
   m_Layer: 5
   m_Name: Timeline
   m_TagString: Untagged
@@ -480,6 +481,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1059345292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059345286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9d3f7ee82903740a3d0ad982028607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timeline: {fileID: 1059345287}
+  namaScene: CutScenefloris
+  exceptionObjects:
+  - UI Game
+  - CanvasOptionTolong
 --- !u!1 &1158643312
 GameObject:
   m_ObjectHideFlags: 0

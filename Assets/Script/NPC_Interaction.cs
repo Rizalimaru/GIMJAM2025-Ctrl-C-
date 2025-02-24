@@ -32,11 +32,17 @@ public class NPC_Interaction : MonoBehaviour
     private bool canReturnToRoom = false;
     public static int savedLineIndex = -1; // Simpan index terakhir sebelum puzzle
 
+
     private string lastInteractedNPC;
 
     void Start()
     {
         SetDialogImages();
+        if(lineBeforePlayCutscene != null)
+        {
+            usePlayCutscene = true;
+        }
+        
     }
 
     private void Awake()
@@ -137,12 +143,17 @@ public class NPC_Interaction : MonoBehaviour
 
     private void PlayCutscene()
     {
-        foreach (string sceneName in cutsceneScenes)
+        int index = lineBeforePlayCutscene.IndexOf(currentLineIndex);
+        if (index != -1 && index < cutsceneScenes.Count)
         {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            string sceneName = cutsceneScenes[index];
+            if (!SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            }
         }
+        usePlayCutscene = false;
     }
-
     private void balekKekamar()
     {
         StartCoroutine(SceneController.instance.LoadScene("Kamar"));
@@ -199,4 +210,6 @@ public class NPC_Interaction : MonoBehaviour
             RightDialogImage.GetComponent<UnityEngine.UI.Image>().sprite = rightSprite;
         }
     }
+
+    
 }

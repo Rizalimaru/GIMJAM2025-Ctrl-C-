@@ -1,4 +1,5 @@
 using System.Collections;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class EndingCameraTrigger : MonoBehaviour
@@ -9,46 +10,39 @@ public class EndingCameraTrigger : MonoBehaviour
     public GameObject mainCamera;
     public GameObject cutSceneCamera;
     public Transform player;
-    public Transform target;
+    public GameObject target;
     public bool isCutSceneTriggered = false;
     public float transitionSpeed = 2f;
+    public Image Transistion;
 
     private Coroutine transitionCoroutine;
 
     void Start()
     {
         cutSceneCamera.SetActive(false);
+        target.SetActive(false);
+
     }
 
     void Update()
-    {   
+    {    
+
         if (isCutSceneTriggered)
         {   
             // Smoothly move cutscene camera to target position
             cutSceneCamera.transform.position = Vector3.Lerp(
                 cutSceneCamera.transform.position,
-                new Vector3(target.position.x, cutSceneCamera.transform.position.y, cutSceneCamera.transform.position.z),
+                new Vector3(target.transform.position.x, cutSceneCamera.transform.position.y, cutSceneCamera.transform.position.z),
                 Time.deltaTime * transitionSpeed
             );
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !isCutSceneTriggered)
-        {
-            isCutSceneTriggered = true;
-            if (transitionCoroutine != null)
-                StopCoroutine(transitionCoroutine);
-
-            transitionCoroutine = StartCoroutine(SwitchToCutscene());
-        }
-    }
-
-    public void buttonTesting()
-    {
-            isCutSceneTriggered = true;
-            if (transitionCoroutine != null)
+    public void PlayEvent()
+    {   
+        target.SetActive(true);
+        isCutSceneTriggered = true;
+        if (transitionCoroutine != null)
                 StopCoroutine(transitionCoroutine);
 
             transitionCoroutine = StartCoroutine(SwitchToCutscene());
@@ -89,11 +83,14 @@ public class EndingCameraTrigger : MonoBehaviour
 
     IEnumerator SwitchToMainCamera()
     {
+        //StartCoroutine(SceneController.instance.LoadScene("Ending"));
         float elapsedTime = 0f;
         Vector3 startPos = cutSceneCamera.transform.position;
         Vector3 targetPos = mainCamera.transform.position;
 
         mainCamera.SetActive(true);
+        
+        player.position = new Vector2(-6, -2.02f);
 
         while (elapsedTime < 1f)
         {
@@ -101,7 +98,7 @@ public class EndingCameraTrigger : MonoBehaviour
             elapsedTime += Time.deltaTime * transitionSpeed;
             yield return null;
         }
-
+        
         cutSceneCamera.SetActive(false);
     }
 }

@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<DialogueLine> dialogueQueue;
     public static int currentLineIndex = -1;
-
+    private bool hasPlayedEndingEvent = false;
     private bool sceneChanged;
 
     void Awake()
@@ -152,15 +152,23 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EndDialogue()
-    {   
-        PlayerController player = FindObjectOfType<PlayerController>();
-        player.canMove = true;
-        dialogEnd = true;
-        dialoguePanel.SetActive(false);
-        NPC_Interaction.savedLineIndex = -1;
-        currentLineIndex = -1;
-    }
+        {   
+            PlayerController player = FindObjectOfType<PlayerController>();
+            player.canMove = true;
+            dialogEnd = true;
+            dialoguePanel.SetActive(false);
+            NPC_Interaction.savedLineIndex = -1;
+            currentLineIndex = -1;
 
+            if (SaveSlotSystem.instance.progressSlider.value >= 90 && !hasPlayedEndingEvent)
+            {   
+                EndingCameraTrigger ending = FindObjectOfType<EndingCameraTrigger>();
+                ending.PlayEvent();
+
+                // Tandai bahwa event sudah dijalankan
+                hasPlayedEndingEvent = true;
+            }
+        }
 
 
 }
