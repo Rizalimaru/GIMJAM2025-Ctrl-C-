@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public class ManagerMainmenu : MonoBehaviour
 {
+
+    public static ManagerMainmenu instance;
     [Header("----------- Function Mainmenu1----------------")]
+
+    public Button newButton;
  
     [SerializeField] private CanvasGroup titleCanvasGroup; // CanvasGroup untuk title screen
     [SerializeField] private GameObject titleCanvasGroupGameObject;
@@ -52,6 +56,7 @@ public class ManagerMainmenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        instance = this;
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Mainmenu",0,2f);
         // Load setting sebelumnya
         bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
@@ -295,7 +300,7 @@ public class ManagerMainmenu : MonoBehaviour
         }
     }
 
-    private void SetButtonsInteractable(bool state)
+    public void SetButtonsInteractable(bool state)
     {
         foreach (GameObject buttonObj in buttonOptions)
         {
@@ -306,6 +311,12 @@ public class ManagerMainmenu : MonoBehaviour
                 selector.SetButtonInteractable(state);
             }
         }
+    }
+
+    public void DisableButtonNewGame(){
+        
+        newButton.interactable = false;
+
     }
 
     

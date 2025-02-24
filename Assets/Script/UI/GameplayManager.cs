@@ -109,9 +109,17 @@ public class GameplayManager : MonoBehaviour
 
     public void Mainmenu()
     {
+        saveUI.SetActive(false);
+        preferencesUI.SetActive(false);
+        uiPause.SetActive(false);
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay", 1f);
+        SaveSlotSystem.instance.AutoSaveSlot();
         Time.timeScale = 1; // Pastikan waktu berjalan normal sebelum pindah scene
-        SceneManager.LoadScene("Mainmenu");
+        StartCoroutine(SceneController.instance.LoadScene("Mainmenu"));
         Debug.Log("Kembali ke Main Menu");
+
+        
+
     }
 
     public void SetFullscreen(bool isFullscreen)

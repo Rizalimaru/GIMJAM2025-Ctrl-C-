@@ -115,6 +115,11 @@ public class NPC_Interaction : MonoBehaviour
     {
         if (!puzzleActive ) 
         {
+            AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay", 1f);
+
+            AudioManager.Instance.PlayBackgroundMusicWithTransition("Bunga",0,1f);
+
+
             SceneManager.LoadScene(namaSceneLoad, LoadSceneMode.Additive);
             Scene scene = SceneManager.GetSceneByName("Gameplay");
             foreach (GameObject obj in scene.GetRootGameObjects())
@@ -147,8 +152,11 @@ public class NPC_Interaction : MonoBehaviour
     private void MarkNPCAsInteracted()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, lastInteractedNPC);
+        string npcname = gameObject.name.ToLower();
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcname);
 
+        
+        
         SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
         SaveSlotSystem.instance.NyimpanProgress();
         
@@ -158,13 +166,14 @@ public class NPC_Interaction : MonoBehaviour
 
     private void DelayedLoadNPC()
     {
+        string npcname = gameObject.name.ToLower();
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
         // 🔹 Auto Save terlebih dahulu sebelum mengubah posisi pemain
         SaveSlotSystem.instance.AutoSaveSlot();
 
         // 🔹 Cek apakah interaksi terakhir adalah dengan NPC "ibunoo"
-        if (lastInteractedNPC == "ibunoo")
+        if (npcname == "ibunoo")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
 
@@ -189,7 +198,6 @@ public class NPC_Interaction : MonoBehaviour
         // 🔹 Pastikan semua perubahan disimpan
         PlayerPrefs.Save();
     }
-
 
     private void SetDialogImages()
     {

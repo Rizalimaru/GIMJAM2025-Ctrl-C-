@@ -10,6 +10,7 @@ public class Doorinteractive : MonoBehaviour
 
     void Awake()
     {
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Kamar",0,1f);
         OutText.SetActive(false);
     }
 
@@ -18,6 +19,7 @@ public class Doorinteractive : MonoBehaviour
         if (canGoOut && Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
+            AudioManager.Instance.StopBackgroundMusicWithTransition("Kamar",1f);
         }
     }
 

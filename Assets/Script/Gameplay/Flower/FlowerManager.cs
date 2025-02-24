@@ -81,6 +81,9 @@ public class FlowerManager : MonoBehaviour
     void NextLevel()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Bunga", 1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
     
         SaveSlotSystem.instance.ModifyProgress(currentSlot, 5);
         SceneManager.UnloadSceneAsync("Bunga");

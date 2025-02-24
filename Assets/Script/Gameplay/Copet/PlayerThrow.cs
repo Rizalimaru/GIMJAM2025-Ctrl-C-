@@ -162,11 +162,16 @@ void Update()
 
         if (copetMove != null) copetMove.Disable();
 
-
-
+        // 🔹 Nonaktifkan tombol restart sementara
+        restartButton.interactable = false;
+        StartCoroutine(EnableRestartButton());
     }
 
-
+    IEnumerator EnableRestartButton()
+    {
+        yield return new WaitForSecondsRealtime(2f); // 🔹 Delay sebelum restart bisa ditekan
+        restartButton.interactable = true;
+}
 
 
 

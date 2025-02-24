@@ -36,6 +36,10 @@ public class ManagerMini : MonoBehaviour
     public void ReturnToGame()
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Bunga", 1f);
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
     
         SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
         SceneManager.UnloadSceneAsync("TongSampah");
