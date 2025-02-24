@@ -35,7 +35,9 @@ public class FloristTrigger : MonoBehaviour
     }
 
     IEnumerator StartEvent()
-    {
+    {   
+        PlayerController player = FindObjectOfType<PlayerController>();
+        player.canMove = false;
         isMonologueActive = true;
         hasTriggered = true; // Menandai bahwa event sudah terjadi
 
@@ -55,5 +57,6 @@ public class FloristTrigger : MonoBehaviour
         // Reset status event
         isMonologueActive = false;
         eventStarted = false;
+        player.canMove = true;
     }
 }

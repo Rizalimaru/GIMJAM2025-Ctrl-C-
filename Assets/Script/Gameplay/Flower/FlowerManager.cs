@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class FlowerManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class FlowerManager : MonoBehaviour
     
     private float timeRemaining = 30f; // Waktu dalam detik
     private bool levelCompleted = false;
+    public List<string> exceptionObjects;
 
     void Awake()
     {
@@ -85,5 +87,20 @@ public class FlowerManager : MonoBehaviour
         Time.timeScale = 1f;
         Debug.Log("Mengulang level...");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToGame()
+    {   
+        SceneManager.UnloadSceneAsync("Bunga");
+        Scene scene = SceneManager.GetSceneByName("Gameplay");
+
+        foreach (GameObject obj in scene.GetRootGameObjects())
+        {
+            if(!exceptionObjects.Contains(obj.name))
+            {
+                obj.SetActive(true);
+            }
+        }
+
     }
 }

@@ -6990,6 +6990,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   retryPanel: {fileID: 763577452}
   timerText: {fileID: 795140133}
+  exceptionObjects:
+  - UI HUD
+  - UI Game
 --- !u!4 &1939031294
 Transform:
   m_ObjectHideFlags: 0
