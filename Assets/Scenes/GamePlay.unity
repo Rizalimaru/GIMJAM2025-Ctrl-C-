@@ -3865,7 +3865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: NPCAmount.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: NPCAmount.Array.data[0]
@@ -3879,6 +3879,10 @@ PrefabInstance:
       propertyPath: NPCAmount.Array.data[2]
       value: 
       objectReference: {fileID: 2049662088}
+    - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
+      propertyPath: NPCAmount.Array.data[3]
+      value: 
+      objectReference: {fileID: 1561281473}
     - target: {fileID: 906769187532120667, guid: b2d8e2f1c14d5194a90f8e715c66f378, type: 3}
       propertyPath: slotDates.Array.data[0]
       value: 

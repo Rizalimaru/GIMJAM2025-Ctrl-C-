@@ -331,6 +331,9 @@ public class SaveSlotSystem : MonoBehaviour
         int newProgress = Mathf.Clamp((interactedNPCs * 100) / totalNPCs, 0, 100);
         progress[slot] = newProgress;  // Ganti progress yang baru, bukan tambah
 
+  
+
+
         // Log progress yang akan disimpan
         Debug.Log("Progress saat ini: " + newProgress + "%");
 
