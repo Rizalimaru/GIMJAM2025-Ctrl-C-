@@ -260,7 +260,7 @@ void RestartGame()
 
         AudioManager.Instance.StopBackgroundMusicWithTransition("Maling",1f);
 
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("GamePlay",0,1f);
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
     
         SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
         SceneManager.UnloadSceneAsync("CopetMaling");
