@@ -34,7 +34,7 @@ public class ManagerMini : MonoBehaviour
             AudioManager.Instance.StopBackgroundMusicWithTransition("Sampah", 1f);
             AchievementManager.instance.UnlockAchievement("Small Action Matters");
 
-            AudioManager.Instance.PlayBackgroundMusicWithTransition("GamePlay",0 ,1f);
+            AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0 ,1f);
 
             Invoke("ReturnToGame", 2f);
             // Tambahkan efek kemenangan atau lanjutkan ke level berikutnya
