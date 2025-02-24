@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class StopBack : MonoBehaviour
@@ -7,6 +6,10 @@ public class StopBack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+            AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay",1f);
+
+
+                AudioManager.Instance.PlayBackgroundMusicWithTransition("End",0,1f);
         
     }
 

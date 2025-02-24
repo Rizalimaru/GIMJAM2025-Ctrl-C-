@@ -6105,6 +6105,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b30c022e7779ba2428dc1e2aef6c078a, type: 2}
+    - target: {fileID: 2487616136939747273, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogueManager
       value: 
@@ -6701,6 +6705,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 50b666ba471b5184786342c8c75da5d7, type: 2}
+    - target: {fileID: 2487616136939747273, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: namaKiri
       value: Runa
@@ -6805,6 +6813,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: bb71d645656372b4ba2a65801d943851, type: 2}
+    - target: {fileID: 2487616136939747273, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5830587648527360440, guid: 5c8ed8a20451e8448a53b11a45e4a78a, type: 3}
       propertyPath: dialogueManager
       value: 

@@ -27,7 +27,7 @@ public class Timeline : MonoBehaviour
         }
 
 
-        if(nextSceneName == "Mainmenu"){
+        if(nextSceneName == "MainMenu"){
             AudioManager.Instance.StopBackgroundMusicWithTransition("End",1f);
         }
         }

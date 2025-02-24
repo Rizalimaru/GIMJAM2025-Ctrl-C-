@@ -1,6 +1,6 @@
 using System.Collections;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndingCameraTrigger : MonoBehaviour
 {   
@@ -13,7 +13,7 @@ public class EndingCameraTrigger : MonoBehaviour
     public GameObject target;
     public bool isCutSceneTriggered = false;
     public float transitionSpeed = 2f;
-    public Image Transistion;
+
     public GameObject trasitionImage;
 
     private Coroutine transitionCoroutine;
@@ -93,9 +93,6 @@ public class EndingCameraTrigger : MonoBehaviour
         Vector3 startPos = cutSceneCamera.transform.position;
         Vector3 targetPos = mainCamera.transform.position;
 
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay",1f);
-
-        AudioManager.Instance.PlayBackgroundMusicWithTransition("End",0,1f);
 
         mainCamera.SetActive(true);
         
@@ -109,5 +106,9 @@ public class EndingCameraTrigger : MonoBehaviour
         }
         
         cutSceneCamera.SetActive(false);
+
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay",1f);
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("End",0,1f);
     }
 }

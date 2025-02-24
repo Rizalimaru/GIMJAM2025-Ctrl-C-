@@ -164,6 +164,7 @@ public class DialogueManager : MonoBehaviour
             {   
                 EndingCameraTrigger ending = FindObjectOfType<EndingCameraTrigger>();
 
+
                 ending.PlayEvent();
 
                 // Tandai bahwa event sudah dijalankan

@@ -75,12 +75,6 @@ public class SaveSlotSystem : MonoBehaviour
 
         int lastSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
-        if (progress == null || lastSlot >= progress.Length)
-        {
-            Debug.LogError("progress tidak terinisialisasi atau index out of range!");
-            return;
-        }
-
         if (progressSlider.value != progress[lastSlot]) 
         {
             progressSlider.value = progress[lastSlot];
@@ -480,7 +474,7 @@ public void SaveGame(int slot)
         else
         {
             Debug.Log("🟢 Progress bertambah karena interaksi dengan NPC " + npcID);
-            ModifyProgress(slot, 15); // Tambah progress untuk NPC lain
+            ModifyProgress(slot, 20); // Tambah progress untuk NPC lain
         }
 
         PlayerPrefs.SetInt(key, 1); // Simpan bahwa NPC ini sudah diinteraksi
