@@ -40,6 +40,7 @@ public class PThrow : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayBackgroundMusicWithTransition2("Maling",0,1f,0.8f);
         Time.timeScale = 1f;
         handSpriteRenderer.sprite = readyHandSprite;
         gameOverUI.SetActive(false); // Sembunyikan UI Game Over di awal
@@ -104,6 +105,7 @@ void Update()
 
         if (!isGameOver && Input.GetKeyDown(KeyCode.Space))
         {
+            AudioManager.Instance.PlaySFX("Maling1",0);
             isPowering = false;
             powerBar.gameObject.SetActive(false);
             ThrowSandal(power);
@@ -149,7 +151,11 @@ void Update()
 
     void GameOver()
     {
+    
         if (isGameOver) return;
+        Debug.Log("🔴 GameOver() dipanggil! Musik seharusnya berhenti.");
+
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Maling",1f);
         
         isGameOver = true;
         Time.timeScale = 0f;
@@ -177,7 +183,11 @@ void Update()
 
 void RestartGame()
 {
+    
     if (!gameOverUI.activeSelf) return;
+
+
+    AudioManager.Instance.PlayBackgroundMusicWithTransition2("Maling",0,1f,0.8f);
 
     Debug.Log("🔄 RestartGame() dipanggil!");
 
@@ -186,6 +196,8 @@ void RestartGame()
     {
         Destroy(sandal);
     }
+
+    
 
     // Reset timer dan UI
     gameTimer = gameTimeLimit;
@@ -218,6 +230,9 @@ void RestartGame()
                 Mathf.Cos(Time.time * aimSpeed) * aimRange,
                 0
             );
+
+            targetPosition.z -= 1f; // Sesuaikan angka 1f dengan seberapa jauh ingin mengurangi Z
+
             crosshair.transform.position = targetPosition; // 🔥 LANGSUNG SET POSISI CROSSHAIR
             Debug.Log("🔄 Crosshair di-reset ke posisi target: " + targetPosition);
         }
@@ -239,6 +254,12 @@ void RestartGame()
     public void ReturnToGame()
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
+
+        
+
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Maling",1f);
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("GamePlay",0,1f);
     
         SaveSlotSystem.instance.ModifyProgress(currentSlot, 2);
         SceneManager.UnloadSceneAsync("CopetMaling");

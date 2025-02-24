@@ -14,6 +14,7 @@ public class MiniGameTap : MonoBehaviour
     public Texture handTapTexture2;
     public GameObject textEffectPrefab; // Prefab teks (+1)
     public Transform textEffectParent;  // Parent di dalam Canvas
+    public GameObject audioPrefab;
 
     public List<string> exceptionObjects;
 
@@ -29,6 +30,9 @@ public class MiniGameTap : MonoBehaviour
         progressBar.maxValue = maxTime;
         progressBar.value = 0;
         winImage.SetActive(false);
+
+
+        AudioManager.Instance.PlayBackgroundMusicWithTransition2("TapGame",0,7,0.8f);
     }
 
     void Update()
@@ -63,6 +67,9 @@ public class MiniGameTap : MonoBehaviour
         timer += tapBoost;
         timer = Mathf.Min(timer, maxTime);
 
+        GameObject audioObject = Instantiate(audioPrefab, transform.position, Quaternion.identity);
+        Destroy(audioObject, 2f); // Hancurkan setelah 2 detik agar tidak menumpuk
+
         // Bergantian antara dua gambar tap
         handImage.texture = useFirstTapTexture ? handTapTexture1 : handTapTexture2;
         useFirstTapTexture = !useFirstTapTexture; // Berubah setiap kali ditekan
@@ -95,7 +102,7 @@ public class MiniGameTap : MonoBehaviour
     void ShowWinScreen()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Bunga", 1f);
+        AudioManager.Instance.StopBackgroundMusicWithTransition("TapGame", 1f);
 
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
 

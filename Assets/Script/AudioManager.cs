@@ -156,6 +156,58 @@ public class AudioManager : MonoBehaviour
 
     }
 
+
+    public void PlayBackgroundMusicWithTransition2(string groupName, int index, float fadeInDuration, float targetVolume)
+    {
+        BackgroundMusicGroup group = System.Array.Find(audioBackgroundMusicGroups, g => g.groupName == groupName);
+        if (group != null && index >= 0 && index < group.backgroundMusics.Length)
+        {
+            StartCoroutine(FadeInAndPlayBackgroundMusic(group.backgroundMusics[index], fadeInDuration, targetVolume));
+        }
+        else
+        {
+            Debug.LogWarning("Background music group or index not found.");
+        }
+    }
+
+    IEnumerator FadeInAndPlayBackgroundMusic(AudioSource audioSource, float fadeInDuration, float targetVolume)
+    {
+        audioSource.Play();
+        float startVolume = 0f;
+        audioSource.volume = startVolume;
+
+        float deltaVolume = targetVolume / fadeInDuration;
+
+        while (audioSource.volume < targetVolume)
+        {
+            audioSource.volume += deltaVolume * Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        audioSource.volume = Mathf.Clamp(audioSource.volume, 0f, targetVolume);
+    }
+
+    public void StopBackgroundMusicWithTransition2(AudioSource audioSource, float fadeOutDuration)
+    {
+        StartCoroutine(FadeOutAndStopBackgroundMusic(audioSource, fadeOutDuration));
+    }
+
+    IEnumerator FadeOutAndStopBackgroundMusic(AudioSource audioSource, float fadeOutDuration)
+    {
+        float startVolume = audioSource.volume;
+        float deltaVolume = startVolume / fadeOutDuration;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= deltaVolume * Time.deltaTime;
+            yield return null;
+        }
+
+        audioSource.volume = 0f;
+        audioSource.Stop();
+    }
+
+
     //pause background music
     public void PauseBackgroundMusic(string groupName)
     {
@@ -233,25 +285,20 @@ public class AudioManager : MonoBehaviour
 
     IEnumerator FadeOutBackgroundMusic(AudioSource audioSource, float fadeOutDuration)
     {
-        // Simpan volume awal
         float startVolume = audioSource.volume;
+        float elapsedTime = 0f;
 
-        // Hitung increment per frame
-        float deltaVolume = startVolume / fadeOutDuration;
-
-        // Fade out musik dengan mengurangi volume setiap frame
-        while (audioSource.volume > 0)
+        while (elapsedTime < fadeOutDuration)
         {
-            audioSource.volume -= deltaVolume * Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, elapsedTime / fadeOutDuration);
             yield return null;
         }
 
-        // Pastikan volume tidak negatif
         audioSource.volume = 0f;
-
-        // Hentikan musik setelah selesai fade out
         audioSource.Stop();
     }
+
 
 
     // Fungsi untuk transisi ke musik latar belakang berdasarkan scene

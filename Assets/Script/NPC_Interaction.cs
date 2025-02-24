@@ -117,8 +117,6 @@ public class NPC_Interaction : MonoBehaviour
         {
             AudioManager.Instance.StopBackgroundMusicWithTransition("Gameplay", 1f);
 
-            AudioManager.Instance.PlayBackgroundMusicWithTransition("Bunga",0,1f);
-
 
             SceneManager.LoadScene(namaSceneLoad, LoadSceneMode.Additive);
             Scene scene = SceneManager.GetSceneByName("Gameplay");
@@ -173,7 +171,7 @@ public class NPC_Interaction : MonoBehaviour
         SaveSlotSystem.instance.AutoSaveSlot();
 
         // 🔹 Cek apakah interaksi terakhir adalah dengan NPC "ibunoo"
-        if (npcname == "ibunoo")
+        if (npcname == "npc_ibunoo")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
 

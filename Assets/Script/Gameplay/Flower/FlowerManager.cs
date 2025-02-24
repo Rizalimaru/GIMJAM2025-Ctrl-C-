@@ -18,6 +18,8 @@ public class FlowerManager : MonoBehaviour
 
     void Awake()
     {
+        AudioManager.Instance.PlayBackgroundMusicWithTransition("Bunga",0,1f);
+
         instance = this;
     }
 

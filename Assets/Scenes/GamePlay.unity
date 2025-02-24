@@ -4040,13 +4040,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 706699419532658000, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
-      propertyPath: m_Pitch
-      value: -0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 706699419532658000, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
+    - target: {fileID: 4981404687293775592, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
+      propertyPath: m_Volume
+      value: 0.751
       objectReference: {fileID: 0}
     - target: {fileID: 7323015901150554984, guid: 72ddf19825bf5664e997b7357ad643ce, type: 3}
       propertyPath: m_LocalPosition.x

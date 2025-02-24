@@ -18,6 +18,7 @@ public class ManagerMini : MonoBehaviour
     void Start()
     {
         instance = this;
+        AudioManager.Instance.PlayBackgroundMusicWithTransition2("Sampah", 0,1f,0.5f);
     }
 
     public void AddProgress()
@@ -37,7 +38,7 @@ public class ManagerMini : MonoBehaviour
     {   
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
 
-        AudioManager.Instance.StopBackgroundMusicWithTransition("Bunga", 1f);
+        AudioManager.Instance.StopBackgroundMusicWithTransition("Sampah", 1f);
 
         AudioManager.Instance.PlayBackgroundMusicWithTransition("Gameplay",0,1f);
     

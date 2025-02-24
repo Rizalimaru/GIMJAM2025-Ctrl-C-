@@ -19,6 +19,8 @@ public class Doorinteractive : MonoBehaviour
         if (canGoOut && Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(SceneController.instance.LoadScene("GamePlay"));
+
+            AudioManager.Instance.PlaySFX("Door",0);
             AudioManager.Instance.StopBackgroundMusicWithTransition("Kamar",1f);
         }
     }
