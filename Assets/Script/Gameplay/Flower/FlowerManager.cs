@@ -64,6 +64,7 @@ public class FlowerManager : MonoBehaviour
             if (!flower.isPlaced)
                 return;
         }
+        AudioManager.Instance.PlaySFX("WinMini",0);
 
         levelCompleted = true;
         Debug.Log("Semua bunga sudah terpasang! Pindah ke level berikutnya.");

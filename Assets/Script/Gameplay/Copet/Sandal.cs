@@ -52,6 +52,7 @@ public class Sandal : MonoBehaviour
             // Cek apakah posisi sandal berada dalam rentang Z yang valid
             if (transform.position.z >= -1f && transform.position.z <= 1f)
             {
+                AudioManager.Instance.PlaySFX("WinMini",0);
                 AudioManager.Instance.PlaySFX("Maling1",1);
                 Destroy(enemy.gameObject); // Hapus musuh
                 Destroy(gameObject); // Hapus sandal juga
