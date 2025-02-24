@@ -48,10 +48,6 @@ public class PThrow : MonoBehaviour
 
     void Update()
     {
-        if (maling == null) 
-        {
-            return;
-        }
 
         if(gameTimer >= 0)
         {
@@ -109,8 +105,8 @@ public class PThrow : MonoBehaviour
         // Jika maling kena dan hilang, hentikan timer
         if (maling == null) 
         {
-            gameObject.SetActive(false); // Matikan script jika maling sudah kena
-
+            ReturnToGame();
+            return;
         }
     }
 
@@ -155,8 +151,9 @@ public class PThrow : MonoBehaviour
         // Reset timer and UI
         gameTimer = gameTimeLimit;
         UpdateTimerUI();
-
+        Time.timeScale = 1f;
         // Reset game objects and states here
+
         if (copetMove != null)
         {
             copetMove.Enable();
