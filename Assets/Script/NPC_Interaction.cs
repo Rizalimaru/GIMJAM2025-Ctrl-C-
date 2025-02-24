@@ -26,7 +26,7 @@ public class NPC_Interaction : MonoBehaviour
 
     private bool canTalk = false;
     private bool isTalking = false;
-    private static int currentLineIndex = 0; // Menggunakan variabel static
+    private static int currentLineIndex = -1; // Menggunakan variabel static
     public bool puzzleActive = false;
     public bool isPuzzleSolved = false;
     private bool canReturnToRoom = false;
@@ -67,10 +67,11 @@ public class NPC_Interaction : MonoBehaviour
     private void Update()
     {   
         Debug.Log("Current Line Index: " + currentLineIndex);
+        currentLineIndex = DialogueManager.currentLineIndex;
         if (canTalk && Input.GetKeyDown(KeyCode.Space))
         {
             if (puzzleActive) return;
-
+            
             if (!isTalking)
             {
                 dialogueManager.StartDialogue(dialogue, namaKiri, namaKanan, leftSprite, rightSprite);

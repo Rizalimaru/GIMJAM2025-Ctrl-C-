@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
     [HideInInspector] public string namaKanan;
 
     private Queue<DialogueLine> dialogueQueue;
-    private static int currentLineIndex = -1;
+    public static int currentLineIndex = -1;
 
     private bool sceneChanged;
 
@@ -54,7 +54,8 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue, string leftName, string rightName, Sprite leftSprite, Sprite rightSprite)
     {
         Debug.Log("Starting dialogue with " + leftName + " and " + rightName);
-        
+        PlayerController player = FindObjectOfType<PlayerController>();
+        player.canMove = false;
         currentLineIndex = -1;
         dialoguePanel.SetActive(true);
         dialogueQueue.Clear();
@@ -151,9 +152,9 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EndDialogue()
-    {
-
-
+    {   
+        PlayerController player = FindObjectOfType<PlayerController>();
+        player.canMove = true;
         dialogEnd = true;
         dialoguePanel.SetActive(false);
         NPC_Interaction.savedLineIndex = -1;
