@@ -11934,7 +11934,8 @@ MonoBehaviour:
   - npc_cs
   - npc_florist
   - npc_bocil1
-  - 
+  - npc_ibunoo
+  - npc_ibuyess
   titleText: {fileID: 2107582001}
   triggerKey: HasTriggered
 --- !u!1 &1208911025

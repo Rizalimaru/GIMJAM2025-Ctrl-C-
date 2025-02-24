@@ -31,6 +31,7 @@ public class NPC_Interaction : MonoBehaviour
     public bool isPuzzleSolved = false; // Cek apakah puzzle sudah selesai
     private bool canReturnToRoom = false; // Tambahan untuk cek apakah bisa kembali ke kamar
 
+    private string lastInteractedNPC; 
     void Start()
     {
         SetDialogImages();
@@ -146,9 +147,8 @@ public class NPC_Interaction : MonoBehaviour
     private void MarkNPCAsInteracted()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        string npcname = gameObject.name.ToLower();
-        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, npcname);
-        
+        SaveSlotSystem.instance.SaveNPCInteraction(currentSlot, lastInteractedNPC);
+
         SaveSlotSystem.instance.LoadNPCInteractions(currentSlot);
         SaveSlotSystem.instance.NyimpanProgress();
         
@@ -159,11 +159,37 @@ public class NPC_Interaction : MonoBehaviour
     private void DelayedLoadNPC()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        
+
+        // 🔹 Auto Save terlebih dahulu sebelum mengubah posisi pemain
         SaveSlotSystem.instance.AutoSaveSlot();
+
+        // 🔹 Cek apakah interaksi terakhir adalah dengan NPC "ibunoo"
+        if (lastInteractedNPC == "ibunoo")
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                // 🔹 Ubah posisi pemain ke -91.3 pada sumbu X
+                player.transform.position = new Vector3(-91.3f, player.transform.position.y, player.transform.position.z);
+                Debug.Log("📍 Pemain dipindahkan ke -91.3 karena interaksi dengan NPC Ibunoo.");
+                
+                // 🔹 Simpan posisi pemain yang sudah diperbarui
+                PlayerPrefs.SetFloat("PlayerX_" + currentSlot, -91.3f);
+                PlayerPrefs.SetFloat("PlayerY_" + currentSlot, player.transform.position.y);
+                PlayerPrefs.SetFloat("PlayerZ_" + currentSlot, player.transform.position.z);
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                Debug.LogWarning("⚠ Pemain tidak ditemukan, tidak bisa dipindahkan.");
+            }
+        }
+
+        // 🔹 Pastikan semua perubahan disimpan
         PlayerPrefs.Save();
-        
     }
+
 
     private void SetDialogImages()
     {
