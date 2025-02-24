@@ -84,6 +84,7 @@ void Update()
 
         if (!isGameOver && Input.GetKeyDown(KeyCode.Space) && crosshairCollider.IsTouching(malingCollider))
         {
+            AudioManager.Instance.PlaySFX("Maling1",2);
             copetMove.Disable();
             isAiming = false;
             isPowering = true;
@@ -156,7 +157,7 @@ void Update()
         Debug.Log("🔴 GameOver() dipanggil! Musik seharusnya berhenti.");
 
         AudioManager.Instance.StopBackgroundMusicWithTransition("Maling",1f);
-        
+
         isGameOver = true;
         Time.timeScale = 0f;
         gameOverUI.SetActive(true);
