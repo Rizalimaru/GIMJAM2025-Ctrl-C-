@@ -27,6 +27,11 @@ public class MonologueManager : MonoBehaviour
     {
         sentences = new Queue<string>();
         dialoguePanel.SetActive(false);
+
+        // Mengaktifkan auto-size agar teks menyesuaikan ukuran area
+        dialogueText.enableAutoSizing = true;
+        dialogueText.fontSizeMin = 10f; // Ukuran minimal agar tetap terbaca
+        dialogueText.fontSizeMax = 36f; // Ukuran maksimal
     }
 
     public void StartMonologue(Monologue monologue)
@@ -71,12 +76,17 @@ public class MonologueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence)
     {
         isTyping = true;
-        dialogueText.text = "";
+        dialogueText.text = sentence; // Tetapkan teks penuh dulu agar auto-size dapat menyesuaikan
+        yield return null; // Tunggu satu frame untuk pembaruan ukuran
+
+        dialogueText.text = ""; // Kosongkan sebelum mulai mengetik efek TypeWriter
+
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.02f);
         }
+
         isTyping = false;
     }
 

@@ -20,12 +20,16 @@ public class NPC_Interaction : MonoBehaviour
     public string namaKanan;
     public int lineBeforeLoadScene;
     public bool useLoadPuzzle = true; // Opsi di Inspector
+    public bool usePlayCutscene = false; // Opsi tambahan untuk Play Cutscene
+    public List<string> cutsceneScenes; // List cutscene yang akan dimainkan
+    public List<int> lineBeforePlayCutscene; // Line sebelum cutscene dimainkan
 
     private bool canTalk = false;
     private bool isTalking = false;
     private int currentLineIndex = 0; 
     public bool puzzleActive = false; // Cek apakah puzzle sedang berjalan
     public bool isPuzzleSolved = false; // Cek apakah puzzle sudah selesai
+    private bool canReturnToRoom = false; // Tambahan untuk cek apakah bisa kembali ke kamar
 
     void Start()
     {
@@ -76,6 +80,11 @@ public class NPC_Interaction : MonoBehaviour
             }
         }
 
+        if (usePlayCutscene && lineBeforePlayCutscene.Contains(currentLineIndex))
+        {
+            PlayCutscene();
+        }
+
         if (isTalking && currentLineIndex == lineBeforeLoadScene && isPuzzleSolved == false)
         {
             isTalking = false;
@@ -84,7 +93,7 @@ public class NPC_Interaction : MonoBehaviour
             if (useLoadPuzzle)
                 LoadPuzzle();
             else
-                balekKekamar();
+                canReturnToRoom = true; // Set flag untuk kembali ke kamar nanti
         }
 
         if (dialogueManager.dialogEnd)
@@ -92,6 +101,12 @@ public class NPC_Interaction : MonoBehaviour
             MarkNPCAsInteracted();
             isTalking = false;
             dialogueManager.dialogEnd = false;
+            
+            if (canReturnToRoom) // Hanya kembali ke kamar setelah dialog selesai
+            {
+                balekKekamar();
+                canReturnToRoom = false;
+            }
         }
     }
 
@@ -107,6 +122,14 @@ public class NPC_Interaction : MonoBehaviour
             }
             isPuzzleSolved = true;
             Invoke("tungguActive", 2f);
+        }
+    }
+
+    private void PlayCutscene()
+    {
+        foreach (string sceneName in cutsceneScenes)
+        {
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
 

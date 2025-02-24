@@ -90,8 +90,13 @@ public class PlayerController : MonoBehaviour
 
     private void inputPlayer()
     {
-        if (!canMove) return;
-
+        if (!canMove)
+        {   
+            playerAnimator.SetBool("isWalking", false);
+            playerAnimator.SetBool("WalkingAtas", false);
+            playerAnimator.SetBool("WalkingBawah", false);
+            return;
+        } 
         movement = 0;
         verticalMovement = 0;
 
@@ -127,6 +132,13 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {   
+        if (!canMove)
+        {   
+            playerAnimator.SetBool("isWalking", false);
+            playerAnimator.SetBool("WalkingAtas", false);
+            playerAnimator.SetBool("WalkingBawah", false);
+            return;
+        } 
         transform.position += new Vector3(movement * moveSpeed * Time.fixedDeltaTime, verticalMovement * moveSpeed * Time.fixedDeltaTime, 0);
     }
 }
