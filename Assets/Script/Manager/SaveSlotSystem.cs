@@ -68,13 +68,25 @@ public class SaveSlotSystem : MonoBehaviour
 
     void Update()
     {
+        if (progressSlider == null || !progressSlider.gameObject.activeInHierarchy)
+        {
+            return; // Jangan lakukan apa pun jika progressSlider null atau nonaktif
+        }
+
         int lastSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
-        
+
+        if (progress == null || lastSlot >= progress.Length)
+        {
+            Debug.LogError("progress tidak terinisialisasi atau index out of range!");
+            return;
+        }
+
         if (progressSlider.value != progress[lastSlot]) 
         {
             progressSlider.value = progress[lastSlot];
         }
     }
+
     void Start()
     {
         int currentSlot = PlayerPrefs.GetInt("SelectedSaveSlot", 0);
